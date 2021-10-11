@@ -1,0 +1,25 @@
+.form-input {
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid #e2e2e2;
+  padding: 10px 15px;
+  &__input {
+    flex: 1;
+    font-size: 26px;
+    padding: 0;
+  }
+  &__textarea {
+    min-width: 200px;
+    width: 100%;
+    flex: 1;
+    border-width: 0;
+    height: 140px;
+    min-height: 140px;
+    text-align-vertical: top;
+    textarea {
+      font-size: 26px;
+      outline: none;
+      resize: none;
+    }
+  }
+}

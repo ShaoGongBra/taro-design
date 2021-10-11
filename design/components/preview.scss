@@ -1,0 +1,28 @@
+.preview {
+  background-color: #f2f2f2;
+  align-items: center;
+  .head {
+    height: 60px;
+    flex-direction: row;
+    align-items: center;
+    .item {
+      margin: 0 6px;
+      padding: 6px 4px;
+      border-radius: 4px;
+      &.hover {
+        background-color: #e2e2e2;
+      }
+    }
+  }
+  .mobile {
+    position: relative;
+    background-color: #fff;
+    // overflow-y: scroll;
+    // &::-webkit-scrollbar {
+    //   display: none;
+    // }
+    .scroll {
+      height: 800px;
+    }
+  }
+}

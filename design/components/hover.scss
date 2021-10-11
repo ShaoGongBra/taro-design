@@ -1,0 +1,12 @@
+.select-box {
+  position: absolute;
+  z-index: 9;
+  &.top,
+  &.bottom {
+    border-top: 1px dashed #666;
+  }
+  &.left,
+  &.right {
+    border-left: 1px dashed #666;
+  }
+}

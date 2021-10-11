@@ -1,0 +1,25 @@
+.overlay-loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  &__main {
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    align-items: center;
+    padding: 30px 10px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    z-index: 10;
+  }
+  &__text {
+    margin-top: 20px;
+    font-size: 28px;
+    color: #fff;
+  }
+}

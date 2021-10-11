@@ -1,0 +1,81 @@
+$nodeLeft: 20px;
+
+.nodes {
+  flex: 1;
+  .scroll-root {
+    flex: 1;
+    width: 100%;
+    position: relative;
+  }
+  .scroll-main {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    display: block;
+  }
+  .item-add {
+    position: absolute;
+    height: 1px;
+    flex-shrink: 0;
+    background-color: #666;
+    margin-left: 40px;
+    min-width: 300px;
+    &.top {
+      top: -1px;
+    }
+    &.bottom {
+      bottom: -1px;
+    }
+  }
+  .item {
+    cursor: pointer;
+    height: 50px;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    &.select {
+      background-color: #e8e8e8;
+    }
+    &.hover {
+      opacity: 0.6;
+    }
+    &.insert {
+      background-color: #e8e8e8;
+    }
+    .icon-you2 {
+      font-size: 24px;
+      color: #333;
+      transition: all 0.3s;
+      padding: 0 10px;
+      &:hover {
+        color: #999;
+      }
+      &.hide {
+        &::before {
+          opacity: 0;
+        }
+      }
+      &.unfold {
+        transform: rotate(90deg);
+      }
+    }
+    .text {
+      font-size: 24px;
+      color: #333;
+      white-space: nowrap;
+      padding: 0;
+      line-height: 1;
+    }
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+  @for $i from 0 to 50 {
+    .level-#{$i} {
+      padding-left: 16px * $i;
+    }
+  }
+}

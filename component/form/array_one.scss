@@ -1,0 +1,30 @@
+.form-array-one {
+  &__form {
+    flex-direction: row;
+    border: 1px solid #e2e2e2;
+  }
+  &__create {
+    flex: 1;
+  }
+  &__actions {
+    flex-shrink: 0;
+    width: 100px;
+    &__item {
+      flex: 1;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &__add {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #e2e2e2;
+    &__text {
+      font-size: 24px;
+    }
+  }
+}

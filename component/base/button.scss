@@ -1,0 +1,21 @@
+.btn-comp{
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border-width: 2px;
+  /*postcss-pxtransform rn eject enable*/
+  border-style: solid;
+  /*postcss-pxtransform rn eject disable*/
+  &--fillet{
+    border-radius: 750px;
+  }
+  &--fillet-min{
+    border-radius: 10px;
+  }
+  &--disabled{
+    opacity: 0.3;
+  }
+  &__image{
+    margin: 0 10px;
+  }
+}

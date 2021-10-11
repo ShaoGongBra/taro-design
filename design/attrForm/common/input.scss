@@ -1,0 +1,33 @@
+.input-width{
+  flex: 1;
+  display: flex;
+}
+.attr-form-input {
+  font-size: 24px;
+  width: 100%;
+  height: auto;
+  min-height: 32px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  &--root {
+    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+.attr-form-select {
+  width: 30px;
+  border: none;
+  outline: none;
+  font-size: 24px;
+  background-color: transparent;
+  flex-shrink: 0;
+  &.disable-input {
+    flex: 1;
+    width: auto;
+  }
+}

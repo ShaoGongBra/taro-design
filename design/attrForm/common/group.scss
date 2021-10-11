@@ -1,0 +1,28 @@
+.attr-form-group {
+  border-bottom: 1px solid #e2e2e2;
+  & > .nav {
+    flex-direction: row;
+    padding: 10px;
+    align-items: center;
+    &:hover {
+      background-color: #f2f2f2;
+    }
+    .more {
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-left: 12px solid #666;
+      border-bottom: 8px solid transparent;
+      margin-right: 10px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+      &.unfold {
+        transform: rotate(90deg);
+      }
+    }
+    .text {
+      font-size: 28px;
+      color: #666;
+    }
+  }
+}

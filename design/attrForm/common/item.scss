@@ -1,0 +1,40 @@
+.attr-form-item {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  &:hover {
+    background-color: #f2f2f2;
+  }
+  & > .left {
+    flex-direction: row;
+    align-items: center;
+    width: 50%;
+    flex-shrink: 0;
+    .more {
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-left: 12px solid #666;
+      border-bottom: 8px solid transparent;
+      margin-right: 10px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+      &.hide {
+        opacity: 0;
+      }
+      &.unfold {
+        transform: rotate(90deg);
+      }
+    }
+    .name {
+      font-size: 24px;
+      color: #666;
+      &.child {
+        color: #53bafe;
+      }
+    }
+  }
+}
+.attr-form-item-more {
+  padding-left: 20px;
+}

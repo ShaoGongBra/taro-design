@@ -1,0 +1,20 @@
+.form-item {
+  &__text {
+    padding: 10px;
+  }
+  &__main {
+    flex: 1;
+    min-width: 100px;
+    overflow: hidden;
+  }
+  &__verify {
+    font-size: 24px;
+    color: red;
+    margin-top: 8px;
+  }
+  &__tip {
+    font-size: 26px;
+    color: #666;
+    margin-top: 8px;
+  }
+}

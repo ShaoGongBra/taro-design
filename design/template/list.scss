@@ -1,0 +1,48 @@
+.temp-list {
+  padding: 0 10px;
+  .search {
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 10px;
+    border: 1px solid #f2f2f2;
+    margin: 6px 10px;
+    border-radius: 5px;
+    taro-input-core {
+      flex: 1;
+      font-size: 24px;
+      margin-left: 10px;
+      color: #333;
+    }
+    taro-text-core {
+      font-size: 24px;
+      color: #999;
+    }
+  }
+  .item {
+    margin-top: 20px;
+    &:nth-child(1) {
+      margin-top: 0;
+    }
+    box-shadow: 0 0 6px 2px #f2f2f2;
+    .title {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px;
+      border-top: 1px solid #e8e8e8;
+      .name {
+        font-size: 24px;
+        color: #333;
+      }
+      .cate {
+        font-size: 24px;
+        color: #999;
+        &::after {
+          font-family: "icon" !important;
+          content: "\e71f";
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.overlay-toast {
+  max-width: 80%;
+  min-width: 150px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 20px 30px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  z-index: 10;
+  align-items: center;
+  &__content {
+    color: #fff;
+    font-size: 28px;
+    text-align: center;
+    line-height: 36px;
+  }
+}

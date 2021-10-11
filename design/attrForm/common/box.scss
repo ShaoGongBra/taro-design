@@ -1,0 +1,66 @@
+.attr-form-box {
+  padding: 10px;
+  align-self: center;
+  .position {
+    background-color: #fff;
+    border: 1px dashed #e2e2e2;
+  }
+  .margin {
+    background-color: #ae8152;
+  }
+  .border {
+    background-color: #e3c381;
+  }
+  .padding {
+    background-color: #b7c47f;
+  }
+  .size {
+    background-color: #87b2bc;
+    flex-direction: row;
+    justify-content: space-around;
+    min-width: 120px;
+  }
+  .position,
+  .margin,
+  .border,
+  .padding,
+  .size {
+    grid-area: center;
+    padding: 4px;
+    margin: 4px;
+  }
+  .grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      ". top ."
+      "left center right"
+      ". bottom .";
+    .tip {
+      font-size: 18px;
+      position: absolute;
+      left: 5px;
+      top: 5px;
+    }
+    .value {
+      font-size: 24px;
+      color: #333;
+      place-self: center;
+      outline: none;
+      &:nth-child(1) {
+        grid-area: top;
+      }
+      &:nth-child(2) {
+        grid-area: left;
+      }
+      &:nth-child(4) {
+        grid-area: right;
+      }
+      &:nth-child(5) {
+        grid-area: bottom;
+      }
+    }
+  }
+}

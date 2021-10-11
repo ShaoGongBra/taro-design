@@ -1,0 +1,41 @@
+.taro-design > .delete {
+  position: absolute;
+  right: -200px;
+  bottom: -200px;
+  z-index: 1;
+  width: 400px;
+  height: 400px;
+  border-radius: 200px;
+  background-color: #fff;
+  transform: translate(200px, 200px);
+  /*postcss-pxtransform rn eject enable*/
+  transition: transform 0.3s, background-color 0.1s;
+  /*postcss-pxtransform rn eject disable*/
+  box-shadow: 0 0 10px #e2e2e2;
+  &.delete-show {
+    transform: translate(0, 0);
+  }
+  .info {
+    width: 230px;
+    align-items: center;
+    margin-top: 80px;
+    .text {
+      /*postcss-pxtransform rn eject enable*/
+      transition: color 0.1s;
+      /*postcss-pxtransform rn eject disable*/
+      font-size: 20px;
+      color: #999;
+      margin-top: 20px;
+    }
+  }
+  &.delete-over {
+    background-color: #ff4242;
+    transform: translate(0, 0) scale(1.05, 1.05);
+    .icon {
+      color: #e2e2e2;
+    }
+    .text {
+      color: #e2e2e2;
+    }
+  }
+}

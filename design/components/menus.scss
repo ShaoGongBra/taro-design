@@ -1,0 +1,64 @@
+.taro-design > .menu {
+  flex-direction: row;
+  align-self: stretch;
+  .level-1 {
+    width: 120px;
+    background-color: #f2f2f2;
+    overflow-y: auto;
+  }
+  .level-2 {
+    width: 375px;
+    overflow-y: auto;
+    background-color: #fff;
+    &::-webkit-scrollbar {
+      /*滚动条整体样式*/
+      width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+      height: 1px;
+    }
+    &::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      border-radius: 10px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      background: #888;
+    }
+    &::-webkit-scrollbar-track {
+      /*滚动条里面轨道*/
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      background: #ededed;
+    }
+  }
+  .cate {
+    position: relative;
+    .cate-name {
+      font-size: 26px;
+      padding: 20px 5px;
+      text-align: center;
+    }
+    &.hover {
+      background-color: #ccc;
+    }
+  }
+  .child-cate {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    .item {
+      width: 50%;
+      padding: 16px 10px;
+      border-bottom: 1px solid #e2e2e2;
+      border-right: 1px solid #e2e2e2;
+      align-items: center;
+      justify-content: center;
+      .text {
+        font-size: 24px;
+        color: #202020;
+      }
+    }
+  }
+
+  .line {
+    height: 1px;
+    background-color: #ccc;
+  }
+}

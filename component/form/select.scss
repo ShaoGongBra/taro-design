@@ -1,0 +1,124 @@
+.form-select{
+  &--row{
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  &--image{
+    justify-content: space-between;
+  }
+  &--card{
+    align-items: stretch;
+    flex-direction: column;
+  }
+  &__option{
+    flex-direction: row;
+  }
+  &__item-text{
+    flex-direction: row;
+    padding: 6px 0;
+    margin-right: 18px;
+    &__right{
+      // flex: 1;
+    }
+    &__name{
+      font-size: 28px;
+      color: #333;
+      margin-top: 2px;
+    }
+    &__desc{
+      margin-top: 6px;
+      font-size: 24px;
+      color: #888;
+    }
+  }
+  &__item-card{
+    flex-direction: row;
+    padding: 10px 20px;
+    margin-right: 18px;
+    margin-bottom: 10px;
+    border: 1px solid #e2e2e2;
+    align-items: center;
+    border-radius: 10px;
+    &__image{
+      width: 80px;
+      height: 80px;
+      background-color: #e2e2e2;
+      margin-right: 10px;
+    }
+    &__right{
+      flex: 1;
+    }
+    &__name{
+      font-size: 28px;
+      color: #333;
+    }
+    &__desc{
+      margin-top: 6px;
+      font-size: 24px;
+      color: #888;
+    }
+  }
+  &__item-image{
+    margin-bottom: 10px;
+    border: 1px solid #e2e2e2;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 220px;
+    position: relative;
+    &__btn{
+      position: absolute;
+      z-index: 1;
+      left: 10px;
+      top: 10px;
+    }
+    &__image{
+      width: 220px;
+      height: 220px;
+      background-color: #e2e2e2;
+    }
+    &__bottom{
+      padding: 8px;
+      align-items: center;
+    }
+    &__name{
+      font-size: 28px;
+      color: #333;
+    }
+    &__desc{
+      margin-top: 6px;
+      font-size: 24px;
+      color: #888;
+    }
+  }
+  &__item-color{
+    height: 60px;
+    min-width: 60px;
+    border-radius: 10px;
+    border: 1px solid #e2e2e2;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+  &__value{
+    &__select{
+      font-size: 26px;
+    }
+  }
+  &__pull{
+    &__head{
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      &__title{
+        font-size: 24px;
+      }
+    }
+    &__scroll{
+      margin: 20px 0;
+      height: 600px;
+    }
+  }
+}

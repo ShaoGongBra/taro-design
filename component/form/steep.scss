@@ -1,0 +1,30 @@
+.form-steep{
+  flex-direction: row;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  align-self: flex-start;
+  align-items: stretch;
+  &__btn{
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 60px;
+  }
+  &__num{
+    align-items: center;
+    justify-content: center;
+    padding: 0 30px;
+    /*postcss-pxtransform rn eject enable*/
+    border-left-style: solid;
+    border-right-style: solid;
+    /*postcss-pxtransform rn eject disable*/
+    border-left-width: 1px;
+    border-left-color: #e2e2e2;
+    border-right-width: 1px;
+    border-right-color: #e2e2e2;
+    &__text{
+      font-size: 26px;
+      color: #333;
+    }
+  }
+}

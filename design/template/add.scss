@@ -1,0 +1,72 @@
+.temp-add {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  .main {
+    width: 400px;
+    height: 600px;
+    background-color: #fff;
+    border-radius: 10px;
+    .head {
+      flex-direction: row;
+      align-items: center;
+      padding: 20px;
+      .title {
+        flex: 1;
+        margin-left: 20px;
+        font-size: 24px;
+        text-align: center;
+      }
+    }
+    .load {
+      height: 100px;
+      align-items: center;
+      justify-content: center;
+    }
+    .item {
+      flex-direction: row;
+      padding: 20px;
+      justify-content: space-between;
+      &:hover {
+        background-color: #f2f2f2;
+        .icon{
+          opacity: 1;
+        }
+      }
+      &.select {
+        background-color: #e2e2e2;
+      }
+      .input{
+        font-size: 20px;
+        color: #333;
+        border-bottom: 1px solid #ccc;
+        padding: 0 5px;
+        flex: 1;
+      }
+      .name {
+        font-size: 20px;
+      }
+      .icon{
+        transition: opacity 0.2s;
+        opacity: 0;
+      }
+    }
+    .btn {
+      padding: 20px;
+      flex-direction: row;
+      align-items: center;
+      .name{
+        font-size: 24px;
+        border-bottom: 1px solid #e2e2e2;
+        margin-right: 10px;
+        padding: 0 5px;
+      }
+    }
+  }
+}
