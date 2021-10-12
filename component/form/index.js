@@ -13,7 +13,7 @@ import UploadForm from './upload'
 import ObjectForm from './object'
 import ArrayForm from './array'
 import ArrayOneForm from './array_one'
-import ArrayTwoForm, { ArrayTowItem } from './array_two'
+import { ArrayTwo, ArrayTowItem } from './array_two'
 import ButtonForm from './button'
 
 export default {
@@ -33,7 +33,7 @@ export default {
   object: ObjectForm,
   array: ArrayForm,
   'array-one': ArrayOneForm,
-  'array-two': ArrayTwoForm,
+  'array-two': ArrayTwo,
   'array-two-item': ArrayTowItem,
   button: ButtonForm
 }

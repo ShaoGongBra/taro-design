@@ -74,10 +74,11 @@ export default {
       return true
     }
 
-    const item= componentList[nodeName]
-
     // 判断是否被父组件禁用
-    if (item?.child?.disable?.comp?.length) {
+    const item = componentList[nodeName]
+    if (typeof item?.child?.disable === 'function') {
+      return item.child.disable(childNodeName)
+    } else if (item?.child?.disable?.comp?.length) {
       const { disable } = item.child
       const mark = disable.comp.includes(childNodeName)
       if (mark && !disable.contain) {
@@ -89,7 +90,9 @@ export default {
 
     // 判断是否被子组件禁用
     const childItem = componentList[childNodeName]
-    if (childItem?.parent?.disable?.comp?.length) {
+    if (typeof childItem?.parent?.disable === 'function') {
+      return childItem.parent.disable(nodeName)
+    } else if (childItem?.parent?.disable?.comp?.length) {
       const { disable } = childItem.parent
       const mark = disable.comp.includes(nodeName)
       if (mark && !disable.contain) {

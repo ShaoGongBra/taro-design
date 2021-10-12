@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
-import { getPublicAttr, getPublicAttrForm, getBaseAttrForm, FormCreate, componentCate, styleNode } from '../../design/min'
 import { getKey } from 'taro-tools'
-import { nodeCreate } from '../../render'
+import { getPublicAttr, getPublicAttrForm, getBaseAttrForm, FormCreate, componentCate, styleNode } from '../../design/min'
+import { nodeCreate, componentList } from '../../render'
 
 const commonForm = (form = [], style) => getBaseAttrForm(style, [
   FormCreate.input('数据库名', 'name'),
@@ -431,13 +431,8 @@ export default {
       ])
     },
     child: {
-      disable: {
-        // 组件
-        // comp: [],
-        // 组件判断是否是包含这些组件还是不包含这些组件
-        // contain: true,
-        max: 1
-      },
+      disable: nodeName => !componentList[nodeName]?.designConfig?.isForm,
+      max: 1
     }
   },
   'array-two': {
@@ -485,7 +480,8 @@ export default {
       ])
     },
     child: {
-      max: 1
+      max: 1,
+      disable: nodeName => !componentList[nodeName]?.designConfig?.isForm
     },
     parent: {
       disable: {

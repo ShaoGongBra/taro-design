@@ -3,7 +3,7 @@
  - 功能当前正在完善中，尚有多处功能无法正常使用，小程序端和app端尚未测试，请你谨慎使用。
 # 基本用法
   ```
-    yarn add taro-design
+  yarn add taro-design
   ```
   - 如果你的依赖库里没有下列组件，请添加
   ```
@@ -33,7 +33,7 @@
   - 渲染模式使用示例
   ```jsx
   import React from 'react'
-  import { Create } from 'taro-design'
+  import { TopView, Create } from 'taro-design'
 
   export default () => {
     return <TopView>

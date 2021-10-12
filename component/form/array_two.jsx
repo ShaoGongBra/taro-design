@@ -1,20 +1,28 @@
 import React, { useCallback, useMemo, useContext } from 'react'
 import Taro from '@tarojs/taro'
 import { ScrollView, View, Text } from '@tarojs/components'
-import { recursionGetValue } from 'taro-tools'
+import { deepCopy, recursionGetValue } from 'taro-tools'
 import { Icon } from '../base'
 import { getFormDefaultValue } from './utils'
 import { FormContext } from './form'
 import { styled } from '../../render'
 import './array_two.scss'
 
-const ArrayTwo = ({ children, name, _childNodes, _edit }) => {
+const getLineNodeData = (child, index) => {
+  return deepCopy(child).map(item => {
+    const name = item?.child?.[0]?.name
+    if (Array.isArray(name)) {
+      name.splice(name.length - 1, 0, index)
+    }
+    return item
+  })
+}
 
+const ArrayTwo = ({ children, name, _childNodes, _edit }) => {
 
   const { updateValue, values } = useContext(FormContext)
 
   const value = useMemo(() => recursionGetValue(name, values), [name, values])
-
 
   // 添加行
   const addRow = useCallback(() => {
@@ -31,7 +39,7 @@ const ArrayTwo = ({ children, name, _childNodes, _edit }) => {
   const showChild = _childNodes.filter(item => !item.child?.[0]?.hidden)
 
   const actionWidth = useMemo(() => 100, [])
-  const newValue = useMemo(() => _edit ? [{}] : value, [_edit, value])
+  const newValue = useMemo(() => _edit ? [{}] : value || [], [_edit, value])
 
   return <ScrollView className='form-array-two' scrollX>
     {
@@ -55,7 +63,7 @@ const ArrayTwo = ({ children, name, _childNodes, _edit }) => {
           </View>
           {
             newValue.map((item, index) => <View key={'item' + index} className='form-array-two__main'>
-              {children({ nodes: showChild })}
+              {children({ nodes: getLineNodeData(showChild, index) })}
               <View className='form-array-two__main__action' style={{ width: Taro.pxTransform(actionWidth) }}>
                 <Icon name='guanbi2' onClick={() => delRow(index)} />
               </View>
@@ -83,7 +91,7 @@ const ArrayTwo = ({ children, name, _childNodes, _edit }) => {
 
 ArrayTwo.designConfig = {
   childFunc: true,
-  defaultValue: () => ([]),
+  defaultValue: () => [],
   isForm: true,
   // 当前子组件发生更新时更新我
   childForceUpdateSelf: true
@@ -92,8 +100,6 @@ ArrayTwo.designConfig = {
 const ArrayTowItem = ({ children, _edit, _childNodes, ...props }) => {
   return <View {...props}>{children}</View>
 }
-
-export default ArrayTwo
 
 export {
   ArrayTwo,

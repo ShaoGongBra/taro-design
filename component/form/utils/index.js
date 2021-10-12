@@ -1,4 +1,20 @@
-import { componentList } from '../../../design'
+import { componentList } from '../../../render'
+
+/**
+ * 获取单个表单的默认值
+ * @param {*} item
+ * @returns
+ */
+export const getFormItemDefaultValue = item => {
+  const config = componentList[item.nodeName]?.designConfig
+  const defaultValue = config?.defaultValue
+  if (typeof defaultValue === 'function') {
+    return defaultValue(item)
+  } else if (typeof defaultValue !== 'undefined') {
+    return defaultValue
+  }
+  return ''
+}
 
 /**
  * 获取表单的默认值
@@ -8,16 +24,19 @@ import { componentList } from '../../../design'
 const getFormDefaultValue = (form, value = {}) => {
   for (let i = 0, l = form.length; i < l; i++) {
     const item = form[i]
-    const config = componentList[item.nodeName]?.Item?.designConfig
-    if (item.name !== undefined && value[item.name] !== undefined) {
+    const config = componentList[item.nodeName]?.designConfig
+    const name = typeof item.name === 'object' ? item.name[item.name.length - 1] : typeof item.name === 'undefined' ? void 0 : item.name
+    if (name !== undefined && value[name] !== undefined) {
       continue
     }
     if (config?.isForm) {
       const defaultValue = config?.defaultValue
       if (typeof defaultValue === 'function') {
-        value[item.name] = defaultValue(item)
+        value[name] = defaultValue(item)
       } else if (typeof defaultValue !== 'undefined') {
-        value[item.name] = defaultValue
+        value[name] = defaultValue
+      } else {
+        value[name] = ''
       }
     }
     // 不是表单 去找子组件是否有表单
@@ -25,8 +44,8 @@ const getFormDefaultValue = (form, value = {}) => {
       getFormDefaultValue(item.child, value)
     }
     // 是一个对象表单 给对象的内容赋值
-    if (item.child && config?.isForm && typeof value[item.name] === 'objact' && !Array.isArray(value[item.name])) {
-      getFormDefaultValue(item.child, value[item.name])
+    if (item.child && config?.isForm && typeof value[name] === 'objact' && !Array.isArray(value[name])) {
+      getFormDefaultValue(item.child, value[name])
     }
   }
   return value

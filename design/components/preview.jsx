@@ -9,7 +9,7 @@ import './preview.scss'
 
 export default () => {
 
-  const { nodes, config, setPreview } = useContext(Context)
+  const { nodes, setPreview } = useContext(Context)
 
   const [previewPhone] = useState([
     { name: '手机', icon: 'shiwu-shouji', width: 480 },
@@ -17,9 +17,6 @@ export default () => {
     { name: '电脑', icon: 'dianshi', width: 1280 }
   ])
   const [previewPhoneHover, setPreviewPhoneHover] = useState(0)
-
-  // 全局配置
-  const currentConfig = useMemo(() => ({ ...config, edit: false }), [config])
 
   // 组件页面
   const page = useMemo(() => currentPage() + '/preview', [])
@@ -40,9 +37,7 @@ export default () => {
       <View
         className='mobile'
         style={styled.styleTransform({
-          style: {
-            width: previewPhone[previewPhoneHover].width
-          }
+          width: previewPhone[previewPhoneHover].width
         }).style}
       >
         <TopView pageUrl={page}>

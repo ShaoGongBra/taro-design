@@ -1,4 +1,4 @@
-export { default as ComponentItem, defineComponent, defineComponents, isComponent } from './ComponentItem'
+export { default as ComponentItem, componentList, defineComponent, defineComponents, isComponent } from './ComponentItem'
 export { default as Create } from './Create'
 
 export { default as styled, styleType, styleConfig } from './util/styled'

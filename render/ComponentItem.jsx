@@ -5,7 +5,7 @@ import CreateDefault from './Create'
 /**
  * 组件索引
  */
-export const component = {}
+export const componentList = {}
 
 export default class ComponentItem extends Component {
 
@@ -15,8 +15,8 @@ export default class ComponentItem extends Component {
       attr.forceUpdate = () => {
         this.forceUpdate()
         const { parentNode } = this.props
-        const Item = component[attr.nodeName]
-        const parentItem = component[parentNode.nodeName]
+        const Item = componentList[attr.nodeName]
+        const parentItem = componentList[parentNode.nodeName]
         // 让父组件更新
         // 在当前组件定义 parentForceUpdate 或者在父组件定义 childForceUpdateSelf
         if (Item?.designConfig?.parentForceUpdate || parentItem?.designConfig?.childForceUpdateSelf) {
@@ -48,7 +48,7 @@ export default class ComponentItem extends Component {
       return null
     }
 
-    const Item = component[nodeName]
+    const Item = componentList[nodeName]
 
     if (!Item) {
       console.log(nodeName + ' 组件未定义')
@@ -80,7 +80,7 @@ export default class ComponentItem extends Component {
  * 是不是一个合法的节点
  * @param {*} nodeName
  */
-export const isComponent = nodeName => !!component[nodeName]
+export const isComponent = nodeName => !!componentList[nodeName]
 
 /**
  * 定义一个组件
@@ -88,7 +88,7 @@ export const isComponent = nodeName => !!component[nodeName]
  * @param {Component} value 组件
  */
 export const defineComponent = (key, value) => {
-  component[key] = value
+  componentList[key] = value
 }
 
 /**
@@ -98,7 +98,7 @@ export const defineComponent = (key, value) => {
 export const defineComponents = (data) => {
   for (const key in data) {
     if (Object.hasOwnProperty.call(data, key)) {
-      component[key] = data[key]
+      componentList[key] = data[key]
     }
   }
 }

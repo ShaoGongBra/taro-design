@@ -232,6 +232,11 @@ const Item = React.memo(({
             : index + 1
       )
 
+      if(insertPos === 'insert' && !currentUnfold){
+        unfold()
+      }
+
+
       // 不同类型操作
       if (type === EditTypes.FORM_MOVE_NODE) {
         moveNode(item.position, pos)

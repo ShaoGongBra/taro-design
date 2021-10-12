@@ -100,7 +100,7 @@ export default class FormComponent extends Component {
       })
     }
     resetName()
-    console.log(child)
+
     this.setState({
       nodes: child,
       values: getFormDefaultValue(child, defaultValues),

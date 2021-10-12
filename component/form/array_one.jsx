@@ -2,11 +2,11 @@ import React, { useCallback, useMemo, useContext } from 'react'
 import { View, Text } from '@tarojs/components'
 import { getKey, recursionGetValue } from 'taro-tools'
 import { Icon } from '../base'
-import { getFormDefaultValue } from './utils'
+import { getFormItemDefaultValue } from './utils'
 import { FormContext } from './form'
 import './array_one.scss'
 
-const ArrayOne = ({ children, name, _childNodes, _edit, ...attr }) => {
+const ArrayOne = ({ children, name, _childNodes, _edit, style }) => {
 
   const { updateValue, values } = useContext(FormContext)
 
@@ -17,8 +17,7 @@ const ArrayOne = ({ children, name, _childNodes, _edit, ...attr }) => {
     if (_childNodes.length === 0) {
       return
     }
-    const [item] = _childNodes
-    value.push(getFormDefaultValue(_childNodes)[item.name])
+    value.push(getFormItemDefaultValue(_childNodes[0]))
     updateValue(name, [...value])
   }, [updateValue, name, value, _childNodes])
 
@@ -47,7 +46,7 @@ const ArrayOne = ({ children, name, _childNodes, _edit, ...attr }) => {
   }, [_childNodes, name, value, _edit])
 
   return !_edit
-    ? <View style={attr.style}>
+    ? <View style={style}>
       <View className='form-array-one__form'>
         <View className='form-array-one__create'>
           {children({ nodes })}
@@ -69,10 +68,8 @@ const ArrayOne = ({ children, name, _childNodes, _edit, ...attr }) => {
 
 ArrayOne.designConfig = {
   childFunc: true,
-  defaultValue: () => ([]),
-  isForm: true,
-  // 当前子组件发生更新时更新我
-  childForceUpdateSelf: true
+  defaultValue: () => [],
+  isForm: true
 }
 
 export default ArrayOne

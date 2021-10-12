@@ -32,7 +32,58 @@ const Edit = ({
   style
 }) => {
 
-  const [nodes, setNodes] = useState([])
+  const [nodes, setNodes] = useState([
+    {
+      itemStyle: {},
+      textStyle: {},
+      tipStyle: {},
+      nodeName: "form",
+      key: "1634023174729790330",
+      child: [
+        {
+          key: "1634023176492149877",
+          name: "array-two_1",
+          text: "二维数组",
+          tip: "",
+          disabled: false,
+          child: [
+            {
+              child: [
+                {
+                  key: "1634023183495745868",
+                  name: "switch_2",
+                  text: "开关",
+                  tip: "",
+                  disabled: false,
+                  verify: {
+                    required: false,
+                    reg: [],
+                    lenType: "",
+                    len: 0,
+                    lenMin: 0,
+                    lenMax: 0,
+                    emptyMsg: "",
+                    errMsg: "",
+                    lengthErrMsg: ""
+                  },
+                  nodeName: "switch",
+                  child: []
+                }
+              ],
+              style: {
+                width: 150
+              },
+              text: "项目",
+              tip: "",
+              nodeName: "array-two-item",
+              key: "1634023180707193"
+            }
+          ],
+          nodeName: "array-two"
+        }
+      ]
+    }
+  ])
   // 选中的表单
   const [hover, setHover] = useState(void 0)
   // 选中的表单Key
