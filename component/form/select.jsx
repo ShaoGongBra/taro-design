@@ -97,7 +97,7 @@ const renderItems = {
   color: RenderColor
 }
 
-const RenderOption = ({ onlySelect, data = {}, value, onInput }) => {
+const RenderOption = ({ onlySelect, data = {}, value = [], onInput }) => {
   if (!data.option) {
     data.option = []
   }
