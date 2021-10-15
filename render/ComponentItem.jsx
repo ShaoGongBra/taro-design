@@ -42,7 +42,7 @@ export default class ComponentItem extends Component {
 
   render() {
     const { attr, Create = CreateDefault, parentNode, edit = false } = this.props
-    const { hidden, nodeName, child, style, ...otherItem } = attr
+    const { hidden, nodeName, child, style, key, ...otherItem } = attr
 
     if (hidden) {
       return null
@@ -57,7 +57,7 @@ export default class ComponentItem extends Component {
 
     const { style: styleRes, className } = styled.styleTransform(style, true)
 
-    return <Item {...otherItem} style={styleRes} className={className} _childNodes={child} _parentNode={parentNode} _edit={edit}>
+    return <Item {...otherItem} style={styleRes} className={className} _key={key} _childNodes={child} _parentNode={parentNode} _edit={edit}>
       {(child && child.length > 0 || Item.designConfig?.childFunc) && (
         Item.designConfig?.childFunc ?
           ((slotProps = {}) => (child || slotProps.nodes) && <Create

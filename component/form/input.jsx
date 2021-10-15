@@ -6,7 +6,7 @@ import { Icon } from '../base'
 import { FormContext } from './form'
 import './input.scss'
 
-const InputForm = ({ name, _edit, key, multiline, ...attr }) => {
+const InputForm = ({ name, _edit, _key, multiline, ...attr }) => {
 
   const { updateValue, checkVerify, values } = useContext(FormContext)
 
@@ -17,8 +17,8 @@ const InputForm = ({ name, _edit, key, multiline, ...attr }) => {
   }, [updateValue, name])
 
   const blur = useCallback(() => {
-    checkVerify(key)
-  }, [checkVerify, key])
+    checkVerify(_key)
+  }, [checkVerify, _key])
 
   return <View className='form-input'>
     {!!attr.leftIcon && attr.leftIcon.length > 0 && <Icon name={attr.leftIcon} size={36} style={{ marginRight: Taro.pxTransform(10) }} />}

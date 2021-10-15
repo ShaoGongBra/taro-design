@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useCallback, useEffect, useState, useRef } from 'react'
-import { ScrollView, TopView } from '../../component'
 import { currentPage } from 'taro-tools'
+import { ScrollView, TopView } from '../../component'
 import Context from '../util/context'
 import { PageUrlContext, Create } from '../../render'
 import Form from '../attrForm/form'
@@ -19,19 +19,32 @@ export default () => {
     setNodeData(hover?.key, value)
   }, [hover, setNodeData])
 
+  const updateValue = useCallback(({ values }) => {
+    setNodeData(hover?.key, values)
+  }, [hover, setNodeData])
+
   /**
    * 获取编辑表单
    */
   const getEditForm = useCallback(() => {
     if (hover) {
       const data = comp.getEditForm(hover.nodeName)
-      setForm(data.form)
+
       const value = { ...hover }
       delete value.child
       delete value.parentNode
+      delete value.forceUpdate
+      delete value.key
+      delete value.nodeName
+      // 绑定节点事件和表单值
+      const [formNode] = data.form
+      formNode.onUpdateValue = updateValue
+      formNode.defaultValues = value
+
+      setForm(data.form)
       setFormValue(value)
     }
-  }, [hover])
+  }, [hover, updateValue])
 
 
 

@@ -113,7 +113,6 @@ export default {
       }
     },
     form() {
-      const key = getKey()
       return commonForm([
         FormCreate.input('选择类型', 'type', 'select', [{ text: '单选', value: 'radio' }, { text: '多选', value: 'checkbox' }]),
         FormCreate.input('是否弹出', 'mode', 'select', [{ text: '直接展示', value: 'show' }, { text: '弹出展示', value: 'picker' }]),
@@ -124,16 +123,19 @@ export default {
           { text: '图片', value: 'image', image: '' },
           { text: '颜色', value: 'color', image: '' }
         ]),
-        // nodeCreate('array-two', {
-        //   style: { flexDirection: 'column', alignItems: 'stretch' },
-        //   compTextStyle: { textAlign: 'left' }
-        // }, [
-        //   FormCreate.init('input', '文本', 'text').option({ parentAttr: { style: { width: 200 } } }).where(key, '!=', 'color').get(),
-        //   FormCreate.init('input', '值', 'value').option({ parentAttr: { style: { width: 150 } } }).get(),
-        //   FormCreate.init('upload', '图片', 'image').option({ parentAttr: { style: { width: 200 } }, max: 1, type: 'media', mediaType: 'image' }).where(key, '==', ['card', 'image', 'button']).get(),
-        //   FormCreate.init('input', '描述', 'desc').option({ parentAttr: { style: { width: 200 } } }).where(key, '==', ['card', 'text', 'image']).get(),
-        //   FormCreate.init('color', '颜色', 'color').option({ parentAttr: { style: { width: 200 } } }).where(key, '==', 'color').get()
-        // ])
+        nodeCreate('view', {
+          style: { padding: 20 }
+        }, nodeCreate('array-two', {
+          style: { flexDirection: 'column', alignItems: 'stretch' },
+          compTextStyle: { textAlign: 'left' },
+          name: 'option'
+        }, [
+          nodeCreate('array-two-item', { text: '文本', style: { width: 200 } }, nodeCreate('input', { name: 'text' })),
+          nodeCreate('array-two-item', { text: '值', style: { width: 200 } }, nodeCreate('input', { name: 'value' })),
+          nodeCreate('array-two-item', { text: '图片', style: { width: 200 } }, nodeCreate('input', { name: 'image' })),
+          nodeCreate('array-two-item', { text: '描述', style: { width: 200 } }, nodeCreate('input', { name: 'desc' })),
+          nodeCreate('array-two-item', { text: '颜色', style: { width: 200 } }, nodeCreate('color', { name: 'color' }))
+        ]))
       ])
 
       // const key = getKey()

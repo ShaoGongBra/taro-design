@@ -1,6 +1,7 @@
 import React, { Component, useContext } from 'react'
 import { View, Text } from '@tarojs/components'
 import { verify, recursionSetValue, recursionGetValue, deepCopy } from 'taro-tools'
+import {componentList} from '../../render'
 import { chechWhere, getFormDefaultValue } from './utils'
 
 import './form.scss'
@@ -13,7 +14,12 @@ export const FormContext = React.createContext({
   // 验证字段
   checkVerify: noop,
   // 表单提交
-  submit: noop
+  submit: noop,
+  // 表单value
+  values: {},
+  itemStyle: {},
+  textStyle: {},
+  tipStyle: {}
 })
 
 export default class FormComponent extends Component {
@@ -88,8 +94,9 @@ export default class FormComponent extends Component {
     // 重置子组件表单的name
     const resetName = (nodes = child, names = []) => {
       nodes.forEach(item => {
+        const Item = componentList[item.nodeName]
         const currentName = item.name
-        if (currentName && typeof item.name === 'string') {
+        if (Item?.designConfig?.isForm && currentName && typeof item.name === 'string') {
           if (names.length) {
             item.name = [...names, currentName]
           }
@@ -198,6 +205,7 @@ export default class FormComponent extends Component {
    * @param {string} key 要检查的表单的key
    */
   checkVerify = key => {
+    return
     const { nodes } = this.state
     const compItem = this.getKeyComp(key, nodes)
     if (!compItem.verify || !compItem.verify.open) {
@@ -236,19 +244,27 @@ export default class FormComponent extends Component {
   updateValue = (name, value) => {
     const { values } = this.state
     recursionSetValue(name, values, value)
+    const newValues = { ...values }
+    this.props.onUpdateValue?.({
+      name,
+      value,
+      values: newValues
+    })
     this.setState({
-      values: { ...values }
+      values: newValues
     })
   }
-
-  // 表单验证
-
 
   /**
    * 表单提交
    */
   submit = () => {
-
+    const { values } = this.state
+    if (this.props.onSubmit) {
+      this.props.onSubmit(values)
+    } else {
+      // 使用默认设置
+    }
   }
 
   getContextData() {

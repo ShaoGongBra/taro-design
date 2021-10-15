@@ -125,16 +125,7 @@ export default {
    */
   getEditForm(nodeName) {
     const item = componentList[nodeName]
-    const form = item.form ? item.form() : []
-    // 判断子是否在一下有子属性的表单里面 添加这个属性
-    // if (parentNodeName) {
-    //   const parent = componentList[parentNodeName]
-    //   if (parent.child?.form) {
-    //     form.push(Create.init('panel').panel('子节点属性').child([
-    //       Create.init('object', '', 'parentAttr').child(parent.child.form()).get()
-    //     ]).get())
-    //   }
-    // }
+    const form = item.form?.() || []
     return { form, text: item.text }
   },
 

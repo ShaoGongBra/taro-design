@@ -222,10 +222,16 @@ export const getBaseAttrForm = (styles, attr) => {
 
   return [
     {
-      nodeName: 'edit-tab',
-      position: 'top',
+      nodeName: 'form',
       key: getKey(),
-      child: tabs
+      child: [
+        {
+          nodeName: 'edit-tab',
+          position: 'top',
+          key: getKey(),
+          child: tabs
+        }
+      ]
     }
   ]
 }
