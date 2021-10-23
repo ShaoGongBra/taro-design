@@ -43,6 +43,9 @@ export default () => {
 
       setForm(data.form)
       setFormValue(value)
+    } else {
+      setForm([])
+      setFormValue({})
     }
   }, [hover, updateValue])
 

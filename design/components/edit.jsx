@@ -102,6 +102,8 @@ const Edit = ({
       // 删除
       key1.getNode(nodes).child.splice(key1.index, 1)
       setNodes([...nodes])
+      setHover(void 0)
+      setHoverKey(void 0)
     } else if (key1 instanceof NodePosition && key2 === '__copy__') {
       // 复制
       let item = key1.getIndexNode(nodes)

@@ -59,6 +59,7 @@ const List = ({ srarchKey }) => {
   const listRef = useRef([])
 
   useEffect(() => {
+    setPage(1)
     setKeyword(srarchKey)
   }, [srarchKey])
 
@@ -141,6 +142,7 @@ const Project = ({ setTempKeyword, setHover }) => {
   }, [keyword, page])
 
   const search = useCallback(e => {
+    setPage(1)
     setKeyword(e.detail.value)
   }, [])
 
@@ -154,28 +156,32 @@ const Project = ({ setTempKeyword, setHover }) => {
       <Icon name='sousuo2' />
       <Input value={keyword} placeholder='项目搜索' onInput={search} />
     </View>
-    {
-      list.map(item => <View
-        key={item.id}
-        className='temp-list-project__item'
-        onClick={() => {
-          setTempKeyword('project:' + item.id)
-          setHover(0)
-        }}
-      >
-        <Text className='temp-list-project__item__name'>{item.name} <Text className='temp-list-project__item__count'>{item.count}</Text></Text>
-        <View className='temp-list-project__item__bottom'>
-          <View className='temp-list-project__item__tips'>
-            {item.public === 1 && <Text className='temp-list-project__item__public'>公开</Text>}
-            {item.self && <Text className='temp-list-project__item__public'>我的</Text>}
+    <ScrollView
+      onScrollToLower={() => setPage(page + 1)}
+    >
+      {
+        list.map(item => <View
+          key={item.id}
+          className='temp-list-project__item'
+          onClick={() => {
+            setTempKeyword('project:' + item.id)
+            setHover(0)
+          }}
+        >
+          <Text className='temp-list-project__item__name'>{item.name} <Text className='temp-list-project__item__count'>{item.count}</Text></Text>
+          <View className='temp-list-project__item__bottom'>
+            <View className='temp-list-project__item__tips'>
+              {item.public === 1 && <Text className='temp-list-project__item__public'>公开</Text>}
+              {item.self && <Text className='temp-list-project__item__public'>我的</Text>}
+            </View>
+            <Text className='temp-list-project__item__user' onClick={userSearch.bind(null, item.user_id)}>
+              {item.username}
+              <Icon name='you2' size={24} color='#999' />
+            </Text>
           </View>
-          <Text className='temp-list-project__item__user' onClick={userSearch.bind(null, item.user_id)}>
-            {item.username}
-            <Icon name='you2' size={24} color='#999' />
-          </Text>
-        </View>
-      </View>)
-    }
+        </View>)
+      }
+    </ScrollView>
   </View>
 }
 
