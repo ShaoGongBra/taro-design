@@ -133,15 +133,15 @@ export default {
    * 复制一个节点
    * @param {array}} form 要复制的节点
    */
-  copyNodes(form) {
-    if (!(form instanceof Object)) return form //如果不是对象的话直接返回
-    const target = Array.isArray(form) ? [] : {} //数组兼容
-    for (const k in form) {
-      if (form.hasOwnProperty(k)) {
-        if (typeof form[k] === 'object') {
-          target[k] = this.copyNodes(form[k])
+  copyNodes(node) {
+    if (!(node instanceof Object)) return node //如果不是对象的话直接返回
+    const target = Array.isArray(node) ? [] : {} //数组兼容
+    for (const k in node) {
+      if (node.hasOwnProperty(k)) {
+        if (typeof node[k] === 'object') {
+          target[k] = this.copyNodes(node[k])
         } else {
-          target[k] = form[k]
+          target[k] = node[k]
         }
       }
     }
@@ -151,6 +151,9 @@ export default {
       // if (target.name) {
       //   target.name = target.nodeName + '_' + getNameIndex()
       // }
+      if (target.forceUpdate) {
+        delete target.forceUpdate
+      }
     }
     return target
   },

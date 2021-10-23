@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import { View, ScrollView } from '@tarojs/components'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { toast } from 'taro-tools'
+import { deepCopy, toast } from 'taro-tools'
 import Template from '../template';
 import Create from './create'
 import Attr from './attr'
@@ -14,7 +14,6 @@ import Del from './del'
 import Hover from './hover'
 
 import comp from '../util/comp'
-import testData from '../util/testData'
 import { isComponent, querySelectByKey, querySelectByKeyOriginal, styled } from '../../render'
 import Context from '../util/context'
 import { NodePosition } from '../util/edit'
@@ -23,16 +22,10 @@ import EditTypes from '../util/editTypes'
 import '../attrForm'
 import './edit.scss'
 
-
-/**
- * 标记组件是否正在更新 正在更新则不更新新的数据，方式数据错乱
- */
-let listUpdate = false
-
 const Edit = ({
   style,
   template = true,
-  nodes: defaultNodes = []
+  defaultNodes = []
 }) => {
 
   const [nodes, setNodes] = useState(defaultNodes)
@@ -46,10 +39,6 @@ const Edit = ({
   const [preview, setPreview] = useState(false)
   // 导出json
   const [showJson, setShowJson] = useState(false)
-
-  useEffect(() => {
-    listUpdate = false
-  }, [nodes])
 
   // 设置节点数据
   const setNodeData = useCallback((id, data) => {
@@ -81,7 +70,7 @@ const Edit = ({
       // 插入模板
       const currentForm = key2.getNode(nodes)
       comp.copyNodes(key1).forEach(item => {
-        if (!currentForm) {
+        if (currentForm.nodeName === 'root') {
           // 添加到根节点
           nodes.push(item)
         } else if (comp.isChildAdd(currentForm.nodeName, currentForm.child.length) && !comp.isChildDisable(currentForm.nodeName, item.nodeName)) {
@@ -94,10 +83,9 @@ const Edit = ({
       setNodes([...nodes])
     } else if (key1 instanceof NodePosition && key2 instanceof NodePosition) {
       // 排序
-      if (listUpdate || key1.toString() === key2.toString()) {
+      if (key1.toString() === key2.toString()) {
         return
       }
-      listUpdate = true
       const node1 = key1.getNode(nodes)
       const node2 = key2.getNode(nodes)
 
@@ -108,7 +96,6 @@ const Edit = ({
         // 前面的拖动到后面需要 -1
         key2.index--
       }
-      delete node1.parentNode
       node2.child.splice(key2.index, 0, node)
       setNodes([...nodes])
     } else if (key1 instanceof NodePosition && !key2) {

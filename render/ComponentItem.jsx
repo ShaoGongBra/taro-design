@@ -7,29 +7,34 @@ import CreateDefault from './Create'
  */
 export const componentList = {}
 
+/**
+ * 组件更新函数
+ * @param {*} attr
+ */
+const compUpdate = function (attr) {
+  this.forceUpdate()
+  const { parentNode } = this.props
+  const Item = componentList[attr.nodeName]
+  const parentItem = componentList[parentNode?.nodeName]
+  // 让父组件更新
+  // 在当前组件定义 parentForceUpdate 或者在父组件定义 childForceUpdateSelf
+  if (Item?.designConfig?.parentForceUpdate || parentItem?.designConfig?.childForceUpdateSelf) {
+    parentNode?.forceUpdate?.()
+  }
+
+  // 让子组件更新
+  if (Item?.designConfig?.childForceUpdate) {
+    const { child } = attr
+    child.forEach(item => item.forceUpdate?.())
+  }
+}
+
 export default class ComponentItem extends Component {
 
   componentDidMount() {
     const { attr } = this.props
     if (!attr.forceUpdate) {
-      attr.forceUpdate = () => {
-        this.forceUpdate()
-        const { parentNode } = this.props
-        const Item = componentList[attr.nodeName]
-        const parentItem = componentList[parentNode.nodeName]
-        // 让父组件更新
-        // 在当前组件定义 parentForceUpdate 或者在父组件定义 childForceUpdateSelf
-        if (Item?.designConfig?.parentForceUpdate || parentItem?.designConfig?.childForceUpdateSelf) {
-          parentNode?.forceUpdate?.()
-        }
-
-        // 让子组件更新
-        if (Item?.designConfig?.childForceUpdate) {
-          const { child } = attr
-          child.forEach(item => item.forceUpdate?.())
-        }
-
-      }
+      attr.forceUpdate = () => compUpdate.call(this, attr)
     }
   }
 

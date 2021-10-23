@@ -210,14 +210,13 @@ const Item = ({ index, item: currentItem, Create, parentNode }) => {
 export default class Create extends BaseCreate {
 
   render() {
-    const { nodes = [], compName = 'root', parentNode = { key: '__root__', nodeName: 'root', child: nodes } } = this.props
+    const { nodes = [], parentNode = { key: '__root__', nodeName: 'root', child: nodes } } = this.props
     return nodes.map((item, index) => <Item
       key={item.key}
       item={item}
       index={index}
       parentNode={parentNode}
       Create={Create}
-      compName={compName}
       listLength={nodes.length}
     />)
   }

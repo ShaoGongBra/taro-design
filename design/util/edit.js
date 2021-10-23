@@ -1,4 +1,4 @@
-import { querySelectByKey } from "../../render"
+import { querySelectByKeyOriginal } from "../../render"
 
 /**
  * 节点位置信息类
@@ -15,11 +15,11 @@ export class NodePosition {
   }
 
   getNode(nodes) {
-    return querySelectByKey(nodes, this.key)
+    return querySelectByKeyOriginal(nodes, this.key)
   }
 
   getIndexNode(nodes) {
-    return querySelectByKey(nodes, this.key)?.child?.[this.index]
+    return querySelectByKeyOriginal(nodes, this.key)?.child?.[this.index]
   }
 
   toString() {
