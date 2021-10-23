@@ -1,6 +1,6 @@
-import md5 from 'crypto-js/md5'
-
 import { request as oldRequest, searchQuick as oldSearchQuick } from 'taro-tools'
+import { userInfo } from './user'
+
 
 const config = {
   /**
@@ -9,7 +9,7 @@ const config = {
    */
   request: {
     // 请求域名及端口号 请勿以/结尾
-    origin: 'http://192.168.50.31',
+    origin: 'https://taro-design.platelet.xyz',
     // 公共请求路径
     path: 'api',
     /**
@@ -23,29 +23,10 @@ const config = {
      * 公共请求header
      * 可以传入函数或者对象 函数需要返回一个对象
      */
-    header: ({ url }) => {
-
-      const signString = [`url=${url}`]
-
-
-      // 时间戳
-      const timestamp = Date.now() / 1000 | 0
-      signString.push(`timestamp=${timestamp}`)
-
-      // SECRET_KEY
-      signString.push('key=jjpR3m8Gh46kZ9nJd6fAQK8Iedvvq1iQ')
-
-      // 用户tokan
-      const { token } = global.userInfo
-
+    header: () => {
       const header = {
         Accept: 'application/json',
-        'Content-MD5': md5(signString.join('&')).toString().toUpperCase(),
-        'Content-Date': timestamp.toString(),
-        AccessKey: '20388049'
-      }
-      if (token) {
-        header.Authorization = 'Bearer ' + token
+        Token: userInfo.get().token || ''
       }
       return header
     },
@@ -75,24 +56,24 @@ const config = {
      * 成功的code
      * code对不上，请求将会走catch方法
      */
-    succesCode: 200,
+    succesCode: 1,
     /**
      * 请求失败的标准code
      * 这个code将用于内部使用
      */
-    errorCode: 500,
+    errorCode: 0,
     /**
      * 返回值获取code字段
      * 多级请用数组表示
      * 可以传入函数处理数据
      */
-    code: 'statusCode',
+    code: ['data', 'code'],
     /**
      * 返回值获取提示信息的字段
      * 多级请用数组表示
      * 可以传入函数处理数据
      */
-    message: ['data', 'message'],
+    message: ['data', 'msg'],
     /**
      * 要返回到请求结果的字段
      * 当code对比成功时返回此值
@@ -100,18 +81,6 @@ const config = {
      * 可以传入函数处理数据
      */
     data: ['data', 'data'],
-  },
-  /**
-   * 上传配置
-   * 上传的请求头将强制设置为 文件流
-   */
-  upload: {
-    // 上传api api后可以携带参数
-    api: 'member/Upload/index',
-    // 上传文件时的字段名
-    requestField: 'file',
-    // 返回值的图片路径的url 如果有多级可以配置数组 如[0, url]
-    resultField: ['data', 'result', 0, 'url'],
   }
 }
 

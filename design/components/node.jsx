@@ -3,10 +3,9 @@ import { View, Text, Input } from '@tarojs/components'
 import classNames from 'classnames'
 import { useDrag, useDrop } from 'react-dnd'
 import { stopPropagation } from 'taro-tools'
-import { TopView } from '../../component'
-import TemplateAdd from '../template/add'
 import EditTypes from '../util/editTypes'
 import { openMenu } from '../util/util'
+import { addTemplate } from '../template/utils'
 import comp from '../util/comp'
 import Context, { NodeContext } from '../util/context'
 import { NodePosition } from '../util/edit'
@@ -67,10 +66,9 @@ const Item = React.memo(({
     moveNode(new NodePosition(currentItem.key, currentItem.child?.length || 0), '__paste__')
   }, [moveNode, currentItem.child, currentItem.key])
 
-  const addKey = useRef(null)
   // 添加模板
   const add = useCallback(() => {
-    addKey.current = TopView.add(<TemplateAdd nodes={currentItem} onClose={() => TopView.remove(addKey.current)} />)
+    addTemplate(currentItem).catch(() => { })
   }, [currentItem])
 
   // 显示右键菜单
@@ -232,7 +230,7 @@ const Item = React.memo(({
             : index + 1
       )
 
-      if(insertPos === 'insert' && !currentUnfold){
+      if (insertPos === 'insert' && !currentUnfold) {
         unfold()
       }
 

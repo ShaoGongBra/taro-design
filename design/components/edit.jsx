@@ -4,6 +4,7 @@ import { View, ScrollView } from '@tarojs/components'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { toast } from 'taro-tools'
+import Template from '../template';
 import Create from './create'
 import Attr from './attr'
 import Preview from './preview'
@@ -29,10 +30,12 @@ import './edit.scss'
 let listUpdate = false
 
 const Edit = ({
-  style
+  style,
+  template = true,
+  nodes: defaultNodes = []
 }) => {
 
-  const [nodes, setNodes] = useState([])
+  const [nodes, setNodes] = useState(defaultNodes)
   // 选中的表单
   const [hover, setHover] = useState(void 0)
   // 选中的表单Key
@@ -219,6 +222,7 @@ const Edit = ({
       {preview && <Preview />}
       {showJson && <Json />}
       <Del />
+      {template && <Template />}
     </View>
   </Context.Provider>
 }

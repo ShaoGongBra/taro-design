@@ -1,0 +1,29 @@
+.template-auth {
+  width: 400px;
+  background-color: #fff;
+  &__head {
+    flex-direction: row;
+    padding: 10px 25px;
+    justify-content: space-between;
+    border-bottom: 1px solid #f2f2f2;
+    align-items: center;
+    &__title {
+      font-size: 26px;
+    }
+  }
+  &__login {
+    padding: 30px;
+    &__input {
+      font-size: 24px;
+      margin-bottom: 20px;
+      padding: 10px;
+      border-bottom: 1px solid #f2f2f2;
+    }
+    &__reg {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 24px;
+      color: #666;
+    }
+  }
+}
