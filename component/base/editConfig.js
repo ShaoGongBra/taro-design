@@ -27,7 +27,8 @@ export default {
     attr() {
       return {
         style: {},
-        text: '文本内容'
+        text: '文本内容',
+        numberOfLines: ''
       }
     },
     form() {
@@ -36,7 +37,17 @@ export default {
         name: 'style',
         styles: styleNode.text
       }, [
-        FormCreate.input('文本内容', 'text', 'textarea')
+        FormCreate.input('文本内容', 'text', 'textarea'),
+        FormCreate.input('溢出隐藏', 'numberOfLines', 'select', [
+          { text: '不隐藏', value: '' },
+          { text: '1行', value: 1 },
+          { text: '2行', value: 2 },
+          { text: '3行', value: 3 },
+          { text: '4行', value: 4 },
+          { text: '5行', value: 5 },
+          { text: '10行', value: 10 },
+          { text: '20行', value: 20 }
+        ])
       ])
     }
   },

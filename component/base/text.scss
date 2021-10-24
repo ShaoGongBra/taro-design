@@ -1,0 +1,18 @@
+/*postcss-pxtransform rn eject enable*/
+.number-of-lines {
+  //超出一行文字自动隐藏
+  overflow: hidden;
+  //文字隐藏后添加省略号
+  text-overflow: ellipsis;
+  //强制不换行
+  white-space: nowrap;
+  &--more {
+    display: -webkit-box;
+    overflow: hidden;
+
+    /*! autoprefixer: ignore next */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+  }
+}
+/*postcss-pxtransform rn eject disable*/

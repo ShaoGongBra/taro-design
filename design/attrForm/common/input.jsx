@@ -30,7 +30,10 @@ export default ({ name, text, type = 'text', option }) => {
     >
       {
         Array.isArray(option)
-          ? option.map(item => <option key={item.value || item} value={item.value || item}>{item.text || item}</option>)
+          ? option.map(item => {
+            const key = typeof item.value === 'undefined' ? item : item.value
+            return <option key={key} value={key}>{item.text || item}</option>
+          })
           : Object.keys(option).map(key => <option key={key} value={key}>{option[key]}</option>)
       }
     </select>}
