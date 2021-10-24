@@ -16,23 +16,32 @@ const Item = React.memo(({
   item: currentItem,
   index,
   parentNode,
-  level
+  level,
+  defaultUnfold
 }) => {
 
   const { nodes, selectNode, moveNode, setNodeData, hover } = useContext(Context)
 
-  const { isPut, setPut } = useContext(NodeContext)
+  // 是否是展开状态
+  const [unfold, setUnfold] = useState(defaultUnfold)
 
-  // 是否选中
-  const isSelect = useMemo(() => hover?.key === currentItem.key, [hover, currentItem.key])
+  // 是否选中 子元素选中，则当前元素也选中
+  const isSelect = useMemo(() => {
+    let hoverCopy = hover
+    while (hoverCopy) {
+      if (hoverCopy?.key === currentItem.key) {
+        return true
+      }
+      hoverCopy = hoverCopy?.parentNode
+    }
+    return false
+  }, [hover, currentItem.key])
 
   // 是否是最后一个并选中
-  const isLastSelect = useMemo(() => isSelect, [isSelect])
+  const isLastSelect = useMemo(() => hover?.key === currentItem.key, [hover, currentItem.key])
+
   // 是否有子元素
   const isChild = typeof currentItem.child === 'object' && currentItem.child.length > 0
-
-  // 是否是展开状态
-  const currentUnfold = useMemo(() => !isPut(currentItem.key), [isPut, currentItem.key])
 
   // 是不是根节点
   const isRoot = useMemo(() => currentItem.nodeName === 'root', [currentItem.nodeName])
@@ -41,10 +50,10 @@ const Item = React.memo(({
   const [insertPos, setInsertPos] = useState('')
 
   // 点击收起展开
-  const unfold = useCallback(e => {
-    setPut(currentItem.key)
+  const unfoldSwitch = useCallback(e => {
     stopPropagation(e)
-  }, [setPut, currentItem.key])
+    setUnfold(!unfold)
+  }, [unfold])
 
   // 点击选择表单
   const selectItem = useCallback(() => {
@@ -230,8 +239,8 @@ const Item = React.memo(({
             : index + 1
       )
 
-      if (insertPos === 'insert' && !currentUnfold) {
-        unfold()
+      if (insertPos === 'insert' && !unfold) {
+        unfoldSwitch()
       }
 
 
@@ -257,7 +266,7 @@ const Item = React.memo(({
     <View
       ref={ref}
       className={classNames('item', `level-${level}`, {
-        select: isLastSelect || (isSelect && !currentUnfold),
+        select: isLastSelect || (isSelect && !unfold),
         hover: isDragging,
         insert: over && insertPos === 'insert'
       })}
@@ -265,8 +274,8 @@ const Item = React.memo(({
       onContextmenu={showMenu}
     >
       <Text
-        className={classNames('icon', 'icon-you2', { hide: !isChild, unfold: currentUnfold })}
-        onClick={unfold}
+        className={classNames('icon', 'icon-you2', { hide: !isChild, unfold })}
+        onClick={unfoldSwitch}
       ></Text>
       {
         edit && isSelect
@@ -283,7 +292,7 @@ const Item = React.memo(({
       />}
     </View>
 
-    {isChild && currentUnfold && <List
+    {isChild && unfold && <List
       list={currentItem.child}
       parentNode={currentItem}
       level={level + 1}
@@ -305,39 +314,17 @@ export default () => {
 
   const { nodes, moveNode } = useContext(Context)
 
-  const [put, setPutData] = useState({
-    __root__: true
-  })
-
-  // 判断是否收起
-  const isPut = useCallback(key => !put[key], [put])
-
-  // 设置收起状态
-  const setPut = useCallback(key => {
-    put[key] = !put[key]
-    setPutData({ ...put })
-  }, [put])
-
-  const context = useMemo(() => ({
-    isPut,
-    setPut
-  }), [isPut, setPut])
-
   const rootProps = useMemo(() => ({
     item: {
       nodeName: 'root',
       key: '__root__',
-      child: {
-        length: nodes.length,
-        map() {
-          return []
-        }
-      }
+      child: nodes
     },
     index: 0,
     level: 0,
-    parentNode: {}
-  }), [nodes.length])
+    parentNode: {},
+    defaultUnfold: true
+  }), [nodes])
 
 
   const ref = useRef(null)
@@ -366,17 +353,11 @@ export default () => {
 
   drop(ref)
 
-  return <NodeContext.Provider value={context}>
-    <View className='nodes' ref={ref}>
-      <View className='scroll-root'>
-        <View className='scroll-main'>
-          <Item {...rootProps} />
-          {!isPut(rootProps.item.key) && <List
-            list={nodes}
-            parentNode={rootProps.item}
-          />}
-        </View>
+  return <View className='nodes' ref={ref}>
+    <View className='scroll-root'>
+      <View className='scroll-main'>
+        <Item {...rootProps} />
       </View>
     </View>
-  </NodeContext.Provider>
+  </View>
 }
