@@ -5,7 +5,6 @@ import { filterProps } from '../../render'
 import './text.scss'
 
 export default ({ text, className, style, numberOfLines, ...props }) => {
-  console.log(numberOfLines)
   return <Text
     numberOfLines={numberOfLines}
     className={classNames(className, numberOfLines == 1 ? 'number-of-lines' : numberOfLines > 1 ? 'number-of-lines--more' : '')}

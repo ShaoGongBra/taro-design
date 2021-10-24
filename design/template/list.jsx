@@ -14,6 +14,14 @@ const Item = ({ item, onCateSearch }) => {
 
   const { selectNode } = useContext(Context)
 
+  const [height, setHeight] = useState([0, 0])
+
+  const itemRef = useRef(null)
+
+  useEffect(() => {
+    setHeight(itemRef.current.offsetHeight)
+  }, [])
+
   const [, drag] = useDrag({
     type: EditTypes.TEMPLATE_ADD,
     item: () => {
@@ -37,12 +45,19 @@ const Item = ({ item, onCateSearch }) => {
   }, [item.components])
 
   return <View ref={drag} className='item'>
-    <Context.Provider value={{ config: {} }}>
-      <Create nodes={item.content} />
-    </Context.Provider>
     <View className='title'>
       <Text className='name'>{item.name}</Text>
       <Text className='cate' onClick={click}>{item.project_name}</Text>
+    </View>
+    <View
+      className='item__zoom'
+      style={{ height: (height * 0.5) + 'px' }}
+    >
+      <View ref={itemRef} className='item__zoom__pos'>
+        <Context.Provider value={{ config: {} }}>
+          <Create nodes={item.content} />
+        </Context.Provider>
+      </View>
     </View>
     {unInstallList.length > 0 && <Text className='uninstall'>此模板中的 {unInstallList.join(' ')} 组件在你的项目未注册</Text>}
   </View>
