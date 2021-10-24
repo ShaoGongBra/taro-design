@@ -6,7 +6,10 @@ import { colorToRgb, rgbToHexColor } from 'taro-tools'
  */
 export const styleType = {
   enum: 'enum',
+  // 尺寸
   size: 'size',
+  // 支持百分百比的尺寸
+  sizePercent: 'size-percent',
   number: 'number',
   color: 'color',
   string: 'string'
@@ -19,31 +22,31 @@ export const styleConfig = {
   // 基础
   width: {
     text: '宽',
-    type: styleType.size,
+    type: styleType.sizePercent,
   },
   height: {
     text: '高',
-    type: styleType.size,
+    type: styleType.sizePercent,
   },
 
   maxHeight: {
     text: '最大高度',
-    type: styleType.size,
+    type: styleType.sizePercent,
   },
 
   maxWidth: {
     text: '最大宽度',
-    type: styleType.size,
+    type: styleType.sizePercent,
   },
 
   minHeight: {
     text: '最小高度',
-    type: styleType.size,
+    type: styleType.sizePercent,
   },
 
   minWidth: {
     text: '最小宽度',
-    type: styleType.size,
+    type: styleType.sizePercent,
   },
 
   opacity: {
@@ -218,7 +221,7 @@ export const styleConfig = {
 
   left: {
     text: '左',
-    type: styleType.size,
+    type: styleType.sizePercent,
     valueClassName(val) {
       if (+val === 0) {
         return 'left-0'
@@ -227,7 +230,7 @@ export const styleConfig = {
   },
   right: {
     text: '右',
-    type: styleType.size,
+    type: styleType.sizePercent,
     valueClassName(val) {
       if (+val === 0) {
         return 'right-0'
@@ -236,7 +239,7 @@ export const styleConfig = {
   },
   top: {
     text: '上',
-    type: styleType.size,
+    type: styleType.sizePercent,
     valueClassName(val) {
       if (+val === 0) {
         return 'top-0'
@@ -245,7 +248,7 @@ export const styleConfig = {
   },
   bottom: {
     text: '下',
-    type: styleType.size,
+    type: styleType.sizePercent,
     valueClassName(val) {
       if (+val === 0) {
         return 'bottom-0'
@@ -526,7 +529,7 @@ export default {
   },
   // 判断名称是不是尺寸类型的Style  fontSize width height padding margin 等
   isSizeStyle(name) {
-    return !!styleConfig[name] && styleConfig[name].type === styleType.size
+    return !!styleConfig[name] && [styleType.size, styleType.sizePercent].includes(styleConfig[name].type)
   },
   // 判断value是不是默认值
   isDefaultStyleValue(name, value) {
@@ -568,7 +571,10 @@ export default {
       }
       // 转换数字类型样式为可识别的属性
       if (this.isSizeStyle(key)) {
-        style[key] = Taro.pxTransform(style[key])
+        const reg = /^\d{1,}%$/
+        if (typeof style[key] === 'number' || (typeof style[key] === 'string' && !reg.test(style[key]))) {
+          style[key] = Taro.pxTransform(style[key])
+        }
         continue
       }
     }

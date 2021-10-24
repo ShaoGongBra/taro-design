@@ -152,7 +152,7 @@ export default {
       return getBaseAttrForm({
         text: '样式',
         name: 'style',
-        styles: ['size', 'flex', 'backgroundColor', 'padding', 'border', 'borderRadius', 'opacity', 'position', 'overflow']
+        styles: ['width', 'height', 'backgroundColor', 'borderRadius', 'position', 'overflow']
       }, [
         FormCreate.switch('显示指示点', 'indicatorDots'),
         FormCreate.input('指示点颜色', 'indicatorColor', 'color'),
@@ -187,6 +187,14 @@ export default {
     nodeName: 'swiper-item',
     text: '幻灯片项',
     cate: componentCate.base,
+    // 在编辑模式下要加在 拖拽组件上的样式
+    designItemStyle() {
+      return {
+        width: '100%',
+        height: '100%',
+        position: 'absolute'
+      }
+    },
     attr() {
       return {
         child: [],
@@ -194,11 +202,7 @@ export default {
       }
     },
     form() {
-      return getBaseAttrForm({
-        text: '样式',
-        name: 'style',
-        styles: styleNode.view
-      })
+      return getBaseAttrForm([])
     },
     child: {
       disable: {

@@ -1,12 +1,13 @@
-import React, { useRef, useContext, useCallback, useState } from 'react'
+import React, { useRef, useContext, useCallback, useState, useMemo } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import { stopPropagation } from 'taro-tools'
 import EditTypes from '../util/editTypes'
 import comp from '../util/comp'
+import { componentList } from '../util/config'
 import Context from '../util/context'
-import { ComponentItem, isChildNode, Create as BaseCreate } from '../../render'
+import { ComponentItem, isChildNode, Create as BaseCreate, styled } from '../../render'
 import { NodePosition } from '../util/edit'
 
 import './create.scss'
@@ -178,6 +179,14 @@ const Item = ({ index, item: currentItem, Create, parentNode }) => {
 
   drag(drop(ref))
 
+  /**
+   * 配置里面加载当前组件编辑节点上的样式
+   */
+  const itemStyle = useMemo(() => {
+    const style = componentList[currentItem.nodeName]?.designItemStyle?.() || {}
+    return styled.styleTransform(style).style
+  }, [currentItem.nodeName])
+
   return <View
     ref={ref}
     className={classNames('form-drag-drop', `key-${currentItem.key}`, {
@@ -194,7 +203,8 @@ const Item = ({ index, item: currentItem, Create, parentNode }) => {
     style={{
       flex: currentItem.style?.flex,
       flexGrow: currentItem.style?.flexGrow,
-      flexShrink: currentItem.style?.flexShrink
+      flexShrink: currentItem.style?.flexShrink,
+      ...itemStyle
     }}
     onClick={e => {
       stopPropagation(e)
