@@ -83,9 +83,16 @@ export default class ComponentItem extends Component {
 
 /**
  * 是不是一个合法的节点
- * @param {*} nodeName
+ * @param {string} nodeName 节点
  */
 export const isComponent = nodeName => !!componentList[nodeName]
+
+/**
+ * 获取组件配置
+ * @param {string} nodeName 节点
+ * @returns
+ */
+export const getComponentConfig = nodeName => componentList[nodeName]?.designConfig || {}
 
 /**
  * 定义一个组件

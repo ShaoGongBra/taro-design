@@ -1,5 +1,4 @@
 import Taro from '@tarojs/taro'
-import { getKey } from 'taro-tools'
 import { getPublicAttr, getPublicAttrForm, getBaseAttrForm, FormCreate, componentCate, styleNode } from '../../design/min'
 import { nodeCreate, componentList } from '../../render'
 
@@ -193,7 +192,7 @@ export default {
   },
   steep: {
     nodeName: 'steep',
-    text: '进步器',
+    text: '步进器',
     cate: componentCate.form,
     publicAttr: ['name', 'text', 'tip', 'disabled', 'verify', 'showWhere'],
     attr() {
