@@ -27,7 +27,7 @@ const Module = ({ item }) => {
 
 export default () => {
 
-  const { setPreview, setShowJson } = useContext(Context)
+  const { setPreview, setShowExport } = useContext(Context)
 
   const [cates] = useState(comp.getCates())
   const [cateName, setCateName] = useState('base')
@@ -61,7 +61,7 @@ export default () => {
       </View>
       <View
         className='cate'
-        onClick={() => setShowJson('form')}
+        onClick={() => setShowExport('json')}
       >
         <Text className='cate-name'>导出</Text>
       </View>

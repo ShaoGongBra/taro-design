@@ -16,7 +16,7 @@ export default () => {
     { name: '平板', icon: 'shouji', width: 750 },
     { name: '电脑', icon: 'dianshi', width: 1280 }
   ])
-  const [previewPhoneHover, setPreviewPhoneHover] = useState(0)
+  const [previewPhoneHover, setPreviewPhoneHover] = useState(1)
 
   // 组件页面
   const page = useMemo(() => currentPage() + '/preview', [])

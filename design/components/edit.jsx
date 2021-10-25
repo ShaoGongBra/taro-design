@@ -3,12 +3,12 @@ import Taro from '@tarojs/taro'
 import { View, ScrollView } from '@tarojs/components'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { deepCopy, toast } from 'taro-tools'
+import { toast } from 'taro-tools'
 import Template from '../template';
 import Create from './create'
 import Attr from './attr'
 import Preview from './preview'
-import Json from './json'
+import Export from './export'
 import Menus from './menus'
 import Del from './del'
 import Hover from './hover'
@@ -35,10 +35,10 @@ const Edit = ({
   const [hoverKey, setHoverKey] = useState(void 0)
   // 页面配置
   const [config] = useState({ width: 750 })
-  // 预览
+  // 预览显示
   const [preview, setPreview] = useState(false)
-  // 导出json
-  const [showJson, setShowJson] = useState(false)
+  // 导出显示
+  const [showExport, setShowExport] = useState(false)
 
   // 设置节点数据
   const setNodeData = useCallback((id, data) => {
@@ -186,13 +186,13 @@ const Edit = ({
     hoverKey,
     hover,
     preview,
-    showJson,
+    showExport,
     setNodeData,
     moveNode,
     selectNode,
     setPreview,
-    setShowJson
-  }), [nodes, hoverKey, hover, preview, showJson, setNodeData, moveNode, selectNode])
+    setShowExport
+  }), [nodes, hoverKey, hover, preview, showExport, setNodeData, moveNode, selectNode])
 
   return <Context.Provider value={context}>
     <View className='taro-design' style={style}>
@@ -209,7 +209,7 @@ const Edit = ({
       </View>
       <Attr />
       {preview && <Preview />}
-      {showJson && <Json />}
+      {showExport && <Export />}
       <Del />
       {template && <Template />}
     </View>

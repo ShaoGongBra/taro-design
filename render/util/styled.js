@@ -551,8 +551,9 @@ export default {
    * 处理样式
    * @param {object} style 要处理的样式
    * @param {boolean} transformClass 是否转换为ClassName
+   * @param {boolean} platform 保留平台差异 Taro.pxTransform函数将直接以字符串的形式输出
    */
-  styleTransform(style, transformClass) {
+  styleTransform(style, transformClass, platform) {
     style = { ...style }
     const className = []
     // 样式处理
@@ -573,7 +574,11 @@ export default {
       if (this.isSizeStyle(key)) {
         const reg = /^\d{1,}%$/
         if (typeof style[key] === 'number' || (typeof style[key] === 'string' && !reg.test(style[key]))) {
-          style[key] = Taro.pxTransform(style[key])
+          if (platform) {
+            style[key] = `Taro.pxTransform(${style[key]})`
+          } else {
+            style[key] = Taro.pxTransform(style[key])
+          }
         }
         continue
       }
