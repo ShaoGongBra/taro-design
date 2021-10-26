@@ -1,23 +1,35 @@
 .json {
   background-color: #fff;
   align-items: center;
-  .head {
+  border-radius: 10px;
+  overflow: hidden;
+  & > .head {
     height: 60px;
+    width: 1000px;
+    border-bottom: 1px solid #e2e2e2;
     flex-direction: row;
     align-items: center;
-    .item {
-      margin: 0 6px;
-      padding: 10px 6px;
-      border-radius: 4px;
-      font-size: 28px;
-      color: #333;
-      &.select {
-        background-color: #e2e2e2;
+    justify-content: space-between;
+    padding-right: 10px;
+    & > .type {
+      flex-direction: row;
+      align-self: stretch;
+      .item {
+        padding: 0 20px;
+        font-size: 28px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 3px solid #fff;
+        &.select {
+          border-bottom: 3px solid #333;
+        }
       }
     }
   }
   .main {
-    width: 750px;
+    width: 1000px;
     height: 800px;
     position: relative;
     background-color: rgb(245, 242, 240);

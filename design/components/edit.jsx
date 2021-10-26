@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 import Taro from '@tarojs/taro'
-import { View, ScrollView } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { toast } from 'taro-tools'
+import { ScrollView } from '../../component'
 import Template from '../template';
 import Create from './create'
 import Attr from './attr'
@@ -202,14 +203,14 @@ const Edit = ({
         className='phone'
         style={styled.styleTransform({ style: { width: config.width } }).style}
       >
-        <ScrollView className='scroll' scrollY>
+        <ScrollView>
           <Create nodes={nodes} />
           <Hover />
         </ScrollView>
       </View>
       <Attr />
       {preview && <Preview />}
-      {showExport && <Export />}
+      <Export />
       <Del />
       {template && <Template />}
     </View>
