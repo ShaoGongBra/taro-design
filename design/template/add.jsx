@@ -5,6 +5,7 @@ import { toast, event, noop } from 'taro-tools'
 import { Icon, ScrollView, Loading, Button, Modal } from '../../component'
 import { request } from './utils/request'
 import { openMenu } from '../util/util'
+import { getNodesNames } from '../util/node'
 import './add.scss'
 
 const Add = ({ setShow, nodes }) => {
@@ -62,18 +63,6 @@ const Add = ({ setShow, nodes }) => {
     }
     setLoadSubmit(true)
     const nodesList = Array.isArray(nodes) ? nodes : [nodes]
-    const components = []
-    const getComps = (arr = nodesList) => {
-      arr.forEach(item => {
-        if (!components.includes(item.nodeName)) {
-          components.push(item.nodeName)
-        }
-        if (item.child?.length) {
-          getComps(item.child)
-        }
-      })
-    }
-    getComps()
     request({
       url: 'designservice/Template/save',
       method: 'POST',
@@ -81,7 +70,7 @@ const Add = ({ setShow, nodes }) => {
         content: JSON.stringify(nodesList),
         name,
         project: id,
-        components: components.toString()
+        components: getNodesNames(nodesList).toString()
       }
     }).then(() => {
       setShow(false)

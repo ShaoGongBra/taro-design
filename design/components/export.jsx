@@ -26,7 +26,7 @@ export default () => {
 
   const [jsonType, setJsonType] = useState('Object')
 
-  const [componentCate, setComponentCate] = useState('jsx')
+  const [componentCate, setComponentCate] = useState('function')
 
   useEffect(() => {
     showExport && setSimplifyList(comp.simplifyNodes(nodes))
@@ -66,20 +66,19 @@ export default () => {
       </View>}
       {showExport === 'component' && <View className='main'>
         <ScrollView scrollY scrollX className='scroll'>
-          <Code>
-            {nodeToJsx(nodes)}
+          <Code lang='jsx'>
+            {nodeToJsx(nodes, componentCate)}
           </Code>
         </ScrollView>
-        {/* <View className='type'>
-          <Text className={`item${componentCate === 'jsx' ? ' select' : ''}`} onClick={() => setComponentCate('jsx')}>JSX</Text>
-          <Text className={`item${componentCate === 'scss' ? ' select' : ''}`} onClick={() => setComponentCate('scss')}>SCSS</Text>
-          <Text className={`item${componentCate === 'css' ? ' select' : ''}`} onClick={() => setComponentCate('css')}>CSS</Text>
-        </View> */}
+        <View className='type'>
+          <Text className={`item${componentCate === 'function' ? ' select' : ''}`} onClick={() => setComponentCate('function')}>函数组件</Text>
+          <Text className={`item${componentCate === 'class' ? ' select' : ''}`} onClick={() => setComponentCate('class')}>类组件</Text>
+        </View>
         <View
           className='copy'
           onClick={async () => {
             try {
-              await Taro.setClipboardData({ data: nodeToJsx(nodes) })
+              await Taro.setClipboardData({ data: nodeToJsx(nodes, componentCate) })
               Taro.showToast({ title: '复制成功' })
             } catch (error) {
               toast('复制失败')

@@ -1,17 +1,90 @@
-import { styled } from '../../render'
+import { styled, getComponentConfig } from '../../render'
 
+/**
+ * 组件名称转换
+ * @param {*} nodeName
+ * @returns
+ */
 const getItemName = nodeName => nodeName.split('-').map(name => name.replace(name[0], name[0].toUpperCase())).join('')
 
-const getSpace = level => {
+/**
+ * 节点中用到的不重复的组件名称列表
+ * @param {*} nodes
+ * @param {*} nodeNames
+ * @returns
+ */
+export const getNodesNames = (nodes, nodeNames = []) => {
+  nodes.forEach(item => {
+    if (!nodeNames.includes(item.nodeName)) {
+      nodeNames.push(item.nodeName)
+    }
+    if (item.child?.length) {
+      getNodesNames(item.child, nodeNames)
+    }
+  })
+  return nodeNames
+}
+
+/**
+ * 获取组件框架
+ * @param {*} comps 用到的组件列表
+ * @param {*} type 类型 function 函数组件 class 类组件
+ * @param {*} jsx 组件JSX内容
+ */
+const getBase = (comps = [], type, jsx) => {
+  return `import React${type === 'class' ? ', { Component }' : ''} from 'react'
+${jsx.indexOf('Taro.') !== -1 ? 'import Taro from \'@tarojs/taro\'\r\n' : ''}import { componentList, TopView } from 'taro-design'
+
+${comps.map(name => `const ${getItemName(name)} = componentList['${name}']`).join('\r\n')}
+
+export default ${type === 'function'
+      ? `() => {
+
+  return <TopView>
+${jsx}
+  </TopView>
+}`
+      : `class TaroDesignPage extends Component {
+
+  render() {
+    return <TopView>
+${jsx}
+    </TopView>
+  }
+}`
+    }
+`
+}
+
+/**
+ * 获取空格
+ * @param {*} type
+ * @param {*} level
+ * @returns
+ */
+const getSpace = (type, level) => {
   let base = ''
-  for (let i = 0; i < level; i++) {
+  for (let i = 0, l = level + (type === 'function' ? 2 : 3); i < l; i++) {
     base += '  '
   }
   return base
 }
 
-const toJsxItem = ({ nodeName, style, child, tplAlias, key, forceUpdate, ...props }, { index, length }, level) => {
+const toJsxItem = (
+  { nodeName, style, child, tplAlias, key, forceUpdate, ...props },
+  { index, length },
+  type,
+  level
+) => {
+  // 当前空格缩进
+  const space = getSpace(type, level)
+  // 是否是最后一个
+  const isLast = index === length - 1
+  // 转换后的组件名称
   const name = getItemName(nodeName)
+  if (getComponentConfig(nodeName).childFunc) {
+    return space + '{/* ' + name + ' 组件定义了子元素为函数，不支持导出为JSX */}' + (isLast ? '' : '\r\n')
+  }
   const styleRes = JSON
     .stringify(styled.styleTransform(style, false, true).style)
     // 尺寸函数转换
@@ -22,13 +95,13 @@ const toJsxItem = ({ nodeName, style, child, tplAlias, key, forceUpdate, ...prop
     .replace(/,\"([a-zA-Z]{1,})\":/g, (res, val) => ', ' + val + ': ')
     // 去除名称的引号
     .replace(/\"([a-zA-Z]{1,})\":/g, (res, val) => val + ': ')
-  const space = getSpace(level)
+
   const start = [
     space,
     // 标识
     '<' + name,
     // 样式
-    ...(style && Object.keys(style).length ? [' style={' + styleRes + '}'] : []),
+    ...(style && Object.keys(style).length ? [' style={{ ' + styleRes.substr(1, styleRes.length - 2) + ' }}'] : []),
     // 属性
     Object.keys(props).map(k => {
       const keyType = typeof props[k]
@@ -41,20 +114,25 @@ const toJsxItem = ({ nodeName, style, child, tplAlias, key, forceUpdate, ...prop
     // 结尾
     child?.length ? '>' : ' />'
   ].join('')
-  const center = child?.length ? nodeToJsx(child, level + 1) : ''
+  const center = child?.length ? nodeToJsx(child, type, level + 1) : ''
   const end = space + (child?.length ? `</${name}>` : '')
-  return start + (center ? ('\r\n' + center + '\r\n' + end) : '') + (index !== length - 1 ? '\r\n' : '')
+  return start + (center ? ('\r\n' + center + '\r\n' + end) : '') + (isLast ? '' : '\r\n')
 }
 
 /**
  * 将节点转换为jsx数据
  * @param {*} nodes 节点
+ * @param {*} type 组件类型 函数和类 function class
  * @param {*} level
  * @returns
  */
-export const nodeToJsx = (nodes, level = 0) => {
-  return nodes.map((node, index) => toJsxItem(node, {
+export const nodeToJsx = (nodes, type = 'function', level = 0) => {
+  const jsx = nodes.map((node, index) => toJsxItem(node, {
     index,
     length: nodes.length
-  }, level)).join('')
+  }, type, level)).join('')
+  if (level === 0) {
+    return getBase(getNodesNames(nodes), type, jsx)
+  }
+  return jsx
 }
