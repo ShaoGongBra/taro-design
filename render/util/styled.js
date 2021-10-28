@@ -551,10 +551,12 @@ export default {
    * 处理样式
    * @param {object} style 要处理的样式
    * @param {boolean} transformClass 是否转换为ClassName
+   * @param {boolean} transformClass 将样式转换为css输出
    * @param {boolean} platform 保留平台差异 Taro.pxTransform函数将直接以字符串的形式输出
    */
-  styleTransform(style, transformClass, platform) {
+  styleTransform(style, transformClass, css, platform) {
     style = { ...style }
+    const reg = /^\d{1,}%$/
     const className = []
     // 样式处理
     for (const key in style) {
@@ -571,8 +573,7 @@ export default {
         continue
       }
       // 转换数字类型样式为可识别的属性
-      if (this.isSizeStyle(key)) {
-        const reg = /^\d{1,}%$/
+      if (!css && this.isSizeStyle(key)) {
         if (typeof style[key] === 'number' || (typeof style[key] === 'string' && !reg.test(style[key]))) {
           if (platform) {
             style[key] = `Taro.pxTransform(${style[key]})`
@@ -583,7 +584,18 @@ export default {
         continue
       }
     }
-    return { style, className: className.join(' ') }
+    const cssList = []
+    if (css && Object.keys(style).length) {
+      cssList.push('{')
+      for (const key in style) {
+        if (Object.hasOwnProperty.call(style, key)) {
+          cssList.push(`  ${key.replace(/[A-Z]/g, res => `-${res.toLowerCase()}`)}: ${style[key]}${this.isSizeStyle(key) && !reg.test(style[key]) ? 'px' : ''};`)
+        }
+      }
+      cssList.push('}')
+    }
+
+    return { style: css ? {} : style, className: className.join(' '), css: cssList.join('\r\n') }
   },
 }
 

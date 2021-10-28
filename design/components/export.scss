@@ -39,11 +39,9 @@
       overflow-x: scroll;
     }
     .type {
-      position: absolute;
-      left: 0;
-      top: 0;
       flex-direction: row;
       align-items: center;
+      background-color: #fff;
       .item {
         padding: 10px 15px;
         font-size: 28px;
@@ -52,6 +50,18 @@
         background-color: #fff;
         &.select {
           background-color: #e2e2e2;
+        }
+      }
+      .weui-cells_checkbox {
+        margin-left: 20px;
+        font-size: 20px;
+        margin-right: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        & > input {
+          top: 0;
+          margin-right: 5px;
         }
       }
     }

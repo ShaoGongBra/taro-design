@@ -74,7 +74,10 @@ const toJsxItem = (
   { nodeName, style, child, tplAlias, key, forceUpdate, ...props },
   { index, length },
   type,
-  level
+  globalClass,
+  cssSeparate,
+  level,
+  cssList
 ) => {
   // 当前空格缩进
   const space = getSpace(type, level)
@@ -85,23 +88,38 @@ const toJsxItem = (
   if (getComponentConfig(nodeName).childFunc) {
     return space + '{/* ' + name + ' 组件定义了子元素为函数，不支持导出为JSX */}' + (isLast ? '' : '\r\n')
   }
-  const styleRes = JSON
-    .stringify(styled.styleTransform(style, false, true).style)
-    // 尺寸函数转换
-    .replace(/\"Taro.pxTransform\((\d{1,})\)\"/g, (res, val) => 'Taro.pxTransform(' + val + ')')
-    // 将双引号改为单引号
-    .replace(/\"([a-zA-Z]{1,})\":\"([a-zA-Z-#,\(\)]{1,})\"/g, (res, val1, val2) => `"${val1}":'${val2}'`)
-    // 增加属性之间的空格 和 名称的引号
-    .replace(/,\"([a-zA-Z]{1,})\":/g, (res, val) => ', ' + val + ': ')
-    // 去除名称的引号
-    .replace(/\"([a-zA-Z]{1,})\":/g, (res, val) => val + ': ')
+
+  let { style: styleOriginal, className, css } = styled.styleTransform(style, globalClass, cssSeparate, true)
+
+  // css和样式处理
+  if (css && !cssList[css]) {
+    cssList[css] = 'class-' + (++cssList.index)
+  }
+  if (css) {
+    className += (className ? ' ' : '') + cssList[css]
+  }
+
+  const styleRes = cssSeparate
+    ? ''
+    : JSON
+      .stringify(styleOriginal)
+      // 尺寸函数转换
+      .replace(/\"Taro.pxTransform\((\d{1,})\)\"/g, (res, val) => 'Taro.pxTransform(' + val + ')')
+      // 将双引号改为单引号
+      .replace(/\"([a-zA-Z]{1,})\":\"([a-zA-Z-#,\(\)]{1,})\"/g, (res, val1, val2) => `"${val1}":'${val2}'`)
+      // 增加属性之间的空格 和 名称的引号
+      .replace(/,\"([a-zA-Z]{1,})\":/g, (res, val) => ', ' + val + ': ')
+      // 去除名称的引号
+      .replace(/\"([a-zA-Z]{1,})\":/g, (res, val) => val + ': ')
 
   const start = [
     space,
     // 标识
     '<' + name,
+    // 类名
+    ...(className ? [' className=\'' + className + '\''] : []),
     // 样式
-    ...(style && Object.keys(style).length ? [' style={{ ' + styleRes.substr(1, styleRes.length - 2) + ' }}'] : []),
+    ...(!cssSeparate && styleOriginal && Object.keys(styleOriginal).length ? [' style={{ ' + styleRes.substr(1, styleRes.length - 2) + ' }}'] : []),
     // 属性
     Object.keys(props).map(k => {
       const keyType = typeof props[k]
@@ -114,7 +132,7 @@ const toJsxItem = (
     // 结尾
     child?.length ? '>' : ' />'
   ].join('')
-  const center = child?.length ? nodeToJsx(child, type, level + 1) : ''
+  const center = child?.length ? nodeToJsx(child, type, globalClass, cssSeparate, level + 1, cssList) : ''
   const end = space + (child?.length ? `</${name}>` : '')
   return start + (center ? ('\r\n' + center + '\r\n' + end) : '') + (isLast ? '' : '\r\n')
 }
@@ -123,16 +141,21 @@ const toJsxItem = (
  * 将节点转换为jsx数据
  * @param {*} nodes 节点
  * @param {*} type 组件类型 函数和类 function class
+ * @param {*} globalClass 使用全局样式
+ * @param {*} cssSeparate 样式分离
  * @param {*} level
  * @returns
  */
-export const nodeToJsx = (nodes, type = 'function', level = 0) => {
+export const nodeToJsx = (nodes, type = 'function', globalClass, cssSeparate, level = 0, css = { index: 0 }) => {
   const jsx = nodes.map((node, index) => toJsxItem(node, {
     index,
     length: nodes.length
-  }, type, level)).join('')
+  }, type, globalClass, cssSeparate, level, css)).join('')
   if (level === 0) {
-    return getBase(getNodesNames(nodes), type, jsx)
+    return {
+      jsx: getBase(getNodesNames(nodes), type, jsx),
+      css: Object.keys(css).filter(key => key !== 'index').map(value => `.${css[value]} ${value}`).join('\n\r')
+    }
   }
   return jsx
 }
