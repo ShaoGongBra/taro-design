@@ -20,7 +20,7 @@ yarn add taro-design
 - 如果你的依赖库里没有下列组件，请添加
 
 ```bash
-yarn add qs classnames react-syntax-highlighter
+yarn add classnames
 ```
 
 - 添加配置

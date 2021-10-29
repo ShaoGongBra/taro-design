@@ -16,6 +16,7 @@
   "dependencies": {
     "react-dnd": "^14.0.4",
     "react-dnd-html5-backend": "14.0.2",
+    "react-syntax-highlighter": "^15.4.4",
     "taro-tools": "^1.0.3"
   }
 }
