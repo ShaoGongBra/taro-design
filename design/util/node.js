@@ -33,9 +33,9 @@ export const getNodesNames = (nodes, nodeNames = []) => {
  */
 const getBase = (comps = [], type, jsx) => {
   return `import React${type === 'class' ? ', { Component }' : ''} from 'react'
-${jsx.indexOf('Taro.') !== -1 ? 'import Taro from \'@tarojs/taro\'\r\n' : ''}import { componentList, TopView } from 'taro-design'
+${jsx.indexOf('Taro.') !== -1 ? 'import Taro from \'@tarojs/taro\'\r\n' : ''}import { getComponentList, TopView } from 'taro-design'
 
-${comps.map(name => `const ${getItemName(name)} = componentList['${name}']`).join('\r\n')}
+const { ${comps.map(getItemName).join(', ')} } = getComponentList([${comps.map(name => `'${name}'`).join(', ')}])
 
 export default ${type === 'function'
       ? `() => {

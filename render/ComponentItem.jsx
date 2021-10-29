@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styled from './util/styled'
+import { styled } from './util/styled'
 import CreateDefault from './Create'
 
 /**
@@ -93,6 +93,17 @@ export const isComponent = nodeName => !!componentList[nodeName]
  * @returns
  */
 export const getComponentConfig = nodeName => componentList[nodeName]?.designConfig || {}
+
+/**
+ * 获取指定的一系列节点转换为大驼峰命名后的结果
+ * @param {*} nodeNames 指定要获取的节点 如果不传入此字段则返回所有组件
+ */
+export const getComponentList = nodeNames => {
+  return Object.fromEntries(
+    (nodeNames ? nodeNames : Object.keys(componentList))
+      .map(key => [key.split('-').map(name => name.replace(name[0], name[0].toUpperCase())).join(''), componentList[key]])
+  )
+}
 
 /**
  * 定义一个组件

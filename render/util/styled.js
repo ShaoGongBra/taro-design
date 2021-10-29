@@ -522,7 +522,7 @@ export const styleConfig = {
   }
 }
 
-export default {
+const styled = {
   // 判断名称是不是style
   isStyleName(name) {
     return !!styleConfig[name]
@@ -599,3 +599,8 @@ export default {
   },
 }
 
+export default styled
+
+export {
+  styled
+}

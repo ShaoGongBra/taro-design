@@ -1,5 +1,4 @@
-import { CSSProperties } from 'react'
-import React, { Component } from 'react'
+import { CSSProperties, Component } from 'react'
 
 /** 圆角类型 */
 interface radiusType {

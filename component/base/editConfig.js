@@ -27,8 +27,7 @@ export default {
     attr() {
       return {
         style: {},
-        text: '文本内容',
-        numberOfLines: ''
+        text: '文本内容'
       }
     },
     form() {
