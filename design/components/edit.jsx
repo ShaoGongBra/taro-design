@@ -117,10 +117,10 @@ const Edit = ({
       comp.copyNodes(key1, !historyAction).forEach(item => {
         if (currentForm.nodeName === 'root') {
           // 添加到根节点
-          nodes.push(item)
+          nodes.splice(key2.index, 0, item)
           addList.push(item)
         } else if (comp.isChildAdd(currentForm.nodeName, currentForm.child.length) && !comp.isChildDisable(currentForm.nodeName, item.nodeName)) {
-          currentForm.child.push(item)
+          currentForm.child.splice(key2.index, 0, item)
           addList.push(item)
         } else {
           console.warn(comp.getCompName(item.nodeName) + '插入失败')
