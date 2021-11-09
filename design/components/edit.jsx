@@ -115,20 +115,20 @@ const Edit = ({
       const currentForm = key2.getNode(nodes)
       const addList = []
       comp.copyNodes(key1, !historyAction).forEach(item => {
-        if (currentForm.nodeName === 'root') {
-          // 添加到根节点
-          nodes.splice(key2.index, 0, item)
-          addList.push(item)
-        } else if (comp.isChildAdd(currentForm.nodeName, currentForm.child.length) && !comp.isChildDisable(currentForm.nodeName, item.nodeName)) {
-          currentForm.child.splice(key2.index, 0, item)
+        if (currentForm.nodeName === 'root' || (comp.isChildAdd(currentForm.nodeName, currentForm.child.length) && !comp.isChildDisable(currentForm.nodeName, item.nodeName))) {
           addList.push(item)
         } else {
           console.warn(comp.getCompName(item.nodeName) + '插入失败')
-          toast(comp.getCompName(item.nodeName) + '插入失败')
         }
       })
-      // 插入历史记录
-      addList.length && !historyAction && history.current.insert('insert-template', [key2, addList])
+      if (addList.length !== key1.length) {
+        toast((key1.length - addList.length) + '个模板插入失败!')
+      }
+      if (addList.length) {
+        currentForm.child.splice(key2.index, 0, ...addList)
+        // 插入历史记录
+        !historyAction && history.current.insert('insert-template', [key2, addList])
+      }
       setNodes([...nodes])
     } else if (key1 instanceof NodePosition && key2 instanceof NodePosition) {
       // 排序
