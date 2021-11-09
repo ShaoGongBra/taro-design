@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { toast } from 'taro-tools'
+import { deepCopy, toast } from 'taro-tools'
 import { ScrollView } from '../../component'
 import Template from '../template';
 import Create from './create'
@@ -18,10 +18,39 @@ import comp from '../util/comp'
 import { isComponent, querySelectByKey, querySelectByKeyOriginal, styled } from '../../render'
 import Context from '../util/context'
 import { NodePosition } from '../util/edit'
+import { EditHistory } from '../util/history'
 import EditTypes from '../util/editTypes'
 // 初始化编辑器用的表单
 import '../attrForm'
 import './edit.scss'
+
+// 查找属性中的不同值
+const diffAttr = (a, b, keys = []) => {
+  for (const k in b) {
+    if (Object.hasOwnProperty.call(b, k)) {
+      const typeb = typeof b[k]
+      if (typeb === 'undefined') {
+        const res = a[k]
+        delete a[k]
+        return [[...keys, k], res, b[k]]
+      } else if (typeb !== 'object' && a[k] != b[k]) {
+        const res = a[k]
+        a[k] = b[k]
+        return [[...keys, k], res, b[k]]
+      } else if (b[k] instanceof Array && JSON.stringify(a[k]) !== JSON.stringify(b[k])) {
+        const res = deepCopy(a[k])
+        a[k] = b[k]
+        return [[...keys, k], res, deepCopy(b[k])]
+      } else if (typeb === 'object') {
+        const res = diffAttr(a[k], b[k], [...keys, k])
+        if (res[0].length !== 0) {
+          return res
+        }
+      }
+    }
+  }
+  return [[], void 0]
+}
 
 const Edit = ({
   style,
@@ -30,9 +59,9 @@ const Edit = ({
 }) => {
 
   const [nodes, setNodes] = useState(defaultNodes)
-  // 选中的表单
+  // 选中的节点
   const [hover, setHover] = useState(void 0)
-  // 选中的表单Key
+  // 选中的节点Key
   const [hoverKey, setHoverKey] = useState(void 0)
   // 页面配置
   const [config] = useState({ width: 750 })
@@ -41,46 +70,65 @@ const Edit = ({
   // 导出显示
   const [showExport, setShowExport] = useState(false)
 
-  // 设置节点数据
-  const setNodeData = useCallback((id, data) => {
-    const item = querySelectByKeyOriginal(nodes, id)
-    for (const key in data) {
-      if (Object.hasOwnProperty.call(data, key)) {
-        item[key] = data[key]
-      }
+  const history = useRef(null)
+
+  useEffect(() => {
+    history.current = new EditHistory()
+    return () => {
+      history.current.destroy()
     }
+  }, [])
+
+  // 设置节点数据
+  const setNodeData = useCallback((key, data, historyAction) => {
+    // 控制编辑表单重新渲染
+    if (historyAction && hoverKey === key) {
+      setHover(querySelectByKey(nodes, key))
+    }
+    const item = querySelectByKeyOriginal(nodes, key)
+    const res = diffAttr(item, data)
+    res.push(key)
+    !historyAction && history.current.insert('edit', res)
     item?.forceUpdate?.()
-  }, [nodes])
+  }, [nodes, hoverKey])
 
   /**
    * 组件排序 插入 删除 复制 粘贴通用函数
    * 插入：第一个为模板名称 第二个为位置
    * 插入模板：第一个为模板 第二个为位置
    * 排序：第一个为位置 第二个为位置
-   * 删除：第一个为位置 第二个为空
+   * 删除：第一个为位置 第二个为空 或者为number表示要删除的数量
    * 复制：第一个为位置 第二个 '__copy__'
    * 粘贴：第一个为位置 第二个 '__paste__'
    */
-  const moveNode = useCallback((key1, key2) => {
+  const moveNode = useCallback((key1, key2, historyAction) => {
     if (isComponent(key1) && key2 instanceof NodePosition) {
       // 插入组件
       const node = key2.getNode(nodes)
-      node.child.splice(key2.index, 0, comp.getCompAttr(key1))
+      const insertNode = comp.getCompAttr(key1)
+      // 插入历史记录
+      !historyAction && history.current.insert('insert', [key2, insertNode])
+      node.child.splice(key2.index, 0, insertNode)
       setNodes([...nodes])
     } else if (key1 instanceof Array && key1[0] instanceof Object && key2 instanceof NodePosition) {
       // 插入模板
       const currentForm = key2.getNode(nodes)
-      comp.copyNodes(key1).forEach(item => {
+      const addList = []
+      comp.copyNodes(key1, !historyAction).forEach(item => {
         if (currentForm.nodeName === 'root') {
           // 添加到根节点
           nodes.push(item)
+          addList.push(item)
         } else if (comp.isChildAdd(currentForm.nodeName, currentForm.child.length) && !comp.isChildDisable(currentForm.nodeName, item.nodeName)) {
           currentForm.child.push(item)
+          addList.push(item)
         } else {
           console.warn(comp.getCompName(item.nodeName) + '插入失败')
           toast(comp.getCompName(item.nodeName) + '插入失败')
         }
       })
+      // 插入历史记录
+      addList.length && !historyAction && history.current.insert('insert-template', [key2, addList])
       setNodes([...nodes])
     } else if (key1 instanceof NodePosition && key2 instanceof NodePosition) {
       // 排序
@@ -92,16 +140,20 @@ const Edit = ({
 
       // 删除拖拽位置的节点
       const [node] = node1.child.splice(key1.index, 1)
+      // 插入历史记录
+      !historyAction && history.current.insert('move', [key1, key2])
       // 将其插入到新节点
-      if (key1.key === key2.key && key1.index < key2.index) {
-        // 前面的拖动到后面需要 -1
+      // 同一个数组里面 前面的拖动到后面需要索引 -1
+      if (!historyAction && key1.key === key2.key && key1.index < key2.index) {
         key2.index--
       }
       node2.child.splice(key2.index, 0, node)
       setNodes([...nodes])
-    } else if (key1 instanceof NodePosition && !key2) {
+    } else if (key1 instanceof NodePosition && (!key2 || typeof key2 === 'number')) {
       // 删除
-      key1.getNode(nodes).child.splice(key1.index, 1)
+      const [node] = key1.getNode(nodes).child.splice(key1.index, key2 || 1)
+      // 插入历史记录
+      !historyAction && history.current.insert('delete', [key1, comp.copyNodes(node, false)])
       setNodes([...nodes])
       setHover(void 0)
       setHoverKey(void 0)
@@ -143,6 +195,11 @@ const Edit = ({
       })
     }
   }, [nodes])
+
+  // 给历史激励管理器添加工具
+  useEffect(() => {
+    history.current.setTools(nodes, setNodeData, moveNode)
+  }, [nodes, setNodeData, moveNode])
 
   /**
    * 开始编辑表单 当key为空时表示退出表单编辑

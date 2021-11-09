@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useCallback, useEffect, useState, useRef } from 'react'
-import { currentPage } from 'taro-tools'
+import { currentPage, deepCopy } from 'taro-tools'
 import { ScrollView, TopView } from '../../component'
 import Context from '../util/context'
 import { PageUrlContext, Create } from '../../render'
@@ -42,7 +42,7 @@ export default () => {
       formNode.defaultValues = value
 
       setForm(data.form)
-      setFormValue(value)
+      setFormValue(deepCopy(value))
     } else {
       setForm([])
       setFormValue({})
