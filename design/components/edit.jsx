@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { deepCopy, toast } from 'taro-tools'
+import { toast } from 'taro-tools'
 import { ScrollView } from '../../component'
 import Template from '../template';
 import Create from './create'
@@ -17,40 +17,13 @@ import Hover from './hover'
 import comp from '../util/comp'
 import { isComponent, querySelectByKey, querySelectByKeyOriginal, styled } from '../../render'
 import Context from '../util/context'
-import { NodePosition } from '../util/edit'
+import { NodePosition, diffAttr } from '../util/edit'
+import { keyboardEvent, hotKey } from '../util/util'
 import { EditHistory } from '../util/history'
 import EditTypes from '../util/editTypes'
 // 初始化编辑器用的表单
 import '../attrForm'
 import './edit.scss'
-
-// 查找属性中的不同值
-const diffAttr = (a, b, keys = []) => {
-  for (const k in b) {
-    if (Object.hasOwnProperty.call(b, k)) {
-      const typeb = typeof b[k]
-      if (typeb === 'undefined') {
-        const res = a[k]
-        delete a[k]
-        return [[...keys, k], res, b[k]]
-      } else if (typeb !== 'object' && a[k] != b[k]) {
-        const res = a[k]
-        a[k] = b[k]
-        return [[...keys, k], res, b[k]]
-      } else if (b[k] instanceof Array && JSON.stringify(a[k]) !== JSON.stringify(b[k])) {
-        const res = deepCopy(a[k])
-        a[k] = b[k]
-        return [[...keys, k], res, deepCopy(b[k])]
-      } else if (typeb === 'object') {
-        const res = diffAttr(a[k], b[k], [...keys, k])
-        if (res[0].length !== 0) {
-          return res
-        }
-      }
-    }
-  }
-  return [[], void 0]
-}
 
 const Edit = ({
   style,
@@ -74,10 +47,13 @@ const Edit = ({
 
   useEffect(() => {
     history.current = new EditHistory()
+    hotKey.init()
     return () => {
       history.current.destroy()
+      hotKey.destroy()
     }
   }, [])
+
 
   // 设置节点数据
   const setNodeData = useCallback((key, data, historyAction) => {
@@ -196,7 +172,14 @@ const Edit = ({
     }
   }, [nodes])
 
-  // 给历史激励管理器添加工具
+  /**
+   * 快捷键数据绑定
+   */
+  useEffect(() => {
+    hotKey.setData(hover, moveNode, nodes)
+  }, [moveNode, hover, nodes])
+
+  // 给历史记录管理器添加工具
   useEffect(() => {
     history.current.setTools(nodes, setNodeData, moveNode)
   }, [nodes, setNodeData, moveNode])

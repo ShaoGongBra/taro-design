@@ -11,6 +11,14 @@
 用户名：admin  
 密码：123456
 
+## 快捷键
+
+ctrl+z 撤销操作  
+ctrl+shift+z 恢复操作  
+ctrl+c 复制节点  
+ctrl+v 粘贴节点  
+delete 删除节点
+
 ## 基本用法
 
 ```bash
@@ -60,11 +68,6 @@ export default () => {
   </TopView>
 }
 ```
-
-- 快捷键
-
-ctrl+z 撤销操作  
-ctrl+shift+z 恢复操作
 
 - 全局样式
 

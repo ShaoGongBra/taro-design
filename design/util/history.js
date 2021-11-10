@@ -1,42 +1,5 @@
 import { deepCopy } from "taro-tools"
-
-export const keyboardEvent = {
-  callbacks: {},
-  receive(event) {
-    const name = this.getName(event.key, event.ctrlKey, event.shiftKey, event.altKey)
-    this.callbacks[name]?.forEach(func => func())
-    if (this.callbacks[name]) {
-      event.preventDefault()
-      return false
-    }
-  },
-  getName(name, ctrl, shift, alt) {
-    return (typeof name === 'string' ? name.toLowerCase() : '') + (ctrl ? '1' : '0') + (shift ? '1' : '0') + (alt ? '1' : '0')
-  },
-  add(name, cb, ctrl, shift, alt) {
-    name = this.getName(name, ctrl, shift, alt)
-    this.callbacks[name] = this.callbacks[name] || []
-    this.callbacks[name].push(cb)
-  },
-  remove(name, cb, ctrl, shift, alt) {
-    if (!name) {
-      this.callbacks = {}
-    }
-    name = this.getName(name, ctrl, shift, alt)
-    if (!cb) {
-      delete this.callbacks[name]
-    } else {
-      this.callbacks[name]?.some((func, index) => {
-        if (func === cb) {
-          this.callbacks[name].splice(index, 1)
-          return true
-        }
-      })
-    }
-  }
-}
-
-document.addEventListener('keydown', keyboardEvent.receive.bind(keyboardEvent))
+import { keyboardEvent } from './util'
 
 /**
  * 历史记录管理
