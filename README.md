@@ -139,3 +139,24 @@ Taro H5端使用index.html中的js代码片段控制了rem单位的基础值的�
 ```json
 designWidth: 375
 ```
+
+## 更多文档
+
+### [把自己的组件放在TaroDesign中运行](doc/customComponent.md)  
+你可以简单的开发一个组件，通过TaroDesign提供的注册函数，实现在其中运行，包括编辑器和运行时。
+
+
+### [自定义图标库](doc/icon.md)  
+系统内置的图标库包含了一些常见的图标 [点击查看图标](https://at.alicdn.com/t/project/2275070/db4d5200-5c79-42ad-a58c-579ddc701fc9.html?spm=a313x.7781069.1998910419.34)，如果你需要添加新的图标库请看这。
+
+### 基础组件
+这里面导出了一些常用组件。你可以将他们导入到你的项目中使用
+```jsx
+import { TopView, PullView, Modal, Icon, Button, Loading, ScrollView, KeyboardAvoiding } from 'taro-design'
+```
+### 基础函数
+项目引用了`taro-tools`这个依赖，这里面集成了多个常用函数，包含请求、日期、颜色、对象、字符串、表单验证、事件系统等，你可以直接导入到你的项目中使用。
+
+```jsx
+import { request, searchQuick, setRequestConfig, dateToStr, dateDiff, colorToRgb, deepCopy, verify, event, ... } from 'taro-tools'
+```

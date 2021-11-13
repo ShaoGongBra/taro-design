@@ -336,6 +336,7 @@ export const defineComponentConfig = (key, value) => {
     console.warn('不能定义根节点属性')
     return
   }
+  value.nodeName = key
   componentList[key] = value
 }
 
