@@ -51,7 +51,20 @@ import { TopView } from 'taro-design'
 
 export default () => {
   return <TopView>
-    <Design />
+    <Design
+      // 默认数据节点
+      defaultNodes={[]}
+      // 发生编辑时触发的事件 你可以返回一个Promise对象 将会显示一个正在保存的loading
+      onChange={nodes => {}}
+      // 点击保存按钮时触发的事件，当你配置了这个选项才会出现保存按钮 你可以返回一个Promise对象 将会显示一个正在保存的loading
+      onSave={nodes => {}}
+      // 开启模板 默认开启
+      templateOpen
+      // 开启导出 默认开启
+      exportOpen
+      // 应用在最外层的样式 你也可以通过.taro-design控制样式
+      style={{ }}
+    />
   </TopView>
 }
   ```
@@ -119,4 +132,10 @@ taro-view-core {
 }
 ```
 
-更多用法请前往[官方文档](doc/index.md)查看。
+## 导入到其他项目中运行
+
+Taro H5端使用index.html中的js代码片段控制了rem单位的基础值的变换，如果你在后端中没有这个控制，你可以将config配置中的designWidth设置为375然后进行打包(这个值默认为750)。  
+你可能需要将Taro3升级到较新的版本，旧版本对这个配置支持不完整。
+```json
+designWidth: 375
+```
