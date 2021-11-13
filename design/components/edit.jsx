@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 import Taro from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { toast } from 'taro-tools'
-import { ScrollView } from '../../component'
+import { toast, noop } from 'taro-tools'
+import classNames from 'classnames'
+import { ScrollView, Loading } from '../../component'
 import Template from '../template';
 import Create from './create'
 import Attr from './attr'
@@ -18,7 +19,7 @@ import comp from '../util/comp'
 import { isComponent, querySelectByKey, querySelectByKeyOriginal, styled } from '../../render'
 import Context from '../util/context'
 import { NodePosition, diffAttr } from '../util/edit'
-import { keyboardEvent, hotKey } from '../util/util'
+import { hotKey } from '../util/util'
 import { EditHistory } from '../util/history'
 import EditTypes from '../util/editTypes'
 // 初始化编辑器用的表单
@@ -27,8 +28,11 @@ import './edit.scss'
 
 const Edit = ({
   style,
-  template = true,
-  defaultNodes = []
+  templateOpen = true,
+  exportOpen = true,
+  defaultNodes = [],
+  onChange = noop,
+  onSave
 }) => {
 
   const [nodes, setNodes] = useState(defaultNodes)
@@ -42,18 +46,40 @@ const Edit = ({
   const [preview, setPreview] = useState(false)
   // 导出显示
   const [showExport, setShowExport] = useState(false)
+  // 保存loading
+  const [saveStatus, setSaveStatus] = useState(false)
+  // 历史记录按钮状态
+  const [historyStatus, setHistoryStatus] = useState({})
 
   const history = useRef(null)
 
   useEffect(() => {
     history.current = new EditHistory()
     hotKey.init()
+    history.current.onAction(setHistoryStatus)
     return () => {
       history.current.destroy()
       hotKey.destroy()
     }
   }, [])
 
+  // 保存
+  const save = useCallback(() => {
+    const res = onSave(nodes)
+    if (res instanceof Promise) {
+      setSaveStatus(true)
+      res.finally(() => setSaveStatus(false))
+    }
+  }, [nodes, onSave])
+
+  // 改变通知
+  const change = useCallback(() => {
+    const res = onChange(nodes)
+    if (res instanceof Promise) {
+      setSaveStatus(true)
+      res.finally(() => setSaveStatus(false))
+    }
+  }, [nodes, onChange])
 
   // 设置节点数据
   const setNodeData = useCallback((key, data, historyAction) => {
@@ -66,7 +92,8 @@ const Edit = ({
     res.push(key)
     !historyAction && history.current.insert('edit', res)
     item?.forceUpdate?.()
-  }, [nodes, hoverKey])
+    change()
+  }, [nodes, hoverKey, change])
 
   /**
    * 组件排序 插入 删除 复制 粘贴通用函数
@@ -147,6 +174,7 @@ const Edit = ({
       }).catch(() => {
         toast('复制失败')
       })
+      return
     } else if (key1 instanceof NodePosition && key2 === '__paste__') {
       // 粘贴
       Taro.getClipboardData().then(res => {
@@ -169,8 +197,10 @@ const Edit = ({
           toast('数据解析错误')
         }
       })
+      return
     }
-  }, [nodes])
+    change()
+  }, [nodes, change])
 
   /**
    * 快捷键数据绑定
@@ -231,28 +261,50 @@ const Edit = ({
     setNodeData,
     moveNode,
     selectNode,
-    setPreview,
-    setShowExport
+    setShowExport,
+    setPreview
   }), [nodes, hoverKey, hover, preview, showExport, setNodeData, moveNode, selectNode])
 
   return <Context.Provider value={context}>
     <View className='taro-design' style={style}>
-      <Menus />
-      <View
-        ref={ref}
-        className='phone'
-        style={styled.styleTransform({ style: { width: config.width } }).style}
-      >
-        <ScrollView>
-          <Create nodes={nodes} />
-          <Hover />
-        </ScrollView>
+      <Menus templateOpen={templateOpen} />
+      <View className='design-main'>
+        <View className='action'>
+          <Text
+            className={classNames('history icon icon-zuo', { disabled: !historyStatus.back })}
+            onClick={() => history.current.revoke()}
+          />
+          <Text
+            className={classNames('history icon icon-you1', { disabled: !historyStatus.going })}
+            onClick={() => history.current.recover()}
+          />
+          <View className='flex-grow' />
+          {!onSave && saveStatus && <Loading size={36} color='dark' />}
+          <Text className='btn' onClick={() => setPreview(true)}>预览</Text>
+          {exportOpen && <Text className='btn' onClick={() => setShowExport(true)}>导出</Text>}
+          {!!onSave && <Text className='btn save' onClick={save}>{
+            saveStatus
+              ? <Loading size={36} color='blank' />
+              : '保存'
+          }</Text>}
+        </View>
+        <View
+          ref={ref}
+          className='phone'
+          style={styled.styleTransform({ width: config.width }).style}
+        >
+          <ScrollView>
+            <Create nodes={nodes} />
+            <Hover />
+          </ScrollView>
+        </View>
       </View>
+
       <Attr />
       {preview && <Preview />}
-      <Export />
+      {exportOpen && <Export />}
       <Del />
-      {template && <Template />}
+      {templateOpen && <Template />}
     </View>
   </Context.Provider>
 }

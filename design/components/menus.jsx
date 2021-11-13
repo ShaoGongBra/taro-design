@@ -25,9 +25,9 @@ const Module = ({ item }) => {
   </View>
 }
 
-export default () => {
-
-  const { setPreview, setShowExport } = useContext(Context)
+export default ({
+  templateOpen
+}) => {
 
   const [cates] = useState(comp.getCates())
   const [cateName, setCateName] = useState('base')
@@ -45,26 +45,13 @@ export default () => {
           <Text className='cate-name'>{cate.text}</Text>
         </View>)
       }
-      <View className='line' />
-      <View
+      {templateOpen && <View className='line' />}
+      {templateOpen && <View
         className={classNames('cate', { hover: '_template_' === cateName })}
         onClick={() => setCateName('_template_' === cateName ? '' : '_template_')}
       >
         <Text className='cate-name'>模板</Text>
-      </View>
-      <View className='line' />
-      <View
-        className='cate'
-        onClick={() => setPreview(true)}
-      >
-        <Text className='cate-name'>预览</Text>
-      </View>
-      <View
-        className='cate'
-        onClick={() => setShowExport('json')}
-      >
-        <Text className='cate-name'>导出</Text>
-      </View>
+      </View>}
     </View>
     {!!cateName && <View className='level-2'>
       <View className='child-cate'>
@@ -72,7 +59,7 @@ export default () => {
           module.filter(item => item.cate?.name === cateName).map(child => <Module key={child.nodeName} item={child} />)
         }
       </View>
-      <TemplateList show={cateName === '_template_'} />
+      {templateOpen && <TemplateList show={cateName === '_template_'} />}
     </View>}
   </View>
 }

@@ -67,6 +67,7 @@ export class EditHistory {
       }
     }
     this.backSetp++
+    this.actionCallback()
   }
 
   // 恢复
@@ -99,6 +100,7 @@ export class EditHistory {
       }
     }
     this.backSetp--
+    this.actionCallback()
   }
 
   /**
@@ -107,6 +109,7 @@ export class EditHistory {
   destroy() {
     keyboardEvent.remove('z', this.revoke, true)
     keyboardEvent.remove('z', this.recover, true, true)
+    this.actionFcuns = []
   }
 
   setTools(nodes, setNodeData, moveNode) {
@@ -128,6 +131,18 @@ export class EditHistory {
   // 下一个要操作的记录 用于前进
   next() {
     return this.list[this.pointer()]
+  }
+
+  actionFcuns = []
+  onAction(func) {
+    this.actionFcuns.push(func)
+  }
+
+  actionCallback() {
+    this.actionFcuns.forEach(func => func({
+      back: this.list.length > this.backSetp,
+      going: this.backSetp > 0
+    }))
   }
 
   // 插入记录
@@ -152,5 +167,6 @@ export class EditHistory {
       type,
       value
     })
+    this.actionCallback()
   }
 }

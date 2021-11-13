@@ -17,10 +17,61 @@
     background-color: #fff;
     flex-direction: row;
   }
-  .phone {
-    width: 750px;
+  .design-main {
+    flex: 1;
     height: 100%;
+    align-items: center;
+    & > .action {
+      height: 60px;
+      flex-direction: row;
+      align-items: center;
+      width: 750px;
+      .history {
+        font-size: 42px;
+        color: #333;
+        padding: 5px 10px;
+        cursor: pointer;
+        &.disabled {
+          cursor: unset;
+          color: #999;
+        }
+      }
+      .btn {
+        border: 1px solid #999;
+        padding: 0 20px;
+        border-radius: 6px;
+        margin-left: 20px;
+        font-size: 26px;
+        height: 40px;
+        line-height: 40px;
+        cursor: pointer;
+        color: #333;
+        &:nth-child(1) {
+          margin-left: 0;
+        }
+        &.disabled {
+          color: #999;
+          border-color: #ccc;
+        }
+      }
+      .save {
+        background-color: #333;
+        color: #fff;
+        width: 60px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .phone {
+    flex: 1;
+    width: 750px;
     background-color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
     & > .scroll {
       height: 100%;
       position: relative;
