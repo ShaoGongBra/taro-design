@@ -32,7 +32,7 @@ export class EditHistory {
       obj[keys[0]] = value
     } else {
       obj[keys[0]] = {}
-      this.create(keys.slice(1), value, obj[keys[0]])
+      this.createKeyData(keys.slice(1), value, obj[keys[0]])
     }
     return obj
   }

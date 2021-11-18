@@ -26,11 +26,11 @@ export default () => {
   /**
    * 获取编辑表单
    */
-  const getEditForm = useCallback(() => {
+  const getEditForm = useCallback((valueOnly) => {
     if (hover) {
       const data = comp.getEditForm(hover.nodeName)
 
-      const value = { ...hover }
+      const value = deepCopy(hover)
       delete value.child
       delete value.parentNode
       delete value.forceUpdate
@@ -41,8 +41,8 @@ export default () => {
       formNode.onUpdateValue = updateValue
       formNode.defaultValues = value
 
-      setForm(data.form)
-      setFormValue(deepCopy(value))
+      !valueOnly && setForm(data.form)
+      setFormValue(value)
     } else {
       setForm([])
       setFormValue({})
@@ -66,6 +66,9 @@ export default () => {
     if (getFormOldData.current.hover !== hoverString) {
       getEditForm()
       getFormOldData.current.hover = hoverString
+    } else {
+      // 重新获取value
+      getEditForm(true)
     }
   }, [hover, getEditForm])
 

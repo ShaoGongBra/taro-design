@@ -83,16 +83,17 @@ const Edit = ({
 
   // 设置节点数据
   const setNodeData = useCallback((key, data, historyAction) => {
-    // 控制编辑表单重新渲染
-    if (historyAction && hoverKey === key) {
-      setHover(querySelectByKey(nodes, key))
-    }
     const item = querySelectByKeyOriginal(nodes, key)
     const res = diffAttr(item, data)
     res.push(key)
     !historyAction && history.current.insert('edit', res)
     item?.forceUpdate?.()
     change()
+
+    // 控制编辑表单重新渲染
+    if (historyAction && hoverKey === key) {
+      setHover(querySelectByKey(nodes, key))
+    }
   }, [nodes, hoverKey, change])
 
   /**
