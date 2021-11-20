@@ -1,11 +1,25 @@
 # Taro Design
-## 一个简单易用，方便扩展和集成的移动端页面编辑器。
 
+一个简单易用，方便扩展和集成的移动端页面编辑器。
 <center>
-  <img src="doc/images/image1.png" width="480px" alt="预览" />
+  <img src="doc/images/image1.png" width="560px" alt="预览" />
 </center>
 
-## 特点
+* [特点](#feature)
+* [运行原理](#principle)
+* [在线体验](#example)
+* [快捷键支持](#hot-key)
+* [在项目中使用](#use)
+* [导出到其他项目中运行](#otherproject)
+* [交流群](#group)
+* [更多文档](#more)
+	* [把自己的组件放在TaroDesign中运行](#custom-component)
+	* [自定义图标库](#custom-icon)
+	* [基础组件](#base-component)
+	* [基础函数](#base-function)
+
+
+## <a name='feature'></a>特点
 
 - 发布到npm市场，可以很方便的将他集成到你的项目中。
 - 你可以方便的编写一个组件在这个编辑器中运行，或者将你现有的组件经过简单修改运行在编辑器中。
@@ -14,7 +28,7 @@
 - 导出为React组件后，可以继续进行二次开发。
 - 模板市场给你提供了存储和使用模板的功能，你可以通过公开的模板快速创建页面，你也可以根据自己的需求创建模板。
 
-## 运行原理
+## <a name='principle'></a>运行原理
 
 你编辑的后的数据以json的方式运行和存储，下面的示例将一个text组件嵌套在一个view组件的json。
 ```json
@@ -35,21 +49,21 @@
   }
 ]
 ```
-对应的JSX代码如下，这些组件并不是原生的Taro组件，二十经过封装的，所以你看到下面的`Text`组件的文本并不是这样：`<Text>文本内容<Text>`，而是将文本内容赋值在其text属性上，其他组件的结构也大体如此。
+对应的JSX代码如下，这些组件并不是原生的Taro组件，而是经过封装的，所以你看到下面的`Text`组件的文本并不是这样：`<Text>文本内容<Text>`，而是将文本内容赋值在其text属性上，其他组件的结构也大体如此。
 ```html
 <View>
   <Text text='文本内容' />
 </View>
 ```
 
-## 在线体验
+## <a name='example'></a>在线体验
 
 [点击前往在线地址](http://edit.t.platelet.xyz/)  
 在线模板现在未开放注册账号以及管理功能，请使用下面的账号密码进行体验。  
 - 用户名：admin  
 - 密码：123456
 
-## 快捷键支持
+## <a name='hot-key'></a>快捷键支持
 
 ctrl + z 撤销操作  
 ctrl + shift + z 恢复操作  
@@ -57,7 +71,7 @@ ctrl + c 复制节点
 ctrl + v 粘贴节点  
 delete 删除节点
 
-## 基本用法
+## <a name='use'></a>在项目中使用
 
 ```bash
 yarn add taro-design
@@ -170,7 +184,7 @@ taro-view-core {
 }
 ```
 
-## 导出到其他项目中运行
+## <a name='otherproject'></a>导出到其他项目中运行
 
 Taro H5端使用index.html中的js代码片段控制了rem单位的基础值的变换，如果你在后端中没有这个控制，你可以将config配置中的designWidth设置为375然后进行打包(这个值默认为750)。  
 你可能需要将Taro3升级到较新的版本，旧版本对这个配置支持不完整。
@@ -178,27 +192,27 @@ Taro H5端使用index.html中的js代码片段控制了rem单位的基础值的�
 designWidth: 375
 ```
 
-## 交流群
+## <a name='group'></a>交流群
 
 <img src="doc/images/qq.png" width="200px" alt="qq群" />
 
-## 更多文档
+## <a name='more'></a>更多文档
 
-### [把自己的组件放在TaroDesign中运行](doc/customComponent.md)  
-你可以简单的开发一个组件，通过TaroDesign提供的注册函数，实现在其中运行，包括编辑器和运行时。
+### <a name='custom-component'></a>把自己的组件放在TaroDesign中运行 
+你可以简单的开发一个组件，通过TaroDesign提供的注册函数，实现在其中运行，包括编辑器和运行时[（查看）](doc/customComponent.md)。
 
 
-### [自定义图标库](doc/icon.md)  
-系统内置的图标库包含了一些常见的图标 [点击查看图标](https://at.alicdn.com/t/project/2275070/db4d5200-5c79-42ad-a58c-579ddc701fc9.html?spm=a313x.7781069.1998910419.34)，如果你需要添加新的图标库请看这。
+### <a name='custom-icon'></a>自定义图标库
+系统内置的图标库包含了一些常见的图标 [点击查看图标](https://at.alicdn.com/t/project/2275070/db4d5200-5c79-42ad-a58c-579ddc701fc9.html?spm=a313x.7781069.1998910419.34)，如果你需要添加新的图标库请看这[（查看）](doc/icon.md)。
 
-### 基础组件
+### <a name='base-component'></a>基础组件
 这里面导出了一些常用组件。你可以将他们导入到你的项目中使用
 
 ```jsx
 import { TopView, PullView, Modal, Icon, Button, Loading, ScrollView, KeyboardAvoiding } from 'taro-design'
 ```
 
-### 基础函数
+### <a name='base-function'></a>基础函数
 项目引用了`taro-tools`这个依赖，这里面集成了多个常用函数，包含请求、日期、颜色、对象、字符串、表单验证、事件系统等，你可以直接导入到你的项目中使用。
 
 ```jsx
