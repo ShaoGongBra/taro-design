@@ -32,7 +32,9 @@ const Edit = ({
   exportOpen = true,
   defaultNodes = [],
   onChange = noop,
-  onSave
+  onSave,
+  title = 'TaroDesign',
+  renderTitle
 }) => {
 
   const [nodes, setNodes] = useState(defaultNodes)
@@ -268,9 +270,11 @@ const Edit = ({
 
   return <Context.Provider value={context}>
     <View className='taro-design' style={style}>
-      <Menus templateOpen={templateOpen} />
-      <View className='design-main'>
-        <View className='action'>
+      <View className='action'>
+        <View className='head'>
+          {renderTitle || <Text className='title'>{title}</Text>}
+        </View>
+        <View className='flex-grow'>
           <Text
             className={classNames('history icon icon-zuo', { disabled: !historyStatus.back })}
             onClick={() => history.current.revoke()}
@@ -279,7 +283,8 @@ const Edit = ({
             className={classNames('history icon icon-you1', { disabled: !historyStatus.going })}
             onClick={() => history.current.recover()}
           />
-          <View className='flex-grow' />
+        </View>
+        <View className='btns'>
           {!onSave && saveStatus && <Loading size={36} color='dark' />}
           <Text className='btn' onClick={() => setPreview(true)}>预览</Text>
           {exportOpen && <Text className='btn' onClick={() => setShowExport(true)}>导出</Text>}
@@ -289,6 +294,9 @@ const Edit = ({
               : '保存'
           }</Text>}
         </View>
+      </View>
+      <View className='design-main'>
+        <Menus templateOpen={templateOpen} />
         <View
           ref={ref}
           className='phone'
@@ -299,9 +307,9 @@ const Edit = ({
             <Hover />
           </ScrollView>
         </View>
-      </View>
 
-      <Attr />
+        <Attr />
+      </View>
       {preview && <Preview />}
       {exportOpen && <Export />}
       <Del />

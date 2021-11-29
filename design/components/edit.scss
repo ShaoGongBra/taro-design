@@ -1,80 +1,111 @@
 .taro-design {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   background-color: #f5f5f5;
-  align-items: flex-start;
   position: relative;
   height: 100%;
   overflow: hidden;
-
-  .right-menus {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 1;
-    background-color: #fff;
+  & > .action {
+    height: 80px;
     flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #ededed;
+    background-color: #fff;
+    & > .head {
+      width: 500px;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 60px;
+        background-color: #ededed;
+      }
+      .title {
+        font-size: 36px;
+        padding-left: 30px;
+        color: #444;
+      }
+    }
+    .flex-grow {
+      flex: 1;
+      flex-direction: row;
+      padding: 0 20px;
+      justify-content: center;
+    }
+    .history {
+      font-size: 42px;
+      color: #333;
+      padding: 5px 10px;
+      cursor: pointer;
+      &.disabled {
+        cursor: unset;
+        color: #999;
+      }
+    }
+    & > .btns {
+      flex-direction: row;
+      align-items: center;
+      width: 500px;
+      position: relative;
+      justify-content: center;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 60px;
+        background-color: #ededed;
+      }
+    }
+    .btn {
+      border: 1px solid #999;
+      padding: 0 20px;
+      border-radius: 6px;
+      margin-left: 40px;
+      font-size: 26px;
+      height: 40px;
+      line-height: 40px;
+      cursor: pointer;
+      color: #333;
+      &:nth-child(1) {
+        margin-left: 0;
+      }
+      &.disabled {
+        color: #999;
+        border-color: #ccc;
+      }
+    }
+    .save {
+      background-color: #333;
+      color: #fff;
+      width: 60px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
   .design-main {
     flex: 1;
-    height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    & > .action {
-      height: 60px;
-      flex-direction: row;
-      align-items: center;
-      width: 750px;
-      .history {
-        font-size: 42px;
-        color: #333;
-        padding: 5px 10px;
-        cursor: pointer;
-        &.disabled {
-          cursor: unset;
-          color: #999;
-        }
-      }
-      .btn {
-        border: 1px solid #999;
-        padding: 0 20px;
-        border-radius: 6px;
-        margin-left: 20px;
-        font-size: 26px;
-        height: 40px;
-        line-height: 40px;
-        cursor: pointer;
-        color: #333;
-        &:nth-child(1) {
-          margin-left: 0;
-        }
-        &.disabled {
-          color: #999;
-          border-color: #ccc;
-        }
-      }
-      .save {
-        background-color: #333;
-        color: #fff;
-        width: 60px;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-  }
 
-  .phone {
-    flex: 1;
-    width: 750px;
-    background-color: #fff;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    & > .scroll {
-      height: 100%;
-      position: relative;
+    .phone {
+      height: 96%;
+      width: 750px;
+      background-color: #fff;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      & > .scroll {
+        height: 100%;
+        position: relative;
+      }
     }
   }
 }
