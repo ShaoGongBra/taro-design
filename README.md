@@ -116,6 +116,10 @@ export default () => {
       exportOpen
       // 应用在最外层的样式 你也可以通过.taro-design控制样式
       style={{ }}
+      // 头部标题
+      title='TaroDesign'
+      // 用于自定义渲染标题，请传入jsx，当你定义这个参数时title将失效
+      renderTitle={<View>自定义内容</View>}
     />
   </TopView>
 }
