@@ -12,6 +12,7 @@
 * [在项目中使用](#use)
 * [导出到其他项目中运行](#otherproject)
 * [交流群](#group)
+* [合作](#cooperate)
 * [更多文档](#more)
 	* [把自己的组件放在TaroDesign中运行](#custom-component)
 	* [自定义图标库](#custom-icon)
@@ -199,6 +200,10 @@ designWidth: 375
 ## <a name='group'></a>交流群
 
 <img src="doc/images/qq.png" width="200px" alt="qq群" />
+
+## <a name='cooperate'></a>需要合作请加作者微信
+
+<img src="doc/images/weixin.jpg" width="200px" alt="微信好友" />
 
 ## <a name='more'></a>更多文档
 
