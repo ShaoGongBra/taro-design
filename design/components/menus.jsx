@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { View, Text } from '@tarojs/components'
 import classNames from 'classnames'
-import { stopPropagation } from 'taro-tools'
 import TemplateList from '../template/list'
 import Context from '../util/context'
 import comp from '../util/comp'
 import EditTypes from '../util/editTypes'
+import { NodePosition } from '../util/edit'
 import './menus.scss'
 
 const Module = ({ item }) => {
-  const { selectNode } = useContext(Context)
+  const { selectNode, moveNode, nodes } = useContext(Context)
 
   const [, drag] = useDrag({
     type: EditTypes.FORM_ADD,
@@ -20,7 +20,11 @@ const Module = ({ item }) => {
     }
   })
 
-  return <View ref={drag} className='item' onClick={stopPropagation}>
+  const add = useCallback(() => {
+    moveNode(item.nodeName, new NodePosition('__root__', nodes.length))
+  }, [item.nodeName, moveNode, nodes.length])
+
+  return <View ref={drag} className='item' onClick={add}>
     <Text className='text'>{item.text}</Text>
   </View>
 }
@@ -40,15 +44,14 @@ export default ({
         cates.map(cate => <View
           className={`cate${cate.name === cateName ? ' hover' : ''}`}
           key={cate.name}
-          onClick={() => setCateName(cate.name === cateName ? '' : cate.name)}
+          onClick={() => setCateName(cate.name)}
         >
           <Text className='cate-name'>{cate.text}</Text>
         </View>)
       }
-      {templateOpen && <View className='line' />}
       {templateOpen && <View
         className={classNames('cate', { hover: '_template_' === cateName })}
-        onClick={() => setCateName('_template_' === cateName ? '' : '_template_')}
+        onClick={() => setCateName('_template_')}
       >
         <Text className='cate-name'>模板</Text>
       </View>}

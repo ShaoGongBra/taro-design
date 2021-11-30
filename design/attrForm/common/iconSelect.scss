@@ -6,7 +6,7 @@
     height: 40px;
     align-items: center;
     justify-content: center;
-    border: 1px solid #e2e2e2;
+    border: 1px solid #ededed;
     flex-shrink: 0;
   }
 }
@@ -41,7 +41,7 @@
   }
   &__search {
     margin: 10px;
-    border: 1px solid #e2e2e2;
+    border: 1px solid #ededed;
     border-radius: 40px;
     padding: 4px 20px;
     &__input {
@@ -59,7 +59,7 @@
     padding: 10px 0;
     &__item {
       width: 150px;
-      border: 1px solid #e2e2e2;
+      border: 1px solid #ededed;
       margin: 10px;
       align-items: center;
       overflow: hidden;

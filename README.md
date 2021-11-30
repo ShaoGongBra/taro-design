@@ -2,7 +2,7 @@
 
 一个简单易用，方便扩展和集成的移动端页面编辑器。
 <center>
-  <img src="doc/images/image1.png" width="560px" alt="预览" />
+  <img src="doc/images/image1.png" alt="预览" />
 </center>
 
 * [特点](#feature)

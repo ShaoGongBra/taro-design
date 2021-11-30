@@ -28,7 +28,7 @@ export default () => {
 
   return <View className={`delete${deleteShow ? ' delete-show' : ''}${deleteOver ? ' delete-over' : ''}`} ref={dropDelete}>
     <View className='info'>
-      <Icon name='shanchu3' size={52} color={deleteOver ? '#e2e2e2' : '#202020'} style={{ transition: 'color 0.1s' }} />
+      <Icon name='shanchu3' size={52} color={deleteOver ? '#ededed' : '#202020'} style={{ transition: 'color 0.1s' }} />
       <Text className='text'>{deleteOver ? '放开删除' : '拖到这里删除'}</Text>
     </View>
   </View>

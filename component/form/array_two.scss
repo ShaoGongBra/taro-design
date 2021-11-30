@@ -29,7 +29,7 @@
     }
   }
   &__table {
-    border: 1px solid #e2e2e2;
+    border: 1px solid #ededed;
     /*postcss-pxtransform rn eject enable*/
     display: inline-block;
     /*postcss-pxtransform rn eject disable*/
@@ -37,7 +37,7 @@
   &__head {
     flex-direction: row;
     border-bottom-width: 1px;
-    border-bottom-color: #e2e2e2;
+    border-bottom-color: #ededed;
     /*postcss-pxtransform rn eject enable*/
     border-bottom-style: solid;
     /*postcss-pxtransform rn eject disable*/

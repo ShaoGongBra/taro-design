@@ -11,7 +11,7 @@
   /*postcss-pxtransform rn eject enable*/
   transition: transform 0.3s, background-color 0.1s;
   /*postcss-pxtransform rn eject disable*/
-  box-shadow: 0 0 10px #e2e2e2;
+  box-shadow: 0 0 10px #ededed;
   &.delete-show {
     transform: translate(0, 0);
   }
@@ -32,10 +32,10 @@
     background-color: #ff4242;
     transform: translate(0, 0) scale(1.05, 1.05);
     .icon {
-      color: #e2e2e2;
+      color: #ededed;
     }
     .text {
-      color: #e2e2e2;
+      color: #ededed;
     }
   }
 }

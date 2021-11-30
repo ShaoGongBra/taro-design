@@ -1,13 +1,13 @@
 .form-panel {
   margin: 10px;
-  border: 1px solid #e2e2e2;
+  border: 1px solid #ededed;
   background-color: #fff;
   &__head {
     padding: 10px 20px;
     flex-direction: row;
     justify-content: space-between;
     border-bottom-width: 1px;
-    border-bottom-color: #e2e2e2;
+    border-bottom-color: #ededed;
     /*postcss-pxtransform rn eject enable*/
     border-bottom-style: solid;
     /*postcss-pxtransform rn eject disable*/

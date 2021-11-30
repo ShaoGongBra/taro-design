@@ -2,9 +2,10 @@
   flex-direction: row;
   align-self: stretch;
   .level-1 {
-    width: 120px;
-    background-color: #f2f2f2;
+    width: 125px;
+    background-color: #fff;
     overflow-y: auto;
+    border-right: 1px solid #ededed;
   }
   .level-2 {
     width: 375px;
@@ -37,7 +38,7 @@
       color: #000;
     }
     &.hover {
-      background-color: #ccc;
+      background-color: #E8E8E8;
     }
   }
   .child-cate {
@@ -46,9 +47,9 @@
     align-content: flex-start;
     .item {
       width: 50%;
-      padding: 16px 10px;
-      border-bottom: 1px solid #e2e2e2;
-      border-right: 1px solid #e2e2e2;
+      padding: 20px 10px;
+      border-bottom: 1px solid #ededed;
+      border-right: 1px solid #ededed;
       align-items: center;
       justify-content: center;
       .text {
@@ -56,10 +57,5 @@
         color: #202020;
       }
     }
-  }
-
-  .line {
-    height: 1px;
-    background-color: #ccc;
   }
 }

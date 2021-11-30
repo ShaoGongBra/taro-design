@@ -1,6 +1,6 @@
 .form-steep{
   flex-direction: row;
-  border: 1px solid #e2e2e2;
+  border: 1px solid #ededed;
   border-radius: 10px;
   align-self: flex-start;
   align-items: stretch;
@@ -19,9 +19,9 @@
     border-right-style: solid;
     /*postcss-pxtransform rn eject disable*/
     border-left-width: 1px;
-    border-left-color: #e2e2e2;
+    border-left-color: #ededed;
     border-right-width: 1px;
-    border-right-color: #e2e2e2;
+    border-right-color: #ededed;
     &__text{
       font-size: 26px;
       color: #333;

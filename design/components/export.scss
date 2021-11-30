@@ -6,7 +6,7 @@
   & > .head {
     height: 60px;
     width: 1000px;
-    border-bottom: 1px solid #e2e2e2;
+    border-bottom: 1px solid #ededed;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -49,7 +49,7 @@
         font-size: 24px;
         background-color: #fff;
         &.select {
-          background-color: #e2e2e2;
+          background-color: #ededed;
         }
       }
       .weui-cells_checkbox {
@@ -70,7 +70,7 @@
       right: 0;
       top: 0;
       padding: 6px 10px;
-      background-color: #e2e2e2;
+      background-color: #ededed;
       flex-direction: row;
       align-items: center;
       .text {

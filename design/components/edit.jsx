@@ -110,8 +110,12 @@ const Edit = ({
   const moveNode = useCallback((key1, key2, historyAction) => {
     if (isComponent(key1) && key2 instanceof NodePosition) {
       // 插入组件
-      const node = key2.getNode(nodes)
       const insertNode = comp.getCompAttr(key1)
+      const node = key2.getNode(nodes)
+      if (comp.isChildDisable(node.nodeName, key1)) {
+        toast('不支持插入到此位置')
+        return
+      }
       // 插入历史记录
       !historyAction && history.current.insert('insert', [key2, insertNode])
       node.child.splice(key2.index, 0, insertNode)

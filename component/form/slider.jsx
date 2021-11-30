@@ -14,7 +14,7 @@ const SliderForm = ({ name, ...attr }) => {
     updateValue(name, e.detail.value)
   }, [name, updateValue])
 
-  return <Slider value={value} min={attr.min} disabled={!!attr.disabled} max={attr.max} step={attr.step} activeColor='#666' backgroundColor='#e2e2e2' onChange={change} />
+  return <Slider value={value} min={attr.min} disabled={!!attr.disabled} max={attr.max} step={attr.step} activeColor='#666' backgroundColor='#ededed' onChange={change} />
 }
 
 SliderForm.designConfig = {

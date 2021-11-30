@@ -7,12 +7,13 @@ import { Icon, ScrollView } from '../../component'
 import { Create, componentList } from '../../render'
 import Context from '../util/context'
 import EditTypes from '../util/editTypes'
+import { NodePosition } from '../util/edit'
 import { isLogin, userInfo, login, loginOut } from './utils/user'
 import './list.scss'
 
 const Item = ({ item, onCateSearch }) => {
 
-  const { selectNode } = useContext(Context)
+  const { selectNode, moveNode, nodes } = useContext(Context)
 
   const [height, setHeight] = useState([0, 0])
 
@@ -29,6 +30,10 @@ const Item = ({ item, onCateSearch }) => {
       return { template: item.content }
     }
   })
+
+  const add = useCallback(() => {
+    moveNode(item.content, new NodePosition('__root__', nodes.length))
+  }, [item.content, moveNode, nodes.length])
 
   const click = useCallback(() => {
     onCateSearch(item)
@@ -52,6 +57,7 @@ const Item = ({ item, onCateSearch }) => {
     <View
       className='item__zoom'
       style={{ height: (height * 0.5) + 'px' }}
+      onClick={add}
     >
       <View ref={itemRef} className='item__zoom__pos'>
         <Context.Provider value={{ config: {} }}>
