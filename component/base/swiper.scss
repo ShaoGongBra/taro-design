@@ -1,5 +1,7 @@
 .form-swiper-item {
   display: flex;
   flex-direction: column;
+  /*  #ifndef  rn  */
   box-sizing: border-box;
+  /*  #endif  */
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { Animated, Easing, StyleSheet } from 'react-native'
+import { styles } from '../../../render'
 
 export default class Loading extends Component {
   constructor(props) {
@@ -81,26 +82,24 @@ export default class Loading extends Component {
       blank: '#fff'
     }
     return (
-      <View style={[style, {
+      <View style={styles(style, {
         width: width,
         height: width,
-      }]}
+      })}
       >
         {
           lines.map((item, index) => {
             return <Animated.View
               key={'item' + index}
-              style={[
-                styles.child,
-                {
-                  marginTop: - r,
-                  height: r * 2,
-                  transform: [{ rotate: (index * 45 + 90) + 'deg' }],
-                  ...item,
-                  opacity: this.getAnimated(index),
-                  backgroundColor: colors[color] || colors.dark
-                }
-              ]}
+              style={{
+                ...styleSheet.child,
+                marginTop: - r,
+                height: r * 2,
+                transform: [{ rotate: (index * 45 + 90) + 'deg' }],
+                ...item,
+                opacity: this.getAnimated(index),
+                backgroundColor: colors[color] || colors.dark
+              }}
             />
           })
         }
@@ -109,7 +108,7 @@ export default class Loading extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styleSheet = StyleSheet.create({
   child: {
     width: 3,
     borderRadius: 1.5,

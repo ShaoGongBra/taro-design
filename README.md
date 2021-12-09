@@ -10,7 +10,7 @@
 * [在线体验](#example)
 * [快捷键支持](#hot-key)
 * [在项目中使用](#use)
-* [导出到其他项目中运行](#otherproject)
+* [关于页面缩放相关配置](#otherproject)
 * [交流群](#group)
 * [合作](#cooperate)
 * [更多文档](#more)
@@ -87,12 +87,21 @@ yarn add classnames
 - 添加配置
 
 ```javascript
+  // h5端
   h5: {
     esnextModules: [
       'taro-design'
     ]
+  },
+  // rn端
+  rn: {
+    resolve: {
+      include: ['taro-design']
+    }
   }
 ```
+
+项目配置文件位于`config/index.js`
 
 - 编辑器使用示例
 
@@ -125,6 +134,8 @@ export default () => {
   </TopView>
 }
   ```
+  
+注意 编辑器仅支持编译成h5使用，请勿在小程序或者app端调用，以及所有从 `taro-design/design` 导出的函数和组件都一样。
 
 - 渲染模式使用示例
 
@@ -139,63 +150,42 @@ export default () => {
 }
 ```
 
-- 全局样式
+- 使用提示  
+不论是编辑模式还是渲染模式都请将 `TopView` 组件放在最外层，否则会导致样式错乱，弹窗无法使用
 
-为了和rn端保持样式一致，你需要在你的全局样式代码中加入如下的样式。  
-下面的全局样式可能会导致你已经存在的项目样式错乱，你暂时需要自行调试，建议在新项目中使用。
-
+- 全局样式  
+建议你在你的项目的全局样式文件中加入下面的样式，让小程序和h5端页面保持100%的高度
 ```css
-/*postcss-pxtransform rn eject enable*/
-view,
-page,
-.taro_page,
-taro-view-core {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  border-style: solid;
-  border-width: 0;
+/*  #ifndef rn h5  */
+page {
+  height: 100vh;
 }
-input,
-textarea,
-taro-view-core,
-view {
-  box-sizing: border-box;
+/*  #endif  */
+
+/*  #ifdef h5  */
+.taro_page {
+  height: 100vh;
 }
-taro-view-core,
-taro-text-core {
-  line-height: 1;
-}
-taro-text-core {
-  font-size: 28px;
-  color: #333;
-}
-.taro_page taro-image-core {
-  width: auto;
-  height: auto;
-}
-.taro_page .taro-video-container {
-  position: relative;
-}
-/*postcss-pxtransform rn eject disable*/
+/*  #endif  */
+
 ```
 
-因为样式覆盖问题，你需要在你的index.html 的 body后面插入下面的样式
+## <a name='otherproject'></a>关于页面缩放相关配置
 
-```css
-taro-view-core {
-  display: flex;
-  flex-direction: column;
-}
-```
+Taro H5端使用index.html中的js代码片段控制了rem单位的基础值的变换，如果你在后端代码中没有这个控制，你可以将`config/index.js`配置中的designWidth设置为375然后进行打包(这个值默认为750)。
 
-## <a name='otherproject'></a>导出到其他项目中运行
-
-Taro H5端使用index.html中的js代码片段控制了rem单位的基础值的变换，如果你在后端中没有这个控制，你可以将config配置中的designWidth设置为375然后进行打包(这个值默认为750)。  
-你可能需要将Taro3升级到较新的版本，旧版本对这个配置支持不完整。
 ```json
 designWidth: 375
+```  
+
+相反或如你的是使用的Taro项目建议将这个值设置为1000左右，以获得较为合适的尺寸。  
+
+```json
+designWidth: 1000
 ```
+
+此配置仅针对编辑器模式下，渲染模式请使用你的默认值  
+你可能需要将Taro3升级到较新的版本，旧版本对这个配置支持不完整
 
 ## <a name='group'></a>交流群
 

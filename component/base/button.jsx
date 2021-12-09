@@ -1,11 +1,13 @@
-import React from 'react'
 import Taro from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
-import { getContrastYIQ, requireNative } from 'taro-tools'
+import { getContrastYIQ } from 'taro-tools'
 import Loading from './loading'
 import './button.scss'
 
-const FastImage = requireNative('react-native-fast-image')
+let FastImage
+if (process.env.TARO_ENV === 'rn') {
+  // FastImage = require('react-native-fast-image')
+}
 
 const sizes = {
   s: { fontSize: 24, padding: 20, height: 50 },
@@ -47,7 +49,7 @@ export default ({
       // e.stopPropagation && e.stopPropagation()
       !disabled && onClick?.(e)
     }}
-    className={`app-touch btn-comp btn-comp--${radiusType}${disabled ? ' btn-comp--disabled' : ''}`}
+    className={`btn-comp btn-comp--${radiusType}${disabled ? ' btn-comp--disabled' : ''}`}
     style={{
       backgroundColor,
       borderColor,

@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import ComponentItem from './ComponentItem'
-import './static/base.css'
 
 class Create extends Component {
 

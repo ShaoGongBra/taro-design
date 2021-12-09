@@ -3,29 +3,14 @@ import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import { event, isIphoneX, currentPage, currentPageAsync } from 'taro-tools'
 import { KeyboardAvoiding } from '../base'
-import Alert from './alert'
-import Loading from './loading'
-import Toast from './toast'
+import Status from './status'
 import './top_view.scss'
 
 let keyValue = 0
 
 class CreateEle extends Component {
   state = {
-    elements: [
-      {
-        key: 'overlay-alert',
-        element: <Alert />
-      },
-      {
-        key: 'overlay-loading',
-        element: <Loading />
-      },
-      {
-        key: 'overlay-toast',
-        element: <Toast />
-      }
-    ]
+    elements: []
   }
 
   componentDidMount() {
@@ -111,7 +96,8 @@ export default class TopView extends Component {
 
   render() {
     const { children, isSafe, isForm, pageUrl, ...props } = this.props
-    return <View {...props} style={props.style} className={classNames('top-view', { 'top-view--safe': isSafe && isIphoneX() })}>
+    return <View {...props} className={classNames('top-view', { 'top-view--safe': isSafe && isIphoneX() })}>
+      <Status barStyle='dark-content' />
       <KeyboardAvoiding isForm={isForm}>
         {children}
       </KeyboardAvoiding>

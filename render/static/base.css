@@ -1,3 +1,4 @@
+/*  #ifdef rn  */
 /* overflow */
 .overflow-hidden {
   overflow: hidden;
@@ -287,3 +288,4 @@
 .opacity-90 {
   opacity: 0.9;
 }
+/*  #endif  */

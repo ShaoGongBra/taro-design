@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { styled } from './util/styled'
 import CreateDefault from './Create'
+import './static/base.css'
 
 /**
  * 组件索引

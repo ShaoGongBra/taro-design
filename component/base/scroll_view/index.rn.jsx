@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { View, Text, ScrollView } from '@tarojs/components'
 import { RefreshControl } from 'react-native'
+import { styles } from '../../../render'
 import Icon from '../icon'
 import Button from '../button'
 import './index.scss'
@@ -67,7 +68,7 @@ export default class Scroll extends Component {
     return (
       <View style={{ flex: 1, transform: flip ? [{ rotate: '180deg' }] : [] }} >
         {reloadShow && <View
-          className={'app-touch scroll-info' + (emptyShow ? ' scroll-info--show' : '')}
+          className={'scroll-info' + (emptyShow ? ' scroll-info--show' : '')}
           onClick={this.reload.bind(this)}
           style={(!!emptyBttton ? { zIndex: 1 } : {})}
         >
@@ -88,7 +89,7 @@ export default class Scroll extends Component {
             />
           }}
           {...flatListParams}
-          style={[{ height: 1 }, style]}
+          style={styles({ height: 1 }, style)}
           onScroll={this.scroll.bind(this)}
           onScrollToLower={this.scrollToLower.bind(this)}
           scrollWithAnimation={scrollWithAnimation}

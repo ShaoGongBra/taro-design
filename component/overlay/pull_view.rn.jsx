@@ -198,7 +198,7 @@ export default class PullView extends Component {
         >
           {this.props.children}
         </Animated.View>
-        <View className='app-touch pull-view__other' style={styleRn.other} onClick={this.overlayCilck.bind(this)}></View>
+        <View className='pull-view__other' style={styleRn.other} onClick={this.overlayCilck.bind(this)}></View>
       </Animated.View>
       : <View className='pull-view' animation={animationRoot}>
         <View
@@ -208,7 +208,7 @@ export default class PullView extends Component {
         >
           {this.props.children}
         </View>
-        <View className='app-touch pull-view__other' style={{ ...positionOther }} onClick={this.overlayCilck.bind(this)}></View>
+        <View className='pull-view__other' style={{ ...positionOther }} onClick={this.overlayCilck.bind(this)}></View>
       </View>
   }
 }

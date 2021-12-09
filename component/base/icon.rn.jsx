@@ -1,10 +1,8 @@
-import React from 'react'
 import Taro from '@tarojs/taro'
 import { Text } from 'react-native'
-import icon from '../../static/fonts/icon'
+import { styles } from 'taro-design/render'
+import { icons } from '../../render/util/icon'
 import './icon.scss'
-
-const icons = { icon }
 
 export default ({ font = 'icon', name, style, color, size = 32, onClick }) => {
   if (typeof name === 'object') {
@@ -22,8 +20,8 @@ export default ({ font = 'icon', name, style, color, size = 32, onClick }) => {
 
   return <Text
     onPress={onClick}
-    style={[{ color, fontSize: Taro.pxTransform(size) }, style, { fontFamily: font }]}
-  >{String.fromCharCode(icons[font][name])}</Text>
+    style={styles({ color, fontSize: Taro.pxTransform(size) }, style, { fontFamily: font })}
+  >{String.fromCharCode(icons[font].list[name])}</Text>
 }
 
 

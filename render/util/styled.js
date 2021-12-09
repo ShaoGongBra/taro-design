@@ -599,8 +599,35 @@ const styled = {
   },
 }
 
+/**
+ * 组件内部style样式的合并，用法类似与classNames，用于兼容rn与其他端style的差异
+ * @param  {...any} arg styles
+ * @returns
+ * @example styles({ color: #666 }, style)
+ */
+const styles = (...arg) => {
+  if (process.env.TARO_ENV === 'rn') {
+    const arr = []
+    arg.forEach(item => {
+      if (Array.isArray(item)) {
+        arr.push(...item)
+      } else {
+        arr.push(item)
+      }
+    })
+    return arr
+  } else {
+    let obj = {}
+    arg.forEach(item => {
+      obj = { ...obj, ...item }
+    })
+    return obj
+  }
+}
+
 export default styled
 
 export {
-  styled
+  styled,
+  styles
 }

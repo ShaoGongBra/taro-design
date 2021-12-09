@@ -1,10 +1,9 @@
-import React from 'react'
 import Taro from '@tarojs/taro'
 import { Text } from '@tarojs/components'
 import classNames from 'classnames'
+import { icons, styles } from '../../render'
 import './icon.scss'
 
-import { icons } from '../../render'
 
 export default ({ font = 'icon', name, style, className, color, size = 32, onClick }) => {
   if (typeof name === 'object') {
@@ -22,7 +21,7 @@ export default ({ font = 'icon', name, style, className, color, size = 32, onCli
 
   return <Text
     onClick={onClick}
-    style={{ color, fontSize: Taro.pxTransform(size), ...style }}
+    style={styles({ color, fontSize: Taro.pxTransform(size) }, style)}
     className={classNames(font, icons[font].prefix + name, className)}
   />
 }

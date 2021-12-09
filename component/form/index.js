@@ -1,39 +1,39 @@
 import Form, { FormItem } from './form'
-import InputForm from './input'
-import SelectForm from './select'
-import SwitchForm from './switch'
-import CheckForm from './check'
-import SteepForm from './steep'
-import SliderForm from './slider'
-import RateForm from './rate'
-import DateForm from './date'
-import TimeForm from './time'
-import ColorForm from './color'
-import UploadForm from './upload'
-import ObjectForm from './object'
-import ArrayForm from './array'
-import ArrayOneForm from './array_one'
+import Input from './input'
+import Select from './select'
+import Switch from './switch'
+import Check from './check'
+import Steep from './steep'
+import Slider from './slider'
+import Rate from './rate'
+import Date from './date'
+import Time from './time'
+import Color from './color'
+import Upload from './upload'
+import Object from './object'
+import Array from './array'
+import ArrayOne from './array_one'
 import { ArrayTwo, ArrayTowItem } from './array_two'
-import ButtonForm from './button'
+import Button from '../base/button'
 
 export default {
   form: Form,
   'form-item': FormItem,
-  input: InputForm,
-  select: SelectForm,
-  switch: SwitchForm,
-  check: CheckForm,
-  steep: SteepForm,
-  slider: SliderForm,
-  rate: RateForm,
-  date: DateForm,
-  time: TimeForm,
-  color: ColorForm,
-  upload: UploadForm,
-  object: ObjectForm,
-  array: ArrayForm,
-  'array-one': ArrayOneForm,
+  input: Input,
+  select: Select,
+  switch: Switch,
+  check: Check,
+  steep: Steep,
+  slider: Slider,
+  rate: Rate,
+  date: Date,
+  time: Time,
+  color: Color,
+  upload: Upload,
+  object: Object,
+  array: Array,
+  'array-one': ArrayOne,
   'array-two': ArrayTwo,
   'array-two-item': ArrayTowItem,
-  button: ButtonForm
+  button: Button
 }
