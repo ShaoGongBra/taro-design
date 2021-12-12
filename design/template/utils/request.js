@@ -1,4 +1,4 @@
-import { request as oldRequest, searchQuick as oldSearchQuick } from 'taro-tools'
+import { request as oldRequest, throttleRequest as oldThrottleRequest } from 'taro-tools'
 import { userInfo } from './user'
 
 
@@ -90,9 +90,9 @@ const config = {
 const request = params => oldRequest({ config, ...params })
 
 // 请求封装
-const searchQuick = (params, mark) => oldSearchQuick({ config, ...params }, mark)
+const throttleRequest = (params, mark) => oldThrottleRequest({ config, ...params }, mark)
 
 export {
   request,
-  searchQuick
+  throttleRequest
 }

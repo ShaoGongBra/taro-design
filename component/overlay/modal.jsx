@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle, useCallback } from 'react'
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle, useCallback } from 'react'
 import { View } from '@tarojs/components'
 import { TopView } from 'taro-design/component'
 import { stopPropagation } from 'taro-tools'
 import classNames from 'classnames'
 import './modal.scss'
 
-const ModalContent = forwardRef(({ children, overlayOpacity = 0.2, onClose }, ref) => {
-  const [show, setShow] = useState(false)
+const ModalContent = forwardRef(({ children, animation, overlayOpacity = 0.2, onClose }, ref) => {
+  const [show, setShow] = useState(!animation)
 
   useEffect(() => {
     setTimeout(() => {
@@ -32,33 +32,47 @@ const ModalContent = forwardRef(({ children, overlayOpacity = 0.2, onClose }, re
   </View>
 })
 
-export default ({ children, show, maskClosable = true, overlayOpacity, onClose }) => {
+export default ({ children, show, animation = true, maskClosable = true, overlayOpacity, onClose }) => {
   const key = useRef(null)
 
   const ref = useRef(null)
 
   const close = useCallback(() => {
     if (maskClosable) {
-      ref.current.hide()
-      setTimeout(() => {
+      if (animation) {
+        ref.current.hide()
+        setTimeout(() => {
+          onClose?.()
+          TopView.remove(key.current)
+          key.current = null
+        }, 200)
+      } else {
         onClose?.()
         TopView.remove(key.current)
         key.current = null
-      }, 200)
+      }
     }
-  }, [maskClosable, onClose])
+  }, [maskClosable, animation, onClose])
 
   useEffect(() => {
     if (show && !key.current) {
-      key.current = TopView.add(<ModalContent ref={ref} onClose={close} overlayOpacity={overlayOpacity}>{children}</ModalContent>)
+      key.current = TopView.add(<ModalContent ref={ref} animation={animation} onClose={close} overlayOpacity={overlayOpacity}>{children}</ModalContent>)
     } else if (!show && key.current) {
-      ref.current.hide()
-      setTimeout(() => {
+      if (animation) {
+        ref.current.hide()
+        setTimeout(() => {
+          TopView.remove(key.current)
+          key.current = null
+        }, 200)
+      } else {
         TopView.remove(key.current)
         key.current = null
-      }, 200)
+      }
     }
-  }, [children, show, overlayOpacity, close])
+    return () => {
+      TopView.remove(key.current)
+    }
+  }, [children, show, animation, overlayOpacity, close])
 
   return <></>
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback, useContext, useMemo, useRef } 
 import { View, Text, Input } from '@tarojs/components'
 import { useDrag } from 'react-dnd'
 import { noop, stopPropagation } from 'taro-tools'
-import { searchQuick } from './utils/request'
+import { throttleRequest } from './utils/request'
 import { Icon, ScrollView } from '../../component'
 import { Create, componentList } from '../../render'
 import Context from '../util/context'
@@ -85,7 +85,7 @@ const List = ({ srarchKey }) => {
   }, [srarchKey])
 
   useEffect(() => {
-    searchQuick({
+    throttleRequest({
       url: 'designservice/Template/list',
       method: 'POST',
       data: {
@@ -145,7 +145,7 @@ const Project = ({ setTempKeyword, setHover }) => {
   const listRef = useRef([])
 
   useEffect(() => {
-    searchQuick({
+    throttleRequest({
       url: 'designservice/Project/list',
       method: 'POST',
       data: {

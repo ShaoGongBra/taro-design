@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { ScrollView, View, Text } from '@tarojs/components'
 import Loading from '../loading'
@@ -13,6 +13,20 @@ export default class Scroll extends Component {
   }
 
   componentDidMount() {
+    Taro.nextTick(() => this.onReady())
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.refresh !== nextProps.refresh) {
+      if (!nextProps.refresh) {
+        this.hideRefresh()
+      } else {
+        this.showRefresh()
+      }
+    }
+  }
+
+  onReady() {
     // 查找当前的根View
     this.rootEle = this.root
     this.scrollEle = this.rootEle.getElementsByClassName('taro-scroll-view__scroll-y')[0]
@@ -60,16 +74,6 @@ export default class Scroll extends Component {
       this.scrollInfoEle.style.transform = `translateY(${this.refreshStatus ? this.refreshHeihgt : 0}px)`
       this.refreshStatus && this.refresh()
     }, false)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.refresh !== nextProps.refresh) {
-      if (!nextProps.refresh) {
-        this.hideRefresh()
-      } else {
-        this.showRefresh()
-      }
-    }
   }
 
   showRefresh() {

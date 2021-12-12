@@ -87,11 +87,46 @@ yarn add classnames
 - 添加配置
 
 ```javascript
+  // 小程序端
+  mini: {
+    webpackChain (chain) {
+      // Taro 3.1 & 3.2
+      chain.resolve.plugin('MultiPlatformPlugin')
+        .tap(args => {
+          return [...args, {
+            include: ['taro-design']
+          }]
+        })
+
+      // Taro 3.3+
+      chain.resolve.plugin('MultiPlatformPlugin')
+        .tap(args => {
+          args[2]["include"] = ['taro-design']
+          return args
+        })
+    }
+  },
   // h5端
   h5: {
     esnextModules: [
       'taro-design'
-    ]
+    ],
+    webpackChain (chain) {
+      // Taro 3.1 & 3.2
+      chain.resolve.plugin('MultiPlatformPlugin')
+        .tap(args => {
+          return [...args, {
+            include: ['taro-design']
+          }]
+        })
+
+      // Taro 3.3+
+      chain.resolve.plugin('MultiPlatformPlugin')
+        .tap(args => {
+          args[2]["include"] = ['taro-design']
+          return args
+        })
+    }
   },
   // rn端
   rn: {
@@ -208,12 +243,12 @@ designWidth: 1000
 这里面导出了一些常用组件。你可以将他们导入到你的项目中使用
 
 ```jsx
-import { TopView, PullView, Modal, Icon, Button, Loading, ScrollView, KeyboardAvoiding } from 'taro-design'
+import { TopView, PullView, Modal, Absolute, Icon, Button, Loading, ScrollView, KeyboardAvoiding } from 'taro-design'
 ```
 
 ### <a name='base-function'></a>基础函数
 项目引用了`taro-tools`这个依赖，这里面集成了多个常用函数，包含请求、日期、颜色、对象、字符串、表单验证、事件系统等，你可以直接导入到你的项目中使用。
 
 ```jsx
-import { request, searchQuick, setRequestConfig, dateToStr, dateDiff, colorToRgb, deepCopy, verify, event, ... } from 'taro-tools'
+import { request, throttleRequest, setRequestConfig, dateToStr, dateDiff, colorToRgb, deepCopy, verify, event, ... } from 'taro-tools'
 ```
