@@ -1,7 +1,7 @@
 import React, { Component, useContext } from 'react'
 import { View, Text } from '@tarojs/components'
 import { verify, recursionSetValue, recursionGetValue, deepCopy } from 'taro-tools'
-import {componentList} from '../../render'
+import { componentList } from '../../render'
 import { chechWhere, getFormDefaultValue } from './utils'
 
 import './form.scss'

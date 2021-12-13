@@ -1,9 +1,9 @@
-import React, { useState, useRef, useMemo, useCallback, useContext } from 'react'
+import { useState, useRef, useMemo, useCallback, useContext } from 'react'
 import Taro from '@tarojs/taro'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
 import { recursionGetValue, getContrastYIQ } from 'taro-tools'
 import { Icon, Button } from '../base'
-import { PullView, TopView } from '../overlay'
+import { PullView } from '../overlay'
 import { FormContext } from './form'
 import './select.scss'
 
@@ -179,7 +179,7 @@ export const SelectForm = attr => {
 
   const value = useMemo(() => recursionGetValue(attr.name, values), [attr.name, values])
 
-  const pullKey = useRef(null)
+  const [pickerShow, setPicketShow] = useState(false)
 
   const input = useCallback(val => {
     if (attr._edit) {
@@ -192,8 +192,8 @@ export const SelectForm = attr => {
     if (attr._edit) {
       return
     }
-    pullKey.current = TopView.add(<Picker attr={attr} value={value} onInput={input} onClose={() => TopView.remove(pullKey.current)} />)
-  }, [attr, value, input])
+    setPicketShow(true)
+  }, [attr])
 
   const isEmpty = attr.mode === 'picker' && attr.option.filter(item => isSelect(item, attr.type, value)).length === 0
 
@@ -204,6 +204,7 @@ export const SelectForm = attr => {
         className='form-select__value__select'
         onClick={picker}
       >点击选择</Text>}
+      {pickerShow && <Picker attr={attr} value={value} onInput={input} onClose={() => setPicketShow(false)} />}
     </View> :
     <RenderOption data={attr} value={value} onInput={input} />
 

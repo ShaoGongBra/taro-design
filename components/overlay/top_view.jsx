@@ -35,7 +35,12 @@ class CreateEle extends Component {
 
   add = e => {
     const { elements } = this.state
-    elements.push(e)
+    const index = elements.findIndex(item => item.key === e.key)
+    if (~index) {
+      elements[index] = e
+    } else {
+      elements.push(e)
+    }
     this.setState({ elements })
   }
 
@@ -80,11 +85,18 @@ export default class TopView extends Component {
     return this.add(element, page)
   }
 
+  static update(key, element, page) {
+    if (!page) {
+      page = currentPage()
+    }
+    key && event.emit(page + '-addOverlay', { key, element })
+  }
+
   static remove(key, page) {
     if (!page) {
       page = currentPage()
     }
-    event.emit(page + '-removeOverlay', { key })
+    key && event.emit(page + '-removeOverlay', { key })
   }
 
   static removeAll(page) {

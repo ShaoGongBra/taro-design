@@ -36,6 +36,10 @@ export default class TopView extends Component<props> {
   static async addAsync(element, page) {
   }
 
+  static update(key, element, page) {
+    return
+  }
+
   static remove(key, page) {
   }
 

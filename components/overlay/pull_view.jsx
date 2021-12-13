@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import Absolute from './absolute'
 import './pull_view.scss'
 
 export default class PullView extends Component {
@@ -59,18 +60,20 @@ export default class PullView extends Component {
   render() {
     const { positionOther, show } = this.state
     const { side = 'bottom', style = {}, overlayOpacity = 0.5, children } = this.props
-    return <View
-      className='pull-view'
-      style={{ backgroundColor: show ? `rgba(0, 0, 0, ${overlayOpacity})` : 'rgba(0, 0, 0, 0)' }}
-      onClick={e => e.stopPropagation && e.stopPropagation()}
-    >
+    return <Absolute>
       <View
-        className={`pull-view__main pull-view__main--${side}${show ? ' pull-view__main--show' : ''}`}
-        style={style}
+        className='pull-view'
+        style={{ backgroundColor: show ? `rgba(0, 0, 0, ${overlayOpacity})` : 'rgba(0, 0, 0, 0)' }}
+        onClick={e => e.stopPropagation && e.stopPropagation()}
       >
-        {children}
+        <View
+          className={`pull-view__main pull-view__main--${side}${show ? ' pull-view__main--show' : ''}`}
+          style={style}
+        >
+          {children}
+        </View>
+        <View className='pull-view__other' style={{ ...positionOther }} onClick={this.overlayCilck.bind(this)}></View>
       </View>
-      <View className='pull-view__other' style={{ ...positionOther }} onClick={this.overlayCilck.bind(this)}></View>
-    </View>
+    </Absolute>
   }
 }

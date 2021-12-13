@@ -55,8 +55,19 @@ export default ({ children, show, animation = true, maskClosable = true, overlay
   }, [maskClosable, animation, onClose])
 
   useEffect(() => {
-    if (show && !key.current) {
-      key.current = TopView.add(<ModalContent ref={ref} animation={animation} onClose={close} overlayOpacity={overlayOpacity}>{children}</ModalContent>)
+    return () => {
+      TopView.remove(key.current)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (show) {
+      const ele = <ModalContent ref={ref} animation={animation} onClose={close} overlayOpacity={overlayOpacity}>{children}</ModalContent>
+      if (key.current) {
+        TopView.update(key.current, ele)
+      } else {
+        key.current = TopView.add(ele)
+      }
     } else if (!show && key.current) {
       if (animation) {
         ref.current.hide()
@@ -68,9 +79,6 @@ export default ({ children, show, animation = true, maskClosable = true, overlay
         TopView.remove(key.current)
         key.current = null
       }
-    }
-    return () => {
-      TopView.remove(key.current)
     }
   }, [children, show, animation, overlayOpacity, close])
 

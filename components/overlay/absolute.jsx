@@ -5,9 +5,16 @@ export default ({ children }) => {
   const key = useRef(null)
 
   useEffect(() => {
-    key.current = TopView.add(children)
     return () => {
       TopView.remove(key.current)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (key.current) {
+      TopView.update(key.current, children)
+    } else {
+      key.current = TopView.add(children)
     }
   }, [children])
 

@@ -13,6 +13,7 @@
 * [关于页面缩放相关配置](#otherproject)
 * [交流群](#group)
 * [合作](#cooperate)
+* [重要更新日志](#update)
 * [更多文档](#more)
 	* [把自己的组件放在TaroDesign中运行](#custom-component)
 	* [自定义图标库](#custom-icon)
@@ -229,6 +230,15 @@ designWidth: 1000
 ## <a name='cooperate'></a>需要合作请加作者微信
 
 <img src="doc/images/weixin.jpg" width="200px" alt="微信好友" />
+
+## <a name='update'></a>重要更新日志
+
+### v1.0.19
+
+- 将 `taro-design/component` 修改为 `taro-design/components` ，如果你的项目使用了这个路径导入组件，请进行调整
+
+- `PullView` 组件可以放在任何位置，不需要放在最外层
+- 新增的 `Absolute` 组件可以将其中的内容添加到顶层，效果与Modal组件类似，只是其中的内容完全由你自定义
 
 ## <a name='more'></a>更多文档
 

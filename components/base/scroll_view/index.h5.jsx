@@ -77,6 +77,7 @@ export default class Scroll extends Component {
   }
 
   showRefresh() {
+    if (!this.scrollEle) return
     this.scrollEle.style.transition = 'transform 0.3s'
     this.scrollInfoEle.style.transition = 'transform 0.3s'
     this.scrollEle.style.transform = `translateY(${this.refreshHeihgt}px)`
@@ -85,7 +86,7 @@ export default class Scroll extends Component {
   }
 
   hideRefresh() {
-    if (this.timerRefresh) return
+    if (this.timerRefresh || !this.scrollEle) return
     this.scrollEle.style.transition = 'transform 0.3s'
     this.scrollInfoEle.style.transition = 'transform 0.3s'
     this.scrollEle.style.transform = `translateY(0px)`
