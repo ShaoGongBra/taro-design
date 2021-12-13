@@ -2,7 +2,7 @@
 import React, { useContext, useState, useMemo } from 'react'
 import { View, ScrollView } from '@tarojs/components'
 import { currentPage } from 'taro-tools'
-import { Icon, PullView, TopView } from '../../component'
+import { Icon, PullView, TopView } from '../../components'
 import Context from '../util/context'
 import { PageUrlContext, Create, styled } from '../../render'
 import './preview.scss'

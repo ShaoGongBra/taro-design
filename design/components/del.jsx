@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { View, Text } from '@tarojs/components'
 import { useDrop } from 'react-dnd'
 import EditTypes from '../util/editTypes'
-import { Icon } from '../../component'
+import { Icon } from '../../components'
 import Context from '../util/context'
 
 import './del.scss'

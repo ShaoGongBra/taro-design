@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { TopView } from 'taro-design/component'
+import TopView from './top_view'
 
 export default ({ children }) => {
   const key = useRef(null)

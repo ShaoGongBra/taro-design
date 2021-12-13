@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, Input } from '@tarojs/components'
 import { event, toast } from 'taro-tools'
-import { Icon, Modal, Button } from '../../component'
+import { Icon, Modal, Button } from '../../components'
 import { request } from './utils/request'
 import { userInfo } from './utils/user'
 import './auth.scss'

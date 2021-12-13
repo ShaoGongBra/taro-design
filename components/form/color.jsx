@@ -1,7 +1,7 @@
 import React, { useRef, useContext, useMemo, useCallback } from 'react'
 import { View, Input } from '@tarojs/components'
 import { isColorString, recursionGetValue } from 'taro-tools'
-import { PullView, TopView } from '../../component'
+import { PullView, TopView } from '../../components'
 import { PageUrlContext } from '../../render'
 import { FormContext } from './form'
 import './color.scss'

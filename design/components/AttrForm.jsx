@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useCallback, useEffect, useState, useRef } from 'react'
 import { currentPage, deepCopy } from 'taro-tools'
-import { ScrollView, TopView } from '../../component'
+import { ScrollView, TopView } from '../../components'
 import Context from '../util/context'
 import { PageUrlContext, Create } from '../../render'
 import Form from '../attrForm/form'

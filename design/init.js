@@ -1,4 +1,4 @@
 import { defineComponentConfigs } from './util/config'
-import editConfig from '../component/editConfig'
+import editConfig from '../components/editConfig'
 
 defineComponentConfigs(editConfig)

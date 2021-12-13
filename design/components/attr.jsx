@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text } from '@tarojs/components'
 import classNames from 'classnames'
-import { Icon } from '../../component'
+import { Icon } from '../../components'
 import Node from './node'
 import AttrForm from './AttrForm'
 import './attr.scss'

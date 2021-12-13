@@ -5,7 +5,7 @@ import { DndProvider, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { toast, noop } from 'taro-tools'
 import classNames from 'classnames'
-import { ScrollView, Loading } from '../../component'
+import { ScrollView, Loading } from '../../components'
 import Template from '../template';
 import Create from './create'
 import Attr from './attr'

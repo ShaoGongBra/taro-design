@@ -3,5 +3,5 @@ import './render/init'
 
 export * from './render'
 
-export * from './component'
+export * from './components'
 

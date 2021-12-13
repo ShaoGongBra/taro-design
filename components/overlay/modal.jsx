@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle, useCallback } from 'react'
 import { View } from '@tarojs/components'
-import { TopView } from 'taro-design/component'
 import { stopPropagation } from 'taro-tools'
 import classNames from 'classnames'
+import TopView from './top_view'
 import './modal.scss'
 
 const ModalContent = forwardRef(({ children, animation, overlayOpacity = 0.2, onClose }, ref) => {
