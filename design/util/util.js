@@ -1,4 +1,4 @@
-import { NodePosition } from "taro-design/design/util/edit"
+import { NodePosition } from './edit'
 
 /**
  * 获取当前元素相对于指定元素的相对位置

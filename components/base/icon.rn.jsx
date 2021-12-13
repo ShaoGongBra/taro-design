@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { Text } from 'react-native'
-import { styles } from 'taro-design/render'
+import { styles } from '../../render'
 import { icons } from '../../render/util/icon'
 import './icon.scss'
 
