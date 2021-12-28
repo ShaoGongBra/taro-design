@@ -262,3 +262,4 @@ import { TopView, PullView, Modal, Absolute, Icon, Button, Loading, ScrollView, 
 ```jsx
 import { request, throttleRequest, setRequestConfig, dateToStr, dateDiff, colorToRgb, deepCopy, verify, event, ... } from 'taro-tools'
 ```
+[TaroTools文档](https://github.com/ShaoGongBra/taro-tools)
