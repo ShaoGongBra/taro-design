@@ -211,13 +211,17 @@ page {
 Taro H5端使用index.html中的js代码片段控制了rem单位的基础值的变换，如果你在后端代码中没有这个控制，你可以将`config/index.js`配置中的designWidth设置为375然后进行打包(这个值默认为750)。
 
 ```json
-designWidth: 375
+{
+  "designWidth": 375
+}
 ```  
 
 相反或如你的是使用的Taro项目建议将这个值设置为1000左右，以获得较为合适的尺寸。  
 
 ```json
-designWidth: 1000
+{
+  "designWidth": 1000
+}
 ```
 
 此配置仅针对编辑器模式下，渲染模式请使用你的默认值  
