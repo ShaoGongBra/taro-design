@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react'
+import { LegacyRef, ComponentType, CSSProperties } from 'react'
 
 /** 弹出位置 */
 interface side {
@@ -12,7 +12,7 @@ interface side {
   right
 }
 
-type props = Partial<{
+interface PullViewProps {
   /**
    * 弹出位置
    * @default buttom
@@ -33,18 +33,18 @@ type props = Partial<{
   /** 点击非内容区域的关闭事件 */
   onClose: () => any
   /** 引用 */
-  ref?: string | ((node: any) => any)
-}>
+  ref?: LegacyRef<any>
+}
 
 /**
- * 弹出模态框
+ * 从四个方向弹出模态框
+ * 此组件需要配合TopView组件使用
+ * 当side为top或者buttom时，请确保你的内容具有固定的高度 为left或者right是确保你的内容具有固定宽度（使用flex: 1或者height: 100%让你的内容获取全部高度）
  * @example
+ * ```jsx
  * {show && <PullView onClose={() => this.setState({ show: false })}>
  *  <Text>将子内容放在这里，这里可以放任何内容作为弹出内容</Text>
  * </PullView>}
- * @info 注意这个组件的外层是使用定位实现全屏的，所以这个组件的尺寸将会受到外层尺寸的影响
- * @info 当side为top或者buttom时，请确保你的内容具有固定的高度 为left或者right是确保你的内容具有固定宽度（使用flex: 1或者height: 100%让你的内容获取全部高度）
+ * ```
  */
-export default class PullView extends Component<props> {
-
-}
+export const PullView: ComponentType<PullViewProps>

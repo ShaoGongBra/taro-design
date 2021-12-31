@@ -1,4 +1,3 @@
-import React from 'react'
 import { Image } from '@tarojs/components'
 import { filterProps } from '../../render'
 import './image.scss'

@@ -1,8 +1,6 @@
-import { CSSProperties } from 'react'
-import { Component } from '@tarojs/taro'
-import { CommonEventFunction } from '@tarojs/components/types/common'
+import { ComponentType, CSSProperties } from 'react'
 
-type props = Partial<{
+interface ScrollViewProps {
 
   /** 组件的内联样式, 可以动态设置的内联样式 */
   style?: CSSProperties
@@ -26,13 +24,13 @@ type props = Partial<{
   /** 滚动到底部/右边，会触发 scrolltolower 事件
    * @supported weapp, swan, alipay, tt, h5, rn
    */
-  onScrollToLower?: (event: CommonEventFunction) => any
+  onScrollToLower?: (event: Event) => any
 
   /** 滚动时触发
    * `event.detail = {scrollLeft, scrollTop, scrollHeight, scrollWidth, deltaX, deltaY}`
    * @supported weapp, swan, alipay, tt, h5, rn
    */
-  onScroll?: (event: CommonEventFunction) => any
+  onScroll?: (event: Event) => any
 
   /** 下拉刷新状态 设置为true显示加载中 false不显示加载中 */
   refresh?: boolean
@@ -70,11 +68,12 @@ type props = Partial<{
 
   /** 引用 */
   ref?: string | ((node: any) => any)
-}>
+}
 
 /**
  * 自适应高度的滚动组件 支持设置下拉刷新 上拉加载 为空显示
  * @example
+ * ```jsx
  * <View className='page-root'>
  *  <Text>顶部不滚动内容 一般为Header</Text>
  *  <Scroll>
@@ -82,9 +81,9 @@ type props = Partial<{
  *  </Scroll>
  *  <Text>底部不滚动内容 根据需要放置</Text>
  * <View>
+ * ```
  * @info 注意滚动组件是使用flex的自动最大宽度实现的 所以外层只能使用flex竖向布局 并且得具有固定高度
  * @info 一般页面使用className='page-root'作为页面得最外层，然后将此组件作为它的子组件使用
  */
-export default class Scroll extends Component<props>{
 
-}
+export const ScrollView: ComponentType<ScrollViewProps>

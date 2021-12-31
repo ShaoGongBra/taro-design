@@ -1,4 +1,4 @@
-import { CSSProperties, Component } from 'react'
+import { CSSProperties, LegacyRef, ComponentType } from 'react'
 
 /** 圆角类型 */
 interface radiusType {
@@ -27,7 +27,7 @@ interface size {
 }
 
 
-type props = Partial<{
+interface ButtonProps {
   /** 按钮文字 */
   text: string
   /** 按钮颜色 */
@@ -53,15 +53,14 @@ type props = Partial<{
   /** 点击事件 */
   onClick: () => any
   /** 引用 */
-  ref?: string | ((node: any) => any)
-}>
+  ref?: LegacyRef<any>
+}
 
 /**
- * 系统统一样式的按钮
+ * 统一样式的按钮
  * @example
- * // 显示一个按钮
+ * ```jsx
  * <Button text='立即购买' size='l' plain />
+ * ```
  */
-export default class Button extends Component<props> {
-
-}
+export const Button: ComponentType<ButtonProps>

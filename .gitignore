@@ -1,2 +1,9 @@
-docs/
+
+# node.js
+#
 node_modules/
+npm-debug.log
+yarn-error.log
+
+# typedoc
+docs/

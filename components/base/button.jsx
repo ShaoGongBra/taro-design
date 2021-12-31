@@ -4,11 +4,6 @@ import { getContrastYIQ } from 'taro-tools'
 import Loading from './loading'
 import './button.scss'
 
-let FastImage
-if (process.env.TARO_ENV === 'rn') {
-  // FastImage = require('react-native-fast-image')
-}
-
 const sizes = {
   s: { fontSize: 24, padding: 20, height: 50 },
   m: { fontSize: 26, padding: 25, height: 56 },
@@ -44,11 +39,7 @@ export default ({
   }
 
   return <View
-    onClick={e => {
-      // 阻止事件穿透
-      // e.stopPropagation && e.stopPropagation()
-      !disabled && onClick?.(e)
-    }}
+    onClick={e => !disabled && onClick?.(e)}
     className={`btn-comp btn-comp--${radiusType}${disabled ? ' btn-comp--disabled' : ''}`}
     style={{
       backgroundColor,
@@ -59,9 +50,7 @@ export default ({
       ...style
     }}
   >
-    {!!beforeImage && (
-      <Image className='btn-comp__image' src={beforeImage} style={{ width: Taro.pxTransform(sizes[size].fontSize * 1.5), height: Taro.pxTransform(sizes[size].fontSize * 1.5) }} />
-    )}
+    {!!beforeImage && <Image className='btn-comp__image' src={beforeImage} style={{ width: Taro.pxTransform(sizes[size].fontSize * 1.5), height: Taro.pxTransform(sizes[size].fontSize * 1.5) }} />}
     <Text
       numberOfLines={1}
       className='btn-comp__txt number-of-lines'
@@ -71,11 +60,7 @@ export default ({
         ...textStyle
       }}
     >{text}</Text>
-    {!!afterImage && (
-      process.env.TARO_ENV === 'rn'
-        ? <FastImage className='btn-comp__image' source={{ uri: afterImage }} style={{ width: Taro.pxTransform(sizes[size].fontSize * 1.5), height: Taro.pxTransform(sizes[size].fontSize * 1.5) }} />
-        : <Image className='btn-comp__image' src={afterImage} style={{ width: Taro.pxTransform(sizes[size].fontSize * 1.5), height: Taro.pxTransform(sizes[size].fontSize * 1.5) }} />
-    )}
+    {!!afterImage && <Image className='btn-comp__image' src={afterImage} style={{ width: Taro.pxTransform(sizes[size].fontSize * 1.5), height: Taro.pxTransform(sizes[size].fontSize * 1.5) }} />}
     {loading && <Loading size={sizes[size].fontSize * 1.5} />}
   </View>
 

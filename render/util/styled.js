@@ -53,10 +53,8 @@ export const styleConfig = {
     text: '不透明度',
     default: 1,
     type: styleType.number,
-
     valueClassData: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
     valueClassName(val) {
-      console.log(val)
       if (this.valueClassData.includes(+val)) {
         return 'opacity-' + (val * 100)
       }

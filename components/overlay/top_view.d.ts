@@ -1,6 +1,6 @@
-import { Component, CSSProperties } from 'react'
+import { LegacyRef, ComponentType, Component, CSSProperties, ReactElement } from 'react'
 
-type props = Partial<{
+interface TopViewProps {
   /**
    * 是否显示安全区域
    * @default false
@@ -12,37 +12,56 @@ type props = Partial<{
   */
   isForm: boolean
   /**
-   * 是否是组件
-   */
-  isComponent: boolean
-  /**
    * 组件页面标识 不传默认读取当前页面的路由
    */
   pageUrl: string
   /** 顶层样式 */
   style: CSSProperties
   /** 引用 */
-  ref?: string | ((node: any) => any)
-}>
+  ref?: LegacyRef<any>
+}
 
+interface AddAsyncTask extends Promise<AddAsyncTask> {
+
+}
 /**
  * 根节点 可以用于控制页面全局弹窗 下巴机型底部空白 键盘弹出控制
+ * @noInheritDoc
  */
-export default class TopView extends Component<props> {
-  static add(element, page) {
-    return
-  }
+export class TopView extends Component<TopViewProps> {
+  /**
+   * 添加一个组件到全局
+   * @param element 组件
+   * @param page 标识 默认当前页面
+   * @return 返回一个key，用于更新或者删除
+   */
+  static add(element: ReactElement, page?: string): number
 
-  static async addAsync(element, page) {
-  }
+  /**
+   * 异步的add方法
+   * @param element 组件
+   * @param page 标识 默认当前页面
+   */
+  static addAsync(element: ReactElement, page?: string): AddAsyncTask
 
-  static update(key, element, page) {
-    return
-  }
+  /**
+   * 更新一个已经创建的组件
+   * @param key 标识
+   * @param element 元素
+   * @param page 页面
+   */
+  static update(key: number, element: ReactElement, page?: string): void
 
-  static remove(key, page) {
-  }
+  /**
+   * 移除一个已经创建的组件
+   * @param key 标识
+   * @param page 页面
+   */
+  static remove(key: number, page?: string): void
 
-  static removeAll(page) {
-  }
+  /**
+   * 移除所有添加的组件
+   * @param page 页面
+   */
+  static removeAll(page?: string): void
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useCallback, useEffect, useState, useRef } from 'react'
+import { useContext, useMemo, useCallback, useEffect, useState, useRef } from 'react'
 import { currentPage, deepCopy } from 'taro-tools'
 import { ScrollView, TopView } from '../../components'
 import Context from '../util/context'

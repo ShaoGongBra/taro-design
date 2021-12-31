@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useCallback, useState, useMemo } from 'react'
+import { useRef, useContext, useCallback, useState, useMemo } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
