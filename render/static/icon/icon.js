@@ -1,4 +1,8 @@
 export default {
+  'pengyouquan': 58880,
+  'weixin': 58881,
+  'zhifubao': 58904,
+  'fuzhi': 59568,
   'pingfen': 59384,
   'pingfen-yipingfen': 59385,
   'jianhao': 58883,
