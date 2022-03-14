@@ -19,7 +19,7 @@ export default class Scroll extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.emptyShow != this.props.emptyShow) {
       if (!!nextProps.emptyShow) {
         this.timer && clearTimeout(this.timer)

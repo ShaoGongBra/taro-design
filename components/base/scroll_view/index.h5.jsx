@@ -16,7 +16,7 @@ export default class Scroll extends Component {
     Taro.nextTick(() => this.onReady())
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.refresh !== nextProps.refresh) {
       if (!nextProps.refresh) {
         this.hideRefresh()
