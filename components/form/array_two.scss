@@ -1,5 +1,5 @@
 .form-array-two {
-  /*postcss-pxtransform rn eject enable*/
+  /*  #ifndef rn  */
   white-space: nowrap;
   &::-webkit-scrollbar {
     display: block;
@@ -18,29 +18,29 @@
     border-radius: 5px;
     background-color: #555;
   }
-  /*postcss-pxtransform rn eject disable*/
+  /*  #endif  */
   &__edit {
     min-width: 100%;
-    /*postcss-pxtransform rn eject enable*/
+    /*  #ifndef rn  */
     display: inline-block;
-    /*postcss-pxtransform rn eject disable*/
+    /*  #endif  */
     &__main {
       flex-direction: row;
     }
   }
   &__table {
     border: 1px solid #ededed;
-    /*postcss-pxtransform rn eject enable*/
+    /*  #ifndef rn  */
     display: inline-block;
-    /*postcss-pxtransform rn eject disable*/
+    /*  #endif  */
   }
   &__head {
     flex-direction: row;
     border-bottom-width: 1px;
     border-bottom-color: #ededed;
-    /*postcss-pxtransform rn eject enable*/
+    /*  #ifndef rn  */
     border-bottom-style: solid;
-    /*postcss-pxtransform rn eject disable*/
+    /*  #endif  */
     &__item {
       align-items: center;
       justify-content: center;
