@@ -6,6 +6,14 @@ import { KeyboardAvoiding } from '../base'
 import Status from './status'
 import './top_view.scss'
 
+const Position = ({ children }) => {
+  return process.env.TARO_ENV === 'rn'
+    ? children
+    : <View className='position'>
+      {children}
+    </View>
+}
+
 let keyValue = 0
 
 class CreateEle extends Component {
@@ -61,9 +69,13 @@ class CreateEle extends Component {
 
   render() {
     const { elements } = this.state
-    return elements.map(item => <React.Fragment key={'topView-' + item.key}>
-      {item.element}
-    </React.Fragment>)
+    return <Position>
+      {
+        elements.map(item => <React.Fragment key={'topView-' + item.key}>
+          {item.element}
+        </React.Fragment>)
+      }
+    </Position>
   }
 }
 

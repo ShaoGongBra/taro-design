@@ -45,31 +45,31 @@ export default class Scroll extends Component {
       scrollTop,
       flip = false
     } = this.props
-    return (
-      <View className='scroll-root'>
-        <ScrollView
-          scrollY
-          className={`scroll-auto-height-weapp scroll ${flip ? 'scroll-flip' : ''}`}
-          style={style}
-          onScroll={this.scroll.bind(this)}
-          onScrollToLower={this.scrollToLower.bind(this)}
-          scrollWithAnimation={scrollWithAnimation}
-          scrollTop={scrollTop}
-          refresherEnabled={refresh !== undefined}
-          refresherThreshold={50}
-          onRefresherrefresh={this.refresh.bind(this)}
-          onRefresherrestore={this.refreshReset.bind(this)}
-          refresherTriggered={!!refresh}
-        >
-          {!emptyShow && this.props.children}
-        </ScrollView>
-        {emptyShow && <View className={'scroll-info' + (emptyShow ? ' scroll-info--show' : '')} onClick={this.reload.bind(this)}>
-          <Icon name={emptyIcon} size={90} color='#333' />
-          {!!emptyTitle && <Text className='scroll-info__title'>{emptyTitle}</Text>}
-          {!!emptyDesc && <Text className='scroll-info__desc'>{emptyDesc}</Text>}
-          {!!emptyBttton && <Button size='m' text={emptyBttton} style={{ marginTop: Taro.pxTransform(20) }} onClick={() => this.props.onEmptyButtonCilck && this.props.onEmptyButtonCilck()} />}
-        </View>}
-      </View>
-    )
+
+    return <View className='scroll-root'>
+      <ScrollView
+        scrollY
+        className={`scroll-auto-height-weapp scroll ${flip ? 'scroll-flip' : ''}`}
+        style={style}
+        onScroll={this.scroll.bind(this)}
+        onScrollToLower={this.scrollToLower.bind(this)}
+        scrollWithAnimation={scrollWithAnimation}
+        scrollTop={scrollTop}
+        refresherEnabled={refresh !== undefined}
+        refresherThreshold={50}
+        onRefresherrefresh={this.refresh.bind(this)}
+        onRefresherrestore={this.refreshReset.bind(this)}
+        refresherTriggered={!!refresh}
+        refresherBackground='transparent'
+      >
+        {!emptyShow && this.props.children}
+      </ScrollView>
+      {emptyShow && <View className={'scroll-info' + (emptyShow ? ' scroll-info--show' : '')} onClick={this.reload.bind(this)}>
+        <Icon name={emptyIcon} size={90} color='#333' />
+        {!!emptyTitle && <Text className='scroll-info__title'>{emptyTitle}</Text>}
+        {!!emptyDesc && <Text className='scroll-info__desc'>{emptyDesc}</Text>}
+        {!!emptyBttton && <Button size='m' text={emptyBttton} style={{ marginTop: Taro.pxTransform(20) }} onClick={() => this.props.onEmptyButtonCilck && this.props.onEmptyButtonCilck()} />}
+      </View>}
+    </View>
   }
 }
