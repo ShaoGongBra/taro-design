@@ -36,7 +36,7 @@ export default class Scroll extends Component {
     const {
       style = {},
       refresh,
-      emptyIcon = 'info',
+      emptyIcon = 'tishi',
       emptyTitle = '什么都没有',
       emptyDesc,
       emptyBttton,
@@ -62,14 +62,16 @@ export default class Scroll extends Component {
         refresherTriggered={!!refresh}
         refresherBackground='transparent'
       >
-        {!emptyShow && this.props.children}
+        {emptyShow ?
+          <View className={'scroll-info' + (emptyShow ? ' scroll-info--show' : '')} onClick={this.reload.bind(this)}>
+            <Icon name={emptyIcon} size={90} color='#333' />
+            {!!emptyTitle && <Text className='scroll-info__title'>{emptyTitle}</Text>}
+            {!!emptyDesc && <Text className='scroll-info__desc'>{emptyDesc}</Text>}
+            {!!emptyBttton && <Button size='m' text={emptyBttton} style={{ marginTop: Taro.pxTransform(20) }} onClick={() => this.props.onEmptyButtonCilck && this.props.onEmptyButtonCilck()} />}
+          </View> :
+          this.props.children
+        }
       </ScrollView>
-      {emptyShow && <View className={'scroll-info' + (emptyShow ? ' scroll-info--show' : '')} onClick={this.reload.bind(this)}>
-        <Icon name={emptyIcon} size={90} color='#333' />
-        {!!emptyTitle && <Text className='scroll-info__title'>{emptyTitle}</Text>}
-        {!!emptyDesc && <Text className='scroll-info__desc'>{emptyDesc}</Text>}
-        {!!emptyBttton && <Button size='m' text={emptyBttton} style={{ marginTop: Taro.pxTransform(20) }} onClick={() => this.props.onEmptyButtonCilck && this.props.onEmptyButtonCilck()} />}
-      </View>}
     </View>
   }
 }
