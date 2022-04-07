@@ -11,11 +11,11 @@ export default ({ font = 'icon', name, style, className, color, size = 32, onCli
     name = name[1]
   }
   if (!icons[font]) {
-    console.warn(font + ' 图标库未定义')
+    console.log(font + ' 图标库未定义')
     return null
   }
   if (!icons[font].list?.[name]) {
-    console.warn(font + ' 图标库下的 ' + name + ' 图标未定义')
+    console.log(font + ' 图标库下的 ' + name + ' 图标未定义')
     return null
   }
 
