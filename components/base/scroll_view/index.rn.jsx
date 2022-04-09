@@ -56,6 +56,7 @@ export default class Scroll extends Component {
       emptyTitle = '什么都没有',
       emptyDesc,
       emptyBttton,
+      emptyColor,
       emptyShow = false,
       scrollWithAnimation = true,
       scrollTop,
@@ -64,7 +65,11 @@ export default class Scroll extends Component {
       contentContainerStyle = {},
       flatListParams
     } = this.props
+
     const { reloadShow } = this.state
+
+    const colorStyle = emptyColor ? { color: emptyColor } : {}
+
     return (
       <View style={{ flex: 1, transform: flip ? [{ rotate: '180deg' }] : [] }} >
         {reloadShow && <View
@@ -72,9 +77,9 @@ export default class Scroll extends Component {
           onClick={this.reload.bind(this)}
           style={(!!emptyBttton ? { zIndex: 1 } : {})}
         >
-          <Icon name={emptyIcon} size={90} color='#333' />
-          {!!emptyTitle && <Text className='scroll-info__title'>{emptyTitle}</Text>}
-          {!!emptyDesc && <Text className='scroll-info__desc'>{emptyDesc}</Text>}
+          <Icon name={emptyIcon} size={90} color={emptyColor || '#333'} />
+          {!!emptyTitle && <Text className='scroll-info__title' style={colorStyle}>{emptyTitle}</Text>}
+          {!!emptyDesc && <Text className='scroll-info__desc' style={colorStyle}>{emptyDesc}</Text>}
           {!!emptyBttton && <Button size='m' text={emptyBttton} style={{ marginTop: Taro.pxTransform(20) }} onClick={() => this.props.onEmptyButtonCilck && this.props.onEmptyButtonCilck()} />}
         </View>}
         <ScrollView
