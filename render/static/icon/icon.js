@@ -1,4 +1,6 @@
 export default {
+  'caidan1': 58892,
+  'caidan2': 59569,
   'pengyouquan': 58880,
   'weixin': 58881,
   'zhifubao': 58904,
