@@ -16,6 +16,7 @@
     /*postcss-pxtransform rn eject enable*/
     transition: opacity 0.2s, transform 0.2s;
     /*postcss-pxtransform rn eject disable*/
+    z-index: 10;
     &--top {
       left: 0;
       right: 0;
@@ -46,6 +47,6 @@
     }
   }
   &__other {
-    position: absolute;
+    flex: 1;
   }
 }

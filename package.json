@@ -1,6 +1,6 @@
 {
   "name": "taro-design",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "跨端页面设计器，支持小程序、RN、h5。做到了运行时和编辑时分离。可以自定义组件用于编辑和使用。",
   "main": "index.js",
   "author": "908634674@qq.com",

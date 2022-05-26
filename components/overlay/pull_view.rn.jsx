@@ -23,19 +23,12 @@ export default class PullView extends Component {
 
   state = {
     animationRoot: null,
-    positionOther: {
-      left: 0,
-      top: 0,
-      right: 0,
-      bottom: 0
-    },
     styleRn: null
   }
 
   componentDidMount() {
     const { side = 'bottom' } = this.props
     const position = {}
-    const { positionOther } = this.state
     // RN端动画
     setTimeout(() => {
       const handle = findNodeHandle(this.anRef)
@@ -45,29 +38,24 @@ export default class PullView extends Component {
           case 'left':
             position.top = 0
             position.bottom = 0
-            positionOther.left = width
             break
           case 'right':
             position.top = 0
             position.bottom = 0
-            positionOther.right = width
             break
           case 'top':
             position.left = 0
             position.right = 0
-            positionOther.top = height
             break
           case 'bottom':
             position.left = 0
             position.right = 0
-            positionOther.bottom = height
             break
         }
 
         this.setState({
           styleRn: StyleSheet.create({
-            position,
-            other: positionOther
+            position
           })
         })
         Animated.timing(
@@ -117,27 +105,27 @@ export default class PullView extends Component {
           })
         }}
       >
-        <Animated.View
-          ref={ref => this.anRef = ref}
-          className='pull-view__main'
-          style={{
-            ...styleRn.position,
-            ...style,
-            ...{
-              opacity: animationRoot.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 1]
-              }),
-              [side]: animationRoot.interpolate({
-                inputRange: [0, 1],
-                outputRange: [-200, 0]
-              })
-            }
-          }}
-        >
-          {this.props.children}
-        </Animated.View>
-        <View className='pull-view__other' style={styleRn.other} onClick={this.overlayCilck.bind(this)}></View>
+        <View className='pull-view__other' onClick={this.overlayCilck.bind(this)}></View>
+      </Animated.View>
+      <Animated.View
+        ref={ref => this.anRef = ref}
+        className='pull-view__main'
+        style={{
+          ...styleRn.position,
+          ...style,
+          ...{
+            opacity: animationRoot.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, 1]
+            }),
+            [side]: animationRoot.interpolate({
+              inputRange: [0, 1],
+              outputRange: [-200, 0]
+            })
+          }
+        }}
+      >
+        {this.props.children}
       </Animated.View>
     </Absolute>
   }
