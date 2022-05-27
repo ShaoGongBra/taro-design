@@ -1,4 +1,5 @@
 import { LegacyRef, ComponentType, Component, CSSProperties, ReactElement } from 'react'
+import { design } from '../../design/components/edit'
 
 interface TopViewProps {
   /**
@@ -29,6 +30,26 @@ interface AddAsyncTask extends Promise<AddAsyncTask> {
  * @noInheritDoc
  */
 export class TopView extends Component<TopViewProps> {
+  /**
+   * 添加一个Node节点到页面
+   * @param node 节点
+   * @return 返回一个key，用于更新或者删除
+   */
+  static addDiy(node: design.Node): number
+
+  /**
+   * 更新一个已经创建的节点
+   * @param key 标识
+   * @param node 节点
+   */
+  static updateDiy(key: number, node: design.Node): void
+
+  /**
+   * 移除一个已经创建的节点
+   * @param key 标识
+   */
+  static removeDiy(key: number): void
+
   /**
    * 添加一个组件到全局
    * @param element 组件

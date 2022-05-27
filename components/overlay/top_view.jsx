@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, useState, useEffect } from 'react'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import { event, isIphoneX, currentPage, currentPageAsync } from 'taro-tools'
 import { KeyboardAvoiding } from '../base'
+import Create from '../../render/Create'
 import Status from './status'
 import './top_view.scss'
 
@@ -14,11 +15,64 @@ const Position = ({ children }) => {
     </View>
 }
 
-let keyValue = 0
+const Diy = () => {
+
+  const [nodes, setNodes] = useState([])
+
+  useEffect(() => {
+    const keyIndex = {}
+    const cb = ({
+      key,
+      node
+    }) => {
+      const index = keyIndex[key]
+      if (node) {
+        // 新增或者更新
+        if (~index) {
+          setNodes(old => {
+            keyIndex[key] = old.length
+            old.push(node)
+            return [...old]
+          })
+        } else {
+          setNodes(old => {
+            old[index] = node
+            return [...old]
+          })
+        }
+      } else {
+        // 删除
+        ~index && setNodes(old => {
+          old.splice(index, 1)
+          // 让大于这个index的index -1，保证索引位置正确
+          Object.keys(keyIndex).forEach(key => {
+            if (keyIndex[key] > index) {
+              keyIndex[key]--
+            }
+          })
+          return [...old]
+        })
+      }
+    }
+    const name = currentPage() + '-diyChange'
+
+    event.add(name, cb)
+    return () => event.remove(name, cb)
+  }, [])
+
+  return nodes.length ?
+    <Create nodes={nodes} />
+    : null
+}
 
 class CreateEle extends Component {
   state = {
-    elements: []
+    elements: [
+      {
+        key: 'diy',
+        element: <Diy />
+      }
+    ]
   }
 
   componentDidMount() {
@@ -79,7 +133,24 @@ class CreateEle extends Component {
   }
 }
 
+
+let diyKeyValue = 0
+let keyValue = 0
 export default class TopView extends Component {
+
+  static addDiy(node) {
+    const key = diyKeyValue++
+    event.emit(currentPage() + '-diyChange', { key, node })
+    return key
+  }
+
+  static updateDiy(key, node) {
+    ~key && event.emit(currentPage() + '-diyChange', { key, node })
+  }
+
+  static removeDiy(key) {
+    ~key && event.emit(currentPage() + '-diyChange', { key })
+  }
 
   static add(element, page) {
     if (!page) {

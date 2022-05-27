@@ -16,7 +16,8 @@ export default {
   icon: Icon,
   video: Video,
   swiper: SwiperLayout,
-  'swiper-item': SwiperItemLayout
+  'swiper-item': SwiperItemLayout,
+  loading: Loading
 }
 
 export {
