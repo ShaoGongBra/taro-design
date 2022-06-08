@@ -8,6 +8,7 @@ import Loading from './loading'
 import ScrollView from './scroll_view'
 import KeyboardAvoiding from './keyboard_avoiding'
 import { SwiperLayout, SwiperItemLayout } from './swiper'
+import { Calendar, CalendarSelect } from './calendar'
 
 export default {
   view: View,
@@ -25,5 +26,7 @@ export {
   Button,
   Loading,
   ScrollView,
-  KeyboardAvoiding
+  KeyboardAvoiding,
+  Calendar,
+  CalendarSelect
 }

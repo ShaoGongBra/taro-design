@@ -3,6 +3,7 @@ export * from './base/icon'
 export * from './base/keyboard_avoiding'
 export * from './base/loading'
 export * from './base/scroll_view'
+export * from './base/calendar'
 
 export * from './overlay/top_view'
 export * from './overlay/pull_view'
