@@ -237,6 +237,9 @@ Taro H5端使用index.html中的js代码片段控制了rem单位的基础值的�
 
 ## <a name='update'></a>重要更新日志
 
+### v1.0.35
+- 新增日历选择组件可以用于日期、周、日期范围的选择 导出两个组件 `<Calendar />` 和 `<CalendarSelect />`, 后者用于创建ref的用Promise的形式进行选择
+
 ### v1.0.19
 
 - 将 `taro-design/component` 修改为 `taro-design/components` ，如果你的项目使用了这个路径导入组件，请进行调整
@@ -257,7 +260,7 @@ Taro H5端使用index.html中的js代码片段控制了rem单位的基础值的�
 这里面导出了一些常用组件。你可以将他们导入到你的项目中使用
 
 ```jsx
-import { TopView, PullView, Modal, Absolute, Icon, Button, Loading, ScrollView, KeyboardAvoiding } from 'taro-design'
+import { TopView, PullView, Modal, Absolute, Icon, Button, Loading, ScrollView, KeyboardAvoiding, Calendar, CalendarSelect } from 'taro-design'
 ```
 
 ### <a name='base-function'></a>基础函数
