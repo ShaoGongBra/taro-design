@@ -1,6 +1,5 @@
 .top-view {
   height: 100%;
-  background-color: #fff;
   /*  #ifndef rn  */
   position: relative;
   display: flex;
@@ -38,10 +37,6 @@ taro-view-core {
 taro-view-core,
 taro-text-core {
   line-height: 1;
-}
-taro-text-core {
-  font-size: 28px;
-  color: #333;
 }
 taro-image-core {
   width: auto;
