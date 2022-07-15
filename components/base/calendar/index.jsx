@@ -205,7 +205,7 @@ export const Calendar = ({
     if (disable) {
       return
     }
-    const day = `${month}-${text}`
+    const day = `${month}-${+text < 10 ? '0' + text : text}`
     if (mode === 'day') {
       setValue(day)
       onChange?.(day)
