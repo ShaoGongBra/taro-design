@@ -231,10 +231,6 @@ Taro H5端使用index.html中的js代码片段控制了rem单位的基础值的�
 
 <img src="doc/images/qq.png" width="200px" alt="qq群" />
 
-## <a name='cooperate'></a>需要合作请加作者微信
-
-<img src="doc/images/weixin.jpg" width="200px" alt="微信好友" />
-
 ## <a name='update'></a>重要更新日志
 
 ### v1.0.35
