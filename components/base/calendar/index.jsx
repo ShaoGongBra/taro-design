@@ -255,8 +255,6 @@ export const Calendar = ({
     }
   }, [onlyCurrentWeek, selectDay, month])
 
-  console.log(onlyCurrentWeek, selelctOfWeekIndex)
-
   return <View className={`calendars ${className}`} style={style}>
     {!onlyCurrentWeek && <View className='calendars__head'>
       <Icon name='zuo2' size={32} onClick={prev} />
