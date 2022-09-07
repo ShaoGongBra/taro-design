@@ -26,6 +26,8 @@ interface CalendarProps {
   max?: string
   /** 允许选择的最小日期 如2020-01-01 */
   min?: string
+  /** 是否仅显示当前日期所在的周 为true只会显示一周的数据 */
+  onlyCurrentWeek?: boolean
   /** 引用 */
   ref?: string | ((node: any) => any)
 }

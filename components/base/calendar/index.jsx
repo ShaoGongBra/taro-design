@@ -57,12 +57,13 @@ const Day = ({
 
 export const Calendar = ({
   mode = 'day', // day日期选择 week周选择 scope范围选择
-  value: propsValue,// 周或者范围选择传入数组，第一项开始时间，第二项结束时间
+  value: propsValue = '',// 周或者范围选择传入数组，第一项开始时间，第二项结束时间
   style,
   className,
   onChange,
   max,
-  min
+  min,
+  onlyCurrentWeek, // 仅显示当前这周的数据
 }) => {
 
   const [value, setValue] = useState(propsValue)
@@ -228,18 +229,51 @@ export const Calendar = ({
     }
   }, [month, mode, onChange, scopeStart])
 
+  const [selectDay, selelctOfWeekIndex] = useMemo(() => {
+    let val
+    if (!value) {
+      val = dateToStr('yyyy-MM-dd')
+    } else if (typeof value === 'string') {
+      val = value
+    } else {
+      val = value[0]
+    }
+    if (!onlyCurrentWeek) {
+      return [val, 0]
+    }
+    const [y, m, w] = Calendar.getMonthWeekForDay(val)
+    return [`${y}-${(m > 9 ? 0 : '0') + m}`, w]
+  }, [value, onlyCurrentWeek])
+
+  useEffect(() => {
+    if (onlyCurrentWeek) {
+      // 将月份重置为当前月份
+      const _month = selectDay.substr(0, 7)
+      if (month !== _month) {
+        setMonth(_month)
+      }
+    }
+  }, [onlyCurrentWeek, selectDay, month])
+
+  console.log(onlyCurrentWeek, selelctOfWeekIndex)
+
   return <View className={`calendars ${className}`} style={style}>
-    <View className='calendars__head'>
+    {!onlyCurrentWeek && <View className='calendars__head'>
       <Icon name='zuo2' size={32} onClick={prev} />
       <Text className='calendars__head__text'>{month}</Text>
       <Icon name='you3' size={32} onClick={next} />
-    </View>
+    </View>}
     {
-      list.map((week, index) => <View className='calendars__row' key={index}>
-        {
-          week.map((day, dayIndex) => <Day key={day.text} week={dayIndex + 1} {...day} onClick={click} />)
+      list.map((week, index) => {
+        if (onlyCurrentWeek && selelctOfWeekIndex !== index && index) {
+          return null
         }
-      </View>)
+        return <View className='calendars__row' key={index}>
+          {
+            week.map((day, dayIndex) => <Day key={day.text} week={dayIndex + 1} {...day} onClick={click} />)
+          }
+        </View>
+      })
     }
   </View>
 }
