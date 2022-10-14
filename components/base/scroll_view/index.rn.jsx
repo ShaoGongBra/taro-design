@@ -9,33 +9,6 @@ import './index.scss'
 
 export default class Scroll extends Component {
 
-  state = {
-    reloadShow: !1
-  }
-
-  componentDidMount() {
-    this.setState({
-      reloadShow: this.props.emptyShow
-    })
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.emptyShow != this.props.emptyShow) {
-      if (!!nextProps.emptyShow) {
-        this.timer && clearTimeout(this.timer)
-        this.setState({
-          reloadShow: !0
-        })
-      } else {
-        this.timer = setTimeout(() => {
-          this.setState({
-            reloadShow: !1
-          })
-        }, 300)
-      }
-    }
-  }
-
   scroll(e) {
     this.props.onScroll && this.props.onScroll(e)
   }
@@ -52,7 +25,7 @@ export default class Scroll extends Component {
     const {
       style = {},
       refresh = false,
-      emptyIcon = 'info',
+      emptyIcon = 'tishi',
       emptyTitle = '什么都没有',
       emptyDesc,
       emptyBttton,
@@ -66,22 +39,10 @@ export default class Scroll extends Component {
       flatListParams
     } = this.props
 
-    const { reloadShow } = this.state
-
     const colorStyle = emptyColor ? { color: emptyColor } : {}
 
     return (
       <View style={{ flex: 1, transform: flip ? [{ rotate: '180deg' }] : [] }} >
-        {reloadShow && <View
-          className={'scroll-info' + (emptyShow ? ' scroll-info--show' : '')}
-          onClick={this.reload.bind(this)}
-          style={(!!emptyBttton ? { zIndex: 1 } : {})}
-        >
-          <Icon name={emptyIcon} size={90} color={emptyColor || '#333'} />
-          {!!emptyTitle && <Text className='scroll-info__title' style={colorStyle}>{emptyTitle}</Text>}
-          {!!emptyDesc && <Text className='scroll-info__desc' style={colorStyle}>{emptyDesc}</Text>}
-          {!!emptyBttton && <Button size='m' text={emptyBttton} style={{ marginTop: Taro.pxTransform(20) }} onClick={() => this.props.onEmptyButtonCilck && this.props.onEmptyButtonCilck()} />}
-        </View>}
         <ScrollView
           scrollY
           showsVerticalScrollIndicator={showsVerticalScrollIndicator}
@@ -102,9 +63,18 @@ export default class Scroll extends Component {
           scrollIndicatorInsets={{ right: 1 }}
         >
           {!emptyShow && this.props.children}
+          {emptyShow && <View
+            className={'scroll-info-rn' + (emptyShow ? ' scroll-info--show' : '')}
+            onClick={this.reload.bind(this)}
+            style={(!!emptyBttton ? { zIndex: 1 } : {})}
+          >
+            <Icon name={emptyIcon} size={90} color={emptyColor || '#333'} />
+            {!!emptyTitle && <Text className='scroll-info__title' style={colorStyle}>{emptyTitle}</Text>}
+            {!!emptyDesc && <Text className='scroll-info__desc' style={colorStyle}>{emptyDesc}</Text>}
+            {!!emptyBttton && <Button size='m' text={emptyBttton} style={{ marginTop: Taro.pxTransform(20) }} onClick={() => this.props.onEmptyButtonCilck && this.props.onEmptyButtonCilck()} />}
+          </View>}
         </ScrollView>
       </View>
-
     )
   }
 }

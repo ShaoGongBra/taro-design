@@ -7,11 +7,6 @@ import './index.scss'
 
 export default class Scroll extends Component {
 
-  static options = {
-    // 组件使用全局样式
-    addGlobalClass: true
-  }
-
   scroll(e) {
     this.props.onScroll && this.props.onScroll(e)
   }

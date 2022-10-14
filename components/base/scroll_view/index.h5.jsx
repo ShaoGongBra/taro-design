@@ -138,7 +138,7 @@ export default class Scroll extends Component {
   render() {
     const {
       style = {},
-      emptyIcon = 'info',
+      emptyIcon = 'tishi',
       emptyTitle = '什么都没有',
       emptyDesc,
       emptyBttton,
