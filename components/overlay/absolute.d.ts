@@ -1,6 +1,6 @@
 import { LegacyRef, ComponentType } from 'react'
 
-interface AboluteProps {
+interface AbsoluteProps {
   /** 引用 */
   ref?: LegacyRef<any>
 }
@@ -10,9 +10,9 @@ interface AboluteProps {
  * 此组件需要配合TopView组件使用
  * @example
  * ```jsx
- * <Abolute>
+ * <Asbolute>
  *   <Text>此处的内容将会添加在和TopView组件相同的位置上</Text>
- * </Abolute>
+ * </Asbolute>
  * ```
  */
-export const Abolute: ComponentType<AboluteProps>
+export const Absolute: ComponentType<AbsoluteProps>
