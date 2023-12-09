@@ -1,6 +1,9 @@
 # Taro Design
 
-一个简单易用，方便扩展和集成的移动端页面编辑器。
+一个简单易用，方便扩展和集成的移动端页面编辑器。  
+
+这项目将不再维护，我将这个模块迁移到 [duxapp 框架](https://app.docs.dux.plus) 中，继续维护。新项目地址 https://github.com/duxapp/design
+
 <center>
   <img src="doc/images/image1.png" alt="预览" />
 </center>
